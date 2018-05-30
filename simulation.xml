@@ -11,7 +11,7 @@
 <FunHandleName> update_rules </FunHandleName>
 <Rule>
 	<Prod>
-		P -> 1 {P,P}_1
+		C -> 1 {C,C}_1
 	</Prod>
 	<InternalState>
 		<Name> MS </Name>
