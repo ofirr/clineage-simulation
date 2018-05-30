@@ -1,3 +1,4 @@
+% clean up from any previous work
 clear;
 clc;
 
@@ -24,8 +25,8 @@ ProgramFile = 'simulation.xml';
 Rules = ParseeSTGProgram(ProgramFile);
 [ Runs, RunsData ] = RunSim(Rules, Rules.Seed, Rules.SimTime);
 
+% generate tree
 Node = Runs(1).Nodes{1}(1);
-
 T = generateTree(Rules, Runs(1).Nodes, Node, Runs(1).NameInds, Runs(1).Name);
 
 % save newtick file
