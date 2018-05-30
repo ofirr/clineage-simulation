@@ -1,10 +1,7 @@
 function [ Rules ] = update_rules( Rules, T, X )
 % updates rules during the transition
 
-    % access to microsatellite mutation transition table
-    global ms_mutation_transition_prob;
-
-    disp( ms_mutation_transition_prob(1, 2) );
+    
     return
 
     CLONE_SIZE = 1000;

@@ -15,7 +15,7 @@
 	</Prod>
 	<InternalState>
 		<Name> MS </Name>
-		<InitVal> 0 </InitVal>
+		<InitVal> 1 </InitVal>
 		<FuncHandleName> update_microsatellite </FuncHandleName>
 		<DuplicateNum> 10 </DuplicateNum>
 	</InternalState>
