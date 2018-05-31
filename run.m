@@ -19,8 +19,7 @@ path_newick = fullfile(path_output, 'tree.newick');
 path_tree_png = fullfile(path_output, 'tree.png');
 
 % load microsatellite mutation transition table
-% mark it as global varaible so that it can be accessed from eSTGt
-global ms_mutation_transition_prob;
+% global varaible so that it can be accessed from eSTGt
 load('ms_mutation_transition_prob');
 
 % parse eSTGt rules from the program file
