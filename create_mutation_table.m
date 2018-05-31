@@ -1,4 +1,4 @@
-function [mutation_table] = create_mutation_table(run, num_of_ms_loci, path_mutation_table)
+function [mutation_table] = create_mutation_table(run, num_of_ms_loci, ms_repeat_lengths)
 
 % get the indexes of the leaves by extracting the last row of the LiveNodes
 leaves_idx = run.LiveNodes{end};
@@ -14,7 +14,10 @@ for col = 1:num_of_ms_loci
     for row = 1:length(leaves_idx)
         
         leaf_id = leaves_idx(row);
-        mutation_table(row, col) = run.Nodes{1,1}(leaf_id).InternalStates.MS(col);
+        
+        % use idx to get the actual ms repeat length
+        ms_repeat_length_idx = run.Nodes{1,1}(leaf_id).InternalStates.MS(col);
+        mutation_table(row, col) = ms_repeat_lengths(ms_repeat_length_idx);
        
     end
     
@@ -36,12 +39,3 @@ mutation_table = array2table(...
 % this will allow to do `mutation_table_full.Cells`
 % this will set (0,0) to `Cells` when outputted to a file
 mutation_table.Properties.DimensionNames{1} = 'Cells';
-
-% write to a file
-writetable(...
-    mutation_table, ...
-    path_mutation_table, ...
-    'WriteVariableNames', true, ...
-    'WriteRowNames', true, ...
-    'Delimiter', 'tab' ...
-);
