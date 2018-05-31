@@ -4,12 +4,12 @@ function [new_mutation_table] = convert_to_mutation_table_with_header(run, mutat
 leaves_idx = run.LiveNodes{end};
 
 % get number of microsatellite loci
-num_of_ms_loci = size(mutation_table, 2);
+num_of_ms_loci = size(mutation_table, 1);
 
 % create a row/column header for mutation table
-column_header = 'LOC_' + string(1:num_of_ms_loci);
-column_header = cellstr(column_header);
-row_header = { run.Nodes{1}(leaves_idx).Name };
+row_header = 'LOC_' + string(1:num_of_ms_loci);
+row_header = cellstr(row_header);
+column_header = { run.Nodes{1}(leaves_idx).Name };
 
 % create a mutation table with column header, row header
 new_mutation_table = array2table(...

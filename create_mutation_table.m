@@ -4,19 +4,19 @@ function [mutation_table] = create_mutation_table(run, num_of_ms_loci, ms_repeat
 leaves_idx = run.LiveNodes{end};
 
 % create a mutation table
-% row: cell ID
-% column: ms ID
+% row: ms_id
+% column: cell ID
 % cell: ms repeat length
-mutation_table = NaN( length(leaves_idx), num_of_ms_loci );
+mutation_table = NaN( num_of_ms_loci, length(leaves_idx) );
 
-for col = 1:num_of_ms_loci
+for col = 1:length(leaves_idx)
         
-    for row = 1:length(leaves_idx)
+    for row = 1:num_of_ms_loci
         
-        leaf_id = leaves_idx(row);
+        leaf_id = leaves_idx(col);
         
         % use idx to get the actual ms repeat length
-        ms_repeat_length_idx = run.Nodes{1,1}(leaf_id).InternalStates.MS(col);
+        ms_repeat_length_idx = run.Nodes{1,1}(leaf_id).InternalStates.MS(row);
         mutation_table(row, col) = ms_repeat_lengths(ms_repeat_length_idx);
        
     end

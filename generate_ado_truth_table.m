@@ -9,6 +9,6 @@ P = dropout_prob.P(sample_idx);
 ms_loci_idx = randi([1 length(dropout_prob.Q)], 1, num_of_ms_loci);
 Q = dropout_prob.Q(ms_loci_idx);
 
-threshold = rand(num_of_samples, num_of_ms_loci);
-signal_prob = P'*Q;
+threshold = rand(num_of_ms_loci, num_of_samples);
+signal_prob = Q'*P;
 ado_truth_table = signal_prob < threshold;

@@ -63,8 +63,8 @@ mutation_table = create_mutation_table(...
 pretty_print(my_run, mutation_table);
 
 % get number of samples, number of microsatellite loci
-num_of_samples = size(mutation_table, 1);
-num_of_ms_loci = size(mutation_table, 2);
+num_of_ms_loci = size(mutation_table, 1);
+num_of_samples = size(mutation_table, 2);
 
 % mutation noise threshold
 mutation_noise_threshold = 0.00194622849;
