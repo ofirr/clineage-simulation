@@ -4,10 +4,15 @@
 		3
 	</SimTime>
 	<Seed>
-		562586
+		875887
 	</Seed>
 </ExecParams>
+<!-- Seeds
 
+    682498
+    875887 
+
+-->
 <FunHandleName> update_rules </FunHandleName>
 <Rule>
 	<Prod>
