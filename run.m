@@ -18,8 +18,8 @@ end
 
 % construct path for mutation table, newick, and png
 path_mutation_table = fullfile(path_output, 'mutation_table.txt');
-path_newick = fullfile(path_output, 'tree.newick');
-path_tree_png = fullfile(path_output, 'tree.png');
+path_newick = fullfile(path_output, 'simulation.newick');
+path_tree_png = fullfile(path_output, 'simulation.png');
 
 %% simulation
 
