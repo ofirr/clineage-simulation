@@ -8,7 +8,10 @@ T = generateTree(rules, my_run.Nodes, root_node, my_run.NameInds, my_run.Name);
 
 % save as newtick
 phytree_obj = T.tree;
-phytreewrite(path_newick, phytree_obj)
+
+s = reroot(phytree_obj, getbyname(phytree_obj, root_node.Name, 'Exact', true));
+
+phytreewrite(path_newick, s, 'Distances', 'false');
 
 % make distinguishable colors
 colors = distinguishable_colors(100, 'w');
