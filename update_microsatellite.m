@@ -6,9 +6,25 @@ function [ newMS ] = update_microsatellite( MS )
     % access to microsatellite mutation transition table
     global ms_mutation_transition_prob;
     
+    % check if MS has all repeat number -1, which means it requires
+    % reinitialization
+    if sum( MS ~= -1 ) == 0   
+        
+        % access to om6 microsatellite ids and repeat numbers read
+        global om6_ms;
+        
+        % reinitialize using the ms repeat numbers
+        MS = repmat(om6_ms(1:length(MS), 2)', 1);        
+        
+    end
+    
     for i = 1:length(MS)
-       
-        probs = ms_mutation_transition_prob(MS(i), :);
+
+        try
+            probs = ms_mutation_transition_prob(MS(i), :);
+        catch
+            fprintf("error: %d\n", i);
+        end        
         
         %fixme: with rand_seed, barely changes
         new_idx = datasample(...
