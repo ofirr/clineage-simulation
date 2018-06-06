@@ -1,8 +1,8 @@
-function [new_mutation_table] = convert_to_mutation_table_with_header(run, mutation_table, has_root)
+function [new_mutation_table] = convert_to_mutation_table_for_tmc(run, mutation_table, has_root)
 
 %{
 e.g.
-names	Run1_C_14	Run1_C_16	Run1_C_17	Run1_C_18	Run1_C_20	Run1_C_22	Run1_C_24	Run1_C_25	Run1_C_26	Run1_C_27	Run1_C_28	Run1_C_29	Run1_C_31	Run1_C_33	Run1_C_34	Run1_C_36	Run1_C_38	Run1_C_39	Run1_C_40	Run1_C_41	Run1_C_42	Run1_C_43	Root
+names	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	Root
 LOC_1	NaN	24	24	NaN	25	23	23	NaN	NaN	NaN	NaN	23	24	24	24	NaN	NaN	NaN	NaN	NaN	24	26	19
 LOC_2	NaN	31	27	NaN	25	NaN	24	NaN	NaN	NaN	NaN	25	NaN	25	29	NaN	28	NaN	NaN	26	27	NaN	20
 LOC_3	12	13	13	NaN	11	NaN	11	NaN	NaN	NaN	12	12	12	11	12	12	NaN	12	NaN	11	12	12	7
@@ -21,24 +21,40 @@ leaves_idx = run.LiveNodes{end};
 % get number of microsatellite loci
 num_of_ms_loci = size(mutation_table, 1);
 
+% get number of cells (without root cell)
+num_of_cells = length( { run.Nodes{1}(leaves_idx).Name } );
+
+% num of rows in the table = header + num of ms loci
+num_of_rows = num_of_ms_loci + 1;
+
+% num of columns in the table = header + num of cells
+num_of_cols = num_of_cells + 1;
+if has_root == true
+    num_of_cols = num_of_cols + 1;
+end
+
+% initialize
+new_mutation_table = cell( num_of_rows, num_of_cols );
+
 % create row header for mutation table
-row_header = 'LOC_' + string(1:num_of_ms_loci);
-row_header = cellstr(row_header);
+ms_loci_names = 'LOC_' + string(1:num_of_ms_loci);
+ms_loci_names = cellstr(ms_loci_names)';
 
 % create column header for mutation table
-column_header = { run.Nodes{1}(leaves_idx).Name };
+cell_names = { run.Nodes{1}(leaves_idx).Name };
+cell_numeric_ids = num2cell( 1:size(cell_names, 2) );
 
 if has_root == true
     % add root cell at the end of the column
-    column_header{1, size(column_header, 2) + 1} = 'Root';
+    cell_names{1, size(cell_names, 2) + 1} = 'Root';
+    cell_numeric_ids{1, size(cell_numeric_ids, 2) + 1} = 'Root';
 end
 
-% create a mutation table with column header, row header
-new_mutation_table = array2table(...
-    mutation_table, ...
-    'VariableNames', column_header, ...
-    'RowNames', row_header ...
-);
+% TMC_CLI expects this string
+new_mutation_table(1, 1) = {'names'};
 
-% set dimension name for mutation table
-new_mutation_table.Properties.DimensionNames{1} = 'names';
+% insert cell names in the first row
+% insert ms loci names in the first column
+new_mutation_table(1, 2:end) = cell_numeric_ids;
+new_mutation_table(2:end, 1) = ms_loci_names;
+new_mutation_table(2:end, 2:end) = num2cell(mutation_table);
