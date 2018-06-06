@@ -30,7 +30,7 @@ column_header = { run.Nodes{1}(leaves_idx).Name };
 
 if has_root == true
     % add root cell at the end of the column
-    column_header{1, size(column_header, 2) + 1} = 'Root';
+    column_header{1, size(column_header, 2) + 1} = 'root';
 end
 
 % create a mutation table with column header, row header

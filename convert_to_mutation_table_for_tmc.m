@@ -46,8 +46,8 @@ cell_numeric_ids = num2cell( 1:size(cell_names, 2) );
 
 if has_root == true
     % add root cell at the end of the column
-    cell_names{1, size(cell_names, 2) + 1} = 'Root';
-    cell_numeric_ids{1, size(cell_numeric_ids, 2) + 1} = 'Root';
+    cell_names{1, size(cell_names, 2) + 1} = 'root';
+    cell_numeric_ids{1, size(cell_numeric_ids, 2) + 1} = 'root';
 end
 
 % TMC_CLI expects this string
@@ -55,6 +55,6 @@ new_mutation_table(1, 1) = {'names'};
 
 % insert cell names in the first row
 % insert ms loci names in the first column
-new_mutation_table(1, 2:end) = cell_numeric_ids;
+new_mutation_table(1, 2:end) = cell_names;
 new_mutation_table(2:end, 1) = ms_loci_names;
 new_mutation_table(2:end, 2:end) = num2cell(mutation_table);
