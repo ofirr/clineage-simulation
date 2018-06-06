@@ -27,8 +27,8 @@ path_tree_png = fullfile(path_output, 'simulation.png');
 global simul_options;
 
 simul_options.add_mutation = true;
-simul_options.add_ado = false;
-simul_options.add_noise = false;
+simul_options.add_ado = true;
+simul_options.add_noise = true;
 
 %% simulation
 
