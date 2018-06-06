@@ -16,8 +16,8 @@ for col = 1:length(leaves_idx)
         leaf_id = leaves_idx(col);
         
         % use idx to get the actual ms repeat length
-        ms_repeat_length_idx = run.Nodes{1,1}(leaf_id).InternalStates.MS(row);
-        mutation_table(row, col) = ms_repeat_lengths(ms_repeat_length_idx);
+        ms_repeat_length = run.Nodes{1,1}(leaf_id).InternalStates.MS(row);
+        mutation_table(row, col) = ms_repeat_length;
        
     end
     
