@@ -6,7 +6,8 @@ clc;
 %% initialize
 
 % path to eSTGt
-addpath('C:\Users\chun\projects\eSTGt\eSTGt');
+%addpath('C:\Users\chun\projects\eSTGt\eSTGt');
+addpath('/Users/dchun/projects/eSTGt/eSTGt/');
 
 % set output path
 path_output = './outputs';
@@ -21,11 +22,20 @@ path_mutation_table = fullfile(path_output, 'mutation_table.txt');
 path_newick = fullfile(path_output, 'simulation.newick');
 path_tree_png = fullfile(path_output, 'simulation.png');
 
+%% options
+
+global simul_options;
+
+simul_options.add_mutation = true;
+simul_options.add_ado = false;
+simul_options.add_noise = false;
+
 %% simulation
 
 % load microsatellite mutation transition table
 % declare as global variable so that it can be accessed from eSTGt
 global ms_mutation_transition_prob;
+global ms_repeat_lengths;
 load('ms_mutation_transition_prob');
 
 % load om6 microsatellite ids and repeat numbers
@@ -83,36 +93,44 @@ mutation_table = create_mutation_table(...
 num_of_ms_loci = size(mutation_table, 1);
 num_of_samples = size(mutation_table, 2);
 
-% mutation noise threshold
-mutation_noise_threshold = 0.00194622849;
+if simul_options.add_noise
+    
+    % mutation noise threshold
+    mutation_noise_threshold = 0.00194622849;
 
-% generate mutation noise table
-%  0: don't change
-%  1: increment microsatellite repeat length by 1
-% -1: decrement microsatellite repeat length by 1
-mutation_noise_table = generate_mutation_noise_table(...
-    num_of_samples, ...
-    num_of_ms_loci, ...
-    mutation_noise_threshold ...
-);
+    % generate mutation noise table
+    %  0: don't change
+    %  1: increment microsatellite repeat length by 1
+    % -1: decrement microsatellite repeat length by 1
+    mutation_noise_table = generate_mutation_noise_table(...
+        num_of_samples, ...
+        num_of_ms_loci, ...
+        mutation_noise_threshold ...
+    );
 
-% add mutation noises
-mutation_table = mutation_table + mutation_noise_table;
+    % add mutation noises
+    mutation_table = mutation_table + mutation_noise_table;
 
-% load allelic dropout probability table
-load('allelic_dropout_prob');
+end
 
-% get allelic dropout truth table
-% 0: don't drop, 1: drop
-ado_truth_table = generate_ado_truth_table(...
-    num_of_samples, ...
-    num_of_ms_loci, ...
-    Dropout ...
-);
+if simul_options.add_ado
+    
+    % load allelic dropout probability table
+    load('allelic_dropout_prob');
 
-% apply allelic dropout to the mutation table
-% dropped-out will be marked as NaN
-mutation_table(ado_truth_table) = NaN;
+    % get allelic dropout truth table
+    % 0: don't drop, 1: drop
+    ado_truth_table = generate_ado_truth_table(...
+        num_of_samples, ...
+        num_of_ms_loci, ...
+        Dropout ...
+    );
+
+    % apply allelic dropout to the mutation table
+    % dropped-out will be marked as NaN
+    mutation_table(ado_truth_table) = NaN;
+
+end
 
 % add root cell
 has_root = true;
