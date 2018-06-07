@@ -8,4 +8,4 @@ run `prepare.m`.
 
 Fixme: currently, eSTGt must reside in `C:\Users\chun\projects\eSTGt\eSTGt`.
 
-run `run.m`.
+run `main.m`.
