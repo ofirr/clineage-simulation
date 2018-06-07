@@ -5,15 +5,15 @@
 - CLineage
 - Python 3+
 - MATLAB 2017
-- eSTGt 1.1
-- TreeCmp v2.0
+- [eSTGt](https://github.com/hisplan/eSTGt) 1.1
+- [TreeCmp](https://eti.pg.edu.pl/treecmp/index.html) v2.0
 - TMC
 
 ## Installation
 
 ### TreeCmp
 
-This will download and install [TreeCmp](https://eti.pg.edu.pl/treecmp/index.html) v2.0 which is needed to obtain various metrics for tree comparison:
+This will download and install TreeCmp v2.0 which is needed to obtain various metrics for tree comparison:
 
 ```bash
 $ ./install.sh
