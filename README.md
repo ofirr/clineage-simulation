@@ -42,6 +42,16 @@ path_matlab='/usr/wisdom/matlabR2017a/bin'
 path_eSTGt='~/projects/eSTGt/eSTGt'
 ```
 
+## Run End-to-End
+
+1. Simulation
+2. Reconstruction
+3. Comparison
+
+```bash
+$ ./run-end-to-end.sh
+```
+
 ## Simulation
 
 ```bash
