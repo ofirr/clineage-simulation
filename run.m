@@ -6,8 +6,8 @@ clc;
 %% initialize
 
 % path to eSTGt
-%addpath('C:\Users\chun\projects\eSTGt\eSTGt');
-addpath('/Users/dchun/projects/eSTGt/eSTGt/');
+addpath('C:\Users\chun\projects\eSTGt\eSTGt');
+%addpath('/Users/dchun/projects/eSTGt/eSTGt/');
 
 % set output path
 path_output = './outputs';
