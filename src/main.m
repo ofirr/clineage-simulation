@@ -6,11 +6,14 @@ clc;
 %% initialize
 
 % path to eSTGt
-addpath('C:\Users\chun\projects\eSTGt\eSTGt');
-%addpath('/Users/dchun/projects/eSTGt/eSTGt/');
+% uncomment if you want to run this from the desktop
+%{
+    addpath('C:\Users\chun\projects\eSTGt\eSTGt');
+    addpath('/Users/dchun/projects/eSTGt/eSTGt/');
+%}
 
 % set output path
-path_output = './outputs';
+path_output = '../outputs';
 
 % create output path if not exists already
 if ~exist(path_output, 'dir')
