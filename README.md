@@ -2,10 +2,12 @@
 
 ## Prerequisites
 
+- CLineage
 - Python 3+
 - MATLAB 2017
 - eSTGt 1.1
 - TreeCmp v2.0
+- TMC
 
 ## Installation
 
@@ -46,11 +48,24 @@ path_eSTGt='~/projects/eSTGt/eSTGt'
 $ ./run.sh
 ```
 
+This will generate:
+
+- `mutation_table.txt`
+- `simulation.newick`
+- `simulation.png`
+
 ## Tree Reconstruction
 
 ```bash
 $ python reconstruct.py
 ```
+
+This will generate:
+
+- `reconstructed.newick`
+- `reconstructed.ascii_plot.txt`
+- `sagis_triplets.log`
+- `simulation.asicc_plot.txt`
 
 ## For Developers
 
