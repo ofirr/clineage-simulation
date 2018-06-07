@@ -54,7 +54,7 @@ run_sagis_triplets(
     loci_filter='ncnr')
 
 # fixme: would be nice if we can do this when calling `run_sagis_triplets`
-os.rename("treeReconstruction.log", os.path.join(work_path, "sagis_triplets.log"))
+os.rename("treeReconstruction.log", os.path.join(work_path, "tmc.log"))
 
 # load reconstructed tree
 tree_reconstructed = dendropy.Tree.get_from_path(
