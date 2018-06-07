@@ -47,6 +47,7 @@ path_eSTGt='~/projects/eSTGt/eSTGt'
 1. Simulation
 2. Reconstruction
 3. Comparison
+4. Report
 
 ```bash
 $ ./run-end-to-end.sh
@@ -86,6 +87,12 @@ $ ./compare.sh
 This will generate:
 
 - `scores.out`
+
+## Report
+
+```bash
+$ python report.py
+```
 
 ## For Developers
 
