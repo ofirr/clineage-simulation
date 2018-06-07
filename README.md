@@ -64,7 +64,7 @@ This will generate:
 
 - `reconstructed.newick`
 - `reconstructed.ascii_plot.txt`
-- `sagis_triplets.log`
+- `tmc.log`
 - `simulation.asicc_plot.txt`
 
 ## Tree Comparison
