@@ -1,4 +1,4 @@
-function [mutation_table] = create_mutation_table(run, num_of_ms_loci, ms_repeat_lengths)
+function [mutation_table] = create_mutation_table(run, num_of_ms_loci)
 
 % get the indexes of the leaves by extracting the last row of the LiveNodes
 leaves_idx = run.LiveNodes{end};
