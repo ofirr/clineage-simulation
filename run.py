@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/home/dcsoft/clineage/")
+sys.path.append("/home/chun/clineage/")
 import clineage.wsgi
 
 import os
@@ -10,7 +10,7 @@ from sequencing.calling.queries.mutation_maps import transpose_dict
 
 from sequencing.phylo.triplets_wrapper import get_cells_and_root, parse_mutations_table, run_sagis_triplets, run_sagis_triplets_binary
 
-work_path = '/home/chun/s/tmp/TreeCmp'
+work_path = './outputs'
 
 # construct path for input mutation table
 path_mutation_table =  os.path.join(work_path, 'mutation_table.txt')
