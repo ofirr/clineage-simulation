@@ -37,7 +37,7 @@ simul_options.add_noise = true;
 % load microsatellite mutation transition table
 % declare as global variable so that it can be accessed from eSTGt
 global ms_mutation_transition_prob;
-global ms_repeat_lengths;
+global ms_idx_rptlen_mapping;
 load('ms_mutation_transition_prob');
 
 % load om6 microsatellite ids and repeat numbers
@@ -48,8 +48,8 @@ om6_ms = csvread('om6_ms_only_legit_ac.csv', 1, 0);
 % convert from actual ms repeat lengths to indexes
 % this is required by ms_mutation_transition_prob
 % e.g. repeat length 5 is mapped to index 1
-for idx1 = 1:length(ms_repeat_lengths)
-    idx2 = find(om6_ms(:, 2)' == ms_repeat_lengths(idx1));
+for idx1 = 1:length(ms_idx_rptlen_mapping)
+    idx2 = find(om6_ms(:, 2)' == ms_idx_rptlen_mapping(idx1));
     om6_ms(idx2, 3) = idx1;
 end
 

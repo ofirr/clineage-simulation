@@ -44,10 +44,12 @@ ms_mutation_transition_prob = [
     3.62E-18	1.50E-17	6.19E-17	2.56E-16	1.06E-15	4.38E-15	1.81E-14	7.49E-14	3.10E-13	1.28E-12	5.30E-12	2.19E-11	9.07E-11	3.75E-10	1.55E-09	6.42E-09	2.65E-08	1.10E-07	4.54E-07	1.88E-06	7.77E-06	3.21E-05	0.000132868	0.000549558	0.002273048	0.009401634	0.038886436	0.160839588	0.665254413	0.122620089
 ];
 
-ms_repeat_lengths = [5:34];
+% mapping between index and ms repeat length
+% e.g. repeat length 5 is mapped to index 1
+ms_idx_rptlen_mapping = [5:34];
 
 % save as mat file
 save(...
     'ms_mutation_transition_prob.mat', ...
-    'ms_mutation_transition_prob', 'ms_repeat_lengths' ...
+    'ms_mutation_transition_prob', 'ms_idx_rptlen_mapping' ...
 );

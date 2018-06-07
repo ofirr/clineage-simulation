@@ -10,7 +10,7 @@ function [ newMS ] = update_microsatellite( MS )
     global ms_mutation_transition_prob;
     
     % mapping between index and ms repeat length
-    global ms_repeat_lengths;
+    global ms_idx_rptlen_mapping;
     
     % check if MS has all repeat number -1, which means it requires
     % reinitialization
@@ -34,7 +34,7 @@ function [ newMS ] = update_microsatellite( MS )
 
         try
             % convert ms repeat length to index
-            idx = find(ms_repeat_lengths == MS(i));
+            idx = find(ms_idx_rptlen_mapping == MS(i));
             
             % using the index, get probability distribution
             probs = ms_mutation_transition_prob(idx, :);
@@ -54,7 +54,7 @@ function [ newMS ] = update_microsatellite( MS )
         );
         
         % convert index to ms repeat length
-        newMS(i) = ms_repeat_lengths(new_idx);
+        newMS(i) = ms_idx_rptlen_mapping(new_idx);
         
     end
 
