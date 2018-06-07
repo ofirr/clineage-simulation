@@ -8,6 +8,7 @@ metrics_r="mc rc ns tt mp mt co"
 # metrics for unrooted trees
 metrics_ur="ms rf pd qt um"
 
+# execute TreeCmp
 java -jar ${treecmp} \
   -r ./outputs/simulation.newick \
   -d ${metrics_r} \

@@ -10,6 +10,7 @@ from sequencing.calling.queries.mutation_maps import transpose_dict
 
 from sequencing.phylo.triplets_wrapper import get_cells_and_root, parse_mutations_table, run_sagis_triplets, run_sagis_triplets_binary
 
+# set work path
 work_path = './outputs'
 
 # construct path for input mutation table
@@ -17,7 +18,8 @@ path_mutation_table =  os.path.join(work_path, 'mutation_table.txt')
 
 # parse mutation table
 calling = parse_mutations_table(path_mutation_table, inverse=False)
-# Verify the presence of a root cell in the input data.
+
+# verify the presence of a root cell in the input data.
 possible_roots = [cell for cell in calling if 'root' in cell]
 assert len(possible_roots) == 1
 root_label = possible_roots[0]
@@ -54,6 +56,7 @@ run_sagis_triplets(
 # fixme: would be nice if we can do this when calling `run_sagis_triplets`
 os.rename("treeReconstruction.log", os.path.join(work_path, "sagis_triplets.log"))
 
+# load reconstructed tree
 tree_reconstructed = dendropy.Tree.get_from_path(
     triplets_tree_path,
     "newick"
@@ -63,6 +66,7 @@ tree_reconstructed = dendropy.Tree.get_from_path(
 # root_node = tree.find_node_with_taxon_label('root')
 # tree.prune_subtree(root_node);
 
+# write ascii plot for reconstructed tree
 with open(os.path.join(work_path, 'reconstructed.ascii_plot.txt'), 'wt') as fout:
     fout.write(tree_reconstructed.as_ascii_plot())
     fout.write('\n')
@@ -76,7 +80,7 @@ tree_simulation = dendropy.Tree.get_from_path(
     "newick"
 )
 
+# write ascii plot for simulation tree
 with open(os.path.join(work_path, 'simulation.ascii_plot.txt'), 'wt') as fout:
     fout.write(tree_simulation.as_ascii_plot())
     fout.write('\n')
-

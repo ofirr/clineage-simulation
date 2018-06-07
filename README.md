@@ -67,6 +67,16 @@ This will generate:
 - `sagis_triplets.log`
 - `simulation.asicc_plot.txt`
 
+## Tree Comparison
+
+```bash
+$ ./compare.sh
+```
+
+This will generate:
+
+- `scores.out`
+
 ## For Developers
 
 ### Updating Mutation Transition Table
