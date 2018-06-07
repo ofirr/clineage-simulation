@@ -1,7 +1,6 @@
 %% clean up from any previous work
 close all;
 clear;
-clc;
 
 %% initialize
 
