@@ -99,3 +99,7 @@ $ python report.py
 ### Updating Mutation Transition Table
 
 Update and run `./src/prepare.m`.
+
+### To Do
+
+- maybe decouple from clineage to be runnable totally independently.
