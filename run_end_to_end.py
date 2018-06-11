@@ -46,18 +46,15 @@ def run_matlab_code(path_matlab, matlab_code):
     run_command(cmd)
 
 
-def generate_tree_ascii_plot(path_output, newick_filename):
+def generate_tree_ascii_plot(path_newick):
 
     import dendropy
 
     # read simulation.newick
-    tree = dendropy.Tree.get_from_path(
-        os.path.join(path_output, newick_filename),
-        "newick"
-    )
+    tree = dendropy.Tree.get_from_path(path_newick, "newick")
 
     # write ascii plot for simulation tree
-    with open(os.path.join(path_output, '{}.ascii-plot.txt'.format(newick_filename)), 'wt') as fout:
+    with open('{}.ascii-plot.txt'.format(path_newick), 'wt') as fout:
         fout.write(tree.as_ascii_plot())
         fout.write('\n')
 
@@ -169,11 +166,11 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
         triplets_tree_path, schema='newick', unquoted_underscores=True)
 
 
-def plot_recontructed_tree(path_matlab, path_simulation_output, newick_filename, png_filename):
+def plot_recontructed_tree(path_matlab, path_newick, path_png):
 
     # run MATLAB simulation
-    matlab_code = "addpath('{0}', '{1}'); plot_reconstructed_tree('{2}', '{3}', '{4}'); exit;".format(
-        PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_simulation_output, newick_filename, png_filename
+    matlab_code = "addpath('{0}', '{1}'); plot_reconstructed_tree('{2}', '{3}'); exit;".format(
+        PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_newick, path_png
     )
 
     run_matlab_code(path_matlab, matlab_code)
@@ -248,28 +245,33 @@ def main():
     path_simulation_output = simulate(envs[ENV_MATLAB_KEY])
 
     # take simulation tree and make ascii plot
-    generate_tree_ascii_plot(path_simulation_output, FILE_SIMULATION_NEWICK)
+    generate_tree_ascii_plot(
+        os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK)
+    )
 
     # reconstruct based on mutation table generated from simulation
     reconstruct(path_simulation_output)
 
     # take reconstructed tree and make ascii plot
-    generate_tree_ascii_plot(path_simulation_output, FILE_RECONSTRUCTED_NEWICK)
-
-    #
-    plot_recontructed_tree(
-        envs[ENV_MATLAB_KEY],
-        path_simulation_output,
-        FILE_RECONSTRUCTED_NEWICK,
-        FILE_RECONSTRUCTED_PNG
+    generate_tree_ascii_plot(
+        os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK)
     )
 
+    # plot the reconstructed tree
+    plot_recontructed_tree(
+        envs[ENV_MATLAB_KEY],
+        os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK),
+        os.path.join(path_simulation_output, FILE_RECONSTRUCTED_PNG)
+    )
+
+    # compare simulation tree and reconstructed tree
     compare(
         os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK),
         os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK),
         os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_RAW)
     )
 
+    # report the final comparison metrics in a pretty format
     report(
         os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_RAW),
         os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_PRETTY),

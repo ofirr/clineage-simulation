@@ -1,7 +1,7 @@
-function [] = plot_reconstructed_tree(path_working, newick_filename, png_filename)
+function [] = plot_reconstructed_tree(path_newick, path_png)
 
 % read from newick file
-reconstructed_tree = phytreeread(fullfile(path_working, newick_filename));
+reconstructed_tree = phytreeread(path_newick);
 
 % plot
 plot(reconstructed_tree);
@@ -10,4 +10,4 @@ plot(reconstructed_tree);
 title('Reconstructed');
 
 % save to png
-saveas(gcf, fullfile(path_working, png_filename), 'png');
+saveas(gcf, path_png, 'png');
