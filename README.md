@@ -11,8 +11,6 @@
 
 ## Installation
 
-### TreeCmp
-
 This will download and install TreeCmp and eSTGt:
 
 ```bash
@@ -21,20 +19,15 @@ $ ./install.sh
 
 ## Configuration
 
-Open `run.sh`, find the following lines, and make necessary changes:
-
-```bash
-path_matlab='/usr/wisdom/matlabR2017a/bin'
-path_eSTGt='~/projects/eSTGt/eSTGt'
-```
-
-## Run End-to-End
-
 Use a proper config file for your environment:
 
 - `config.math102-lx.env` for math102-lx
 - `config.windows.env` for Windows
 - `config.mac.env` for Mac OS X
+
+or you can create a new `.env` file for your own environment.
+
+## Run End-to-End
 
 ```bash
 $ python run_end_to_end.py --env config.math102-lx.env --project ./analysis/tmc
