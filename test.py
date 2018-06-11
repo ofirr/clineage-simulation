@@ -3,20 +3,21 @@ import subprocess
 import json
 import argparse
 
-ENV_MATLAB_KEY = 'matlab'
+ENV_MATLAB_KEY='matlab'
 
-FILE_SIMULATION_NEWICK = 'simulation.newick'
-FILE_RECONSTRUCTED_NEWICK = 'reconstructed.newick'
-FILE_TMC_LOG = 'tmc.log'
-FILE_MUTATION_TABLE = 'mutation_table.txt'
-FILE_RECONSTRUCTED_PNG = 'reconstructed.png'
-
-CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
+FILE_SIMULATION_NEWICK='simulation.newick'
+FILE_RECONSTRUCTED_NEWICK='reconstructed.newick'
+FILE_TMC_LOG='tmc.log'
+FILE_MUTATION_TABLE='mutation_table.txt'
+FILE_RECONSTRUCTED_PNG='reconstructed.png'
+FILE_COMPARISON_METRICS='scores.out'
+CONFIG_PATH_RELATIVE_OUTPUT='pathRelativeOutput'
 
 
 PATH_ESTGT='./eSTGt/eSTGt'
 PATH_SIMULATION_LIB='./src/simulation'
 PATH_RECONSTRUCT_LIB='./src/reconstruction'
+PATH_TREECMP_BIN='./TreeCmp/bin/treeCmp.jar'
 
 def read_json_config(path):
 
@@ -155,13 +156,33 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
 
 
 def plot_recontructed_tree(path_matlab, path_simulation_output, newick_filename, png_filename):
-    
+
     # run MATLAB simulation
     matlab_code = "addpath('{0}', '{1}'); plot_reconstructed_tree('{2}', '{3}', '{4}'); exit;".format(
         PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_simulation_output, newick_filename, png_filename
     )
 
     run_matlab_code(path_matlab, matlab_code)
+
+
+def compare(path_simulation_newick, path_reconstructed_newick, path_score_output):
+
+    #  Metrics for rooted trees
+    metrics_r="mc rc ns tt mp mt co"
+
+    # metrics for unrooted trees
+    metrics_ur="ms rf pd qt um"
+
+    cmd = [
+        'java', '-jar', PATH_TREECMP_BIN,
+        '-r', path_simulation_newick,
+        '-d', metrics_r.split(' '),
+        '-i', path_reconstructed_newick,
+        '-o', path_score_output,
+        '-P', '-N', '-I'
+    ]
+
+    run_command(cmd)
 
 
 def main():
@@ -199,6 +220,12 @@ def main():
         path_simulation_output,
         FILE_RECONSTRUCTED_NEWICK,
         FILE_RECONSTRUCTED_PNG
+    )
+
+    compare(
+        os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK),
+        os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK),
+        os.path.join(path_simulation_output, FILE_COMPARISON_METRICS)
     )
 
 
