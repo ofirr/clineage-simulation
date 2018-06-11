@@ -161,7 +161,8 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
     root_node = tree_reconstructed.find_node_with_taxon_label(
         root_cell_notation
     )
-    tree_reconstructed.prune_subtree(root_node)
+    if root_node:
+        tree_reconstructed.prune_subtree(root_node)
 
     # re-save the newwick after eliminating quotes around taxa labels
     tree_reconstructed.write_to_path(
@@ -221,9 +222,9 @@ def report(path_scores_output_raw, path_scores_output_pretty):
 
     print(df_summary)
 
-    #with open(path_scores_output_pretty, 'wt') as fout:
-    #    fout.write(df_metrics.to_string());
-    #    fout.write(df_summary.to_string());
+    with open(path_scores_output_pretty, 'wt') as fout:
+        fout.write(df_metrics.to_string());
+        fout.write(df_summary.to_string());
 
 
 def main():
