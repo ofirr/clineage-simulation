@@ -200,14 +200,14 @@ def compare(path_simulation_newick, path_reconstructed_newick, path_score_output
     run_command(cmd)
 
 
-def report(path_score_output_raw, path_score_output_pretty):
+def report(path_scores_output_raw, path_scores_output_pretty):
 
     from io import StringIO
     import pandas as pd
     import os
 
     # read the first two lines that contain various metrics
-    df_metrics = pd.read_csv(path_score_output_raw, sep='\t', nrows=1)
+    df_metrics = pd.read_csv(path_scores_output_raw, sep='\t', nrows=1)
 
     # transpose and rename the column to 'metrics'
     df_metrics = df_metrics.T.rename(columns={0:'metrics'})
@@ -217,13 +217,13 @@ def report(path_score_output_raw, path_score_output_pretty):
     print()
 
     # read the summary section
-    df_summary = pd.read_csv(path_scores, sep='\t', skiprows=4)
+    df_summary = pd.read_csv(path_scores_output_raw, sep='\t', skiprows=4)
 
     print(df_summary)
 
-    with open(path_score_output_pretty, 'wt') as fout:
-        fout.write(df_metrics);
-        fout.write(df_summary);
+    #with open(path_scores_output_pretty, 'wt') as fout:
+    #    fout.write(df_metrics.to_string());
+    #    fout.write(df_summary.to_string());
 
 
 def main():
