@@ -219,7 +219,7 @@ def report(path_scores_output_raw, path_scores_output_pretty):
         fout.write(df_summary.to_string())
 
 
-def run(path_matlab, path_proejct, config_json):
+def run(path_matlab, path_project, config_json):
     "run function"
 
     # run simulation
@@ -308,5 +308,9 @@ if __name__ == "__main__":
 
         if not os.path.exists(os.path.join(params.path_project, config_json)):
             raise Exception("Unable to find {}".format(config_json))
+
+        print()
+        print("{} ########################".format(config_json))
+        print()
 
         run(envs[ENV_MATLAB_KEY], params.path_project, config_json)
