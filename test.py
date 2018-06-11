@@ -9,8 +9,14 @@ FILE_SIMULATION_NEWICK = 'simulation.newick'
 FILE_RECONSTRUCTED_NEWICK = 'reconstructed.newick'
 FILE_TMC_LOG = 'tmc.log'
 FILE_MUTATION_TABLE = 'mutation_table.txt'
+FILE_RECONSTRUCTED_PNG = 'reconstructed.png'
 
 CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
+
+
+PATH_ESTGT='./eSTGt/eSTGt'
+PATH_SIMULATION_LIB='./src/simulation'
+PATH_RECONSTRUCT_LIB='./src/reconstruction'
 
 def read_json_config(path):
 
@@ -24,6 +30,18 @@ def run_command(cmd):
     process = subprocess.Popen(cmd)
 
     process.wait()
+
+
+def run_matlab_code(path_matlab, matlab_code):
+    "run matlab script"
+
+    cmd = [
+        os.path.join(path_matlab, 'matlab'),
+        '-nodisplay', '-nosplash', '-nodesktop',
+        '-r', matlab_code
+    ]
+
+    run_command(cmd)
 
 
 def generate_tree_ascii_plot(path_output, newick_filename):
@@ -45,9 +63,6 @@ def generate_tree_ascii_plot(path_output, newick_filename):
 def simulate(path_matlab):
     "run simulation"
 
-    path_eSTGt='./eSTGt/eSTGt'
-    path_simul_lib='./src/simulation'
-
     path_working='./examples/example-01'
     path_working='./analysis/tmc'
 
@@ -55,16 +70,10 @@ def simulate(path_matlab):
 
     # run MATLAB simulation
     matlab_code = "addpath('{0}', '{1}', '{2}'); run_simul('{2}', '{3}'); exit;".format(
-        path_eSTGt, path_simul_lib, path_working, config_filename
+        PATH_ESTGT, PATH_SIMULATION_LIB, path_working, config_filename
     )
 
-    cmd = [
-        os.path.join(path_matlab, 'matlab'),
-        '-nodisplay', '-nosplash', '-nodesktop',
-        '-r', matlab_code
-    ]
-
-    run_command(cmd)
+    run_matlab_code(path_matlab, matlab_code)
 
     # read simulation configuration
     config = read_json_config(os.path.join(path_working, config_filename))
@@ -145,6 +154,16 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
     tree_reconstructed.write_to_path(triplets_tree_path, schema='newick', unquoted_underscores=True)
 
 
+def plot_recontructed_tree(path_matlab, path_simulation_output, newick_filename, png_filename):
+    
+    # run MATLAB simulation
+    matlab_code = "addpath('{0}', '{1}'); plot_reconstructed_tree('{2}', '{3}', '{4}'); exit;".format(
+        PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_simulation_output, newick_filename, png_filename
+    )
+
+    run_matlab_code(path_matlab, matlab_code)
+
+
 def main():
     "main function"
 
@@ -173,6 +192,14 @@ def main():
 
     # take reconstructed tree and make ascii plot
     generate_tree_ascii_plot(path_simulation_output, FILE_RECONSTRUCTED_NEWICK)
+
+    #
+    plot_recontructed_tree(
+        envs[ENV_MATLAB_KEY],
+        path_simulation_output,
+        FILE_RECONSTRUCTED_NEWICK,
+        FILE_RECONSTRUCTED_PNG
+    )
 
 
 if __name__ == "__main__":
