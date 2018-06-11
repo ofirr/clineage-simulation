@@ -93,6 +93,7 @@ templ = """
     <style>
         table {
             font-family: "Open Sans";
+            font-size: 20px;
         }
         .tree-img {
             width: 650px;
@@ -103,7 +104,7 @@ templ = """
 
     {% for item in items %}
     <h1>{{item.config.contents.title}} ({{item.config.filename}})</h1>
-
+    <hr/>
     <table>
     <tr>
         <td>Mutation:</td>
@@ -123,6 +124,7 @@ templ = """
     </tr>
     </table>
 
+    <h2>Mutation Table</h2>
     {{item.simulation.mutationTable}}
 
     <table>

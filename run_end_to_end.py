@@ -158,7 +158,8 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
 
     # re-save the newwick after eliminating quotes around taxa labels
     tree_reconstructed.write_to_path(
-        triplets_tree_path, schema='newick', unquoted_underscores=True)
+        triplets_tree_path, schema='newick', unquoted_underscores=True
+    )
 
 
 def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstructed_newick, path_png):
