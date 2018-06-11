@@ -1,0 +1,7 @@
+{
+    "pathRelativeOutput": "case-02",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 5
+}

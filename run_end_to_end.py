@@ -59,26 +59,21 @@ def generate_tree_ascii_plot(path_newick):
         fout.write('\n')
 
 
-def simulate(path_matlab):
+def simulate(path_matlab, path_project, config_filename):
     "run simulation"
-
-    path_working = './examples/example-01'
-    path_working = './analysis/tmc'
-
-    config_filename = 'config-01.json'
 
     # run MATLAB simulation
     matlab_code = "addpath('{0}', '{1}', '{2}'); run_simul('{2}', '{3}'); exit;".format(
-        PATH_ESTGT, PATH_SIMULATION_LIB, path_working, config_filename
+        PATH_ESTGT, PATH_SIMULATION_LIB, path_project, config_filename
     )
 
     run_matlab_code(path_matlab, matlab_code)
 
     # read simulation configuration
-    config = read_json_config(os.path.join(path_working, config_filename))
+    config = read_json_config(os.path.join(path_project, config_filename))
 
     path_simulation_output = os.path.join(
-        path_working, config[CONFIG_PATH_RELATIVE_OUTPUT]
+        path_project, config[CONFIG_PATH_RELATIVE_OUTPUT]
     )
 
     return path_simulation_output
@@ -224,25 +219,12 @@ def report(path_scores_output_raw, path_scores_output_pretty):
         fout.write(df_summary.to_string())
 
 
-def main():
-    "main function"
-
-    parser = argparse.ArgumentParser(description='run simulation')
-
-    parser.add_argument(
-        "--env",
-        action="store",
-        dest="path_config_env",
-        required=True
-    )
-
-    params = parser.parse_args()
-
-    # read environment configuration
-    envs = read_json_config(params.path_config_env)
+def run(params, envs, config_json):
+    "run function"
 
     # run simulation
-    path_simulation_output = simulate(envs[ENV_MATLAB_KEY])
+    path_simulation_output = simulate(
+        envs[ENV_MATLAB_KEY], params.path_project, config_json)
 
     # take simulation tree and make ascii plot
     generate_tree_ascii_plot(
@@ -278,6 +260,48 @@ def main():
     )
 
 
+def parse_arguments():
+
+    parser = argparse.ArgumentParser(description='run simulation')
+
+    parser.add_argument(
+        "--env",
+        action="store",
+        dest="path_env",
+        required=True
+    )
+
+    parser.add_argument(
+        "--project",
+        action="store",
+        dest="path_project",
+        required=True
+    )
+
+    parser.add_argument(
+        "--multi",
+        action="store_true",
+        dest="multi"
+    )
+
+    # parse arguments
+    params = parser.parse_args()
+
+    # read environment configuration
+    envs = read_json_config(params.path_env)
+
+    if params.multi:
+        with open(os.path.join(params.path_project, 'config.list'), 'rt') as fin:
+            config_jsons = fin.readlines()
+    else:
+        config_jsons = 'config.json'
+
+    return params, envs, config_jsons
+
+
 if __name__ == "__main__":
 
-    main()
+    params, envs, config_jsons = parse_arguments()
+
+    for config_json in config_jsons:
+        run(params, envs, config_json)
