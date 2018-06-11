@@ -1,52 +1,23 @@
 function [ Rules ] = update_rules( Rules, T, X )
 % updates rules during the transition
 
-    
-    return
+    global simul_options;
 
-    CLONE_SIZE = 1000;
-
-    for i=1:length(X)
-        Pop.(Rules.AllNames{i})=X(i);
+    for i = 1:length(X)
+        Pop.( Rules.AllNames{i} ) = X(i);
     end
 
-    for i=1:length(Rules.StartNames)
-        I.(Rules.StartNames{i})=i;
+    for i = 1:length(Rules.StartNames)
+        I.( Rules.StartNames{i} ) = i;
     end
 
-    disp(Pop);
-    disp("-------------------");
-
-    %disp(Rules.Prod{1}.InternalStates.('Gen'));
-    %disp(Rules.Prod{1});
-    %disp(Rules.Prod{1}.InternalStatesNames{2});
-    
-
-    % if simTime > 2
-    if T > 2
-
-        % switch
-        Rules.Prod{I.P}.Rate = rand();
-        Rules.Prod{I.P}.Probs = [0.1 0.1 0.8];
-
+    % early stop if the population of C is greater than `earlyStopPopulation`
+    % early stop only if `earlyStopPopulation` is defined and not zero
+    if isfield(simul_options, 'earlyStopPopulation')
+        if simul_options.earlyStopPopulation ~= 0
+            if Pop.C > simul_options.earlyStopPopulation
+                Rules.Prod{I.C}.Rate = 0;
+            end
+        end
     end
-
-    if Pop.M2 >= 50
-        Rules.Prod{I.M2}.Rate = 0.0;
-        Rules.Prod{I.M2}.Probs = [0.01 0];
-    end
-
-    if Pop.M >= 50
-        Rules.Prod{I.M}.Rate = 0.0;
-        Rules.Prod{I.M}.Probs = [0.01];
-    end    
-
-    if T > 20
-        Rules.Prod{I.P2}.Rate = rand();
-        Rules.Prod{I.P2}.Probs = [0 0];
-
-        Rules.Prod{I.CTC}.Probs = [0 0.1 0.9];
-    end
-
-    % disp(Nodes);
 end
