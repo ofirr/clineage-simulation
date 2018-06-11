@@ -25,7 +25,9 @@ MAST_toYuleAvg                    0.0
 MAST_toUnifAvg                    0.0
 CopheneticL2Metric                0.0
 CopheneticL2Metric_toYuleAvg      0.0
-CopheneticL2Metric_toUnifAvg      0.0                 Name  Avg  Std  Min  Max  Count
+CopheneticL2Metric_toUnifAvg      0.0
+
+                 Name  Avg  Std  Min  Max  Count
 0     MatchingCluster  0.0  0.0  0.0  0.0      1
 1         R-F_Cluster  0.0  0.0  0.0  0.0      1
 2       NodalSplitted  0.0  0.0  0.0  0.0      1

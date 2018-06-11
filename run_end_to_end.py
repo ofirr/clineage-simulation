@@ -218,7 +218,7 @@ def report(path_scores_output_raw, path_scores_output_pretty):
         fout.write(df_metrics.to_string())
         fout.write('\n')
         fout.write('\n')
-        fout.write(df_summary.to_string())
+        fout.write(df_summary.to_string(index_names=False))
         fout.write('\n')
 
 
