@@ -308,6 +308,9 @@ if __name__ == "__main__":
 
     for config_json in config_jsons:
 
+        if not config_json:
+            continue
+
         if not os.path.exists(os.path.join(params.path_project, config_json)):
             raise Exception("Unable to find {}".format(config_json))
 

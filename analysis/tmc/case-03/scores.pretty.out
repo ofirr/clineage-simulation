@@ -2,9 +2,9 @@
 No                                1.0
 RefTree                           1.0
 Tree                              1.0
-RefTree_taxa                      5.0
-Tree_taxa                         5.0
-Common_taxa                       5.0
+RefTree_taxa                      6.0
+Tree_taxa                         6.0
+Common_taxa                       6.0
 MatchingCluster                   0.0
 MatchingCluster_toYuleAvg         0.0
 MatchingCluster_toUnifAvg         0.0
