@@ -10,4 +10,4 @@ addpath('..')
 addpath('../../../analysis/tmc/')
 
 % run_simul('../../../examples/example-01', 'config.json')
-run_simul('../../../analysis/tmc', 'config-04.json')
+run_simul('../../../analysis/tmc', 'config-07.json')
