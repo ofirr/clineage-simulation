@@ -216,7 +216,10 @@ def report(path_scores_output_raw, path_scores_output_pretty):
 
     with open(path_scores_output_pretty, 'wt') as fout:
         fout.write(df_metrics.to_string())
+        fout.write('\n')
+        fout.write('\n')
         fout.write(df_summary.to_string())
+        fout.write('\n')
 
 
 def run(path_matlab, path_project, config_json):
