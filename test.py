@@ -137,9 +137,9 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
         "newick"
     )
 
-    # prune root if necessary
-    # root_node = tree.find_node_with_taxon_label('root')
-    # tree.prune_subtree(root_node);
+    # prune root
+    root_node = tree_reconstructed.find_node_with_taxon_label(root_cell_notation)
+    tree_reconstructed.prune_subtree(root_node);
 
     # re-save the newwick after eliminating quotes around taxa labels
     tree_reconstructed.write_to_path(triplets_tree_path, schema='newick', unquoted_underscores=True)
