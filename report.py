@@ -95,14 +95,14 @@ templ = """
             font-family: "Open Sans";
         }
         .tree-img {
-            width: 700px;
+            width: 650px;
         }
     </style>
 </head>
 <body>
 
     {% for item in items %}
-    <h1>{{item.config.filename}}</h1>
+    <h1>{{item.config.contents.title}} ({{item.config.filename}})</h1>
 
     <table>
     <tr>

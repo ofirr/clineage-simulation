@@ -1,4 +1,5 @@
 {
+    "title": "Example 01",
     "pathRelativeOutput": "outputs",
     "addMutations": true,
     "addAllelicDropOuts": true,
