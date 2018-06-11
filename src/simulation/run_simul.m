@@ -1,4 +1,4 @@
-function [] = run_simul(path_config)
+function [] = run_simul(path_working, config_json)
 %% options
 
 % `path_config` must be set from the calling script
@@ -7,7 +7,7 @@ function [] = run_simul(path_config)
 global simul_options;
 
 % load config.json and store into `simul_options`
-simul_options = jsondecode(fileread(path_config));
+simul_options = jsondecode(fileread(fullfile(path_working, config_json)));
 
 %% clean up from any previous work
 close all;
@@ -22,7 +22,7 @@ close all;
 %}
 
 % set output path
-path_output = simul_options.pathOutput;
+path_output = fullfile(path_working, simul_options.pathRelativeOutput);
 
 % create output path if not exists already
 if ~exist(path_output, 'dir')

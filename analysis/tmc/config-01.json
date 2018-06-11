@@ -1,5 +1,5 @@
 {
-    "pathOutput": "./outputs/",
+    "pathRelativeOutput": "case-01",
     "addMutations": true,
     "addAllelicDropOuts": false,
     "addNoises": false,

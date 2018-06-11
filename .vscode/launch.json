@@ -18,7 +18,10 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${file}"
+            "program": "${file}",
+            "args": [
+                "--env", "config.windows.env"
+            ]
         },
         {
             "name": "Python: Attach",
