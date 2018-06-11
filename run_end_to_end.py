@@ -219,12 +219,13 @@ def report(path_scores_output_raw, path_scores_output_pretty):
         fout.write(df_summary.to_string())
 
 
-def run(params, envs, config_json):
+def run(path_matlab, path_proejct, config_json):
     "run function"
 
     # run simulation
     path_simulation_output = simulate(
-        envs[ENV_MATLAB_KEY], params.path_project, config_json)
+        path_matlab, path_project, config_json
+    )
 
     # take simulation tree and make ascii plot
     generate_tree_ascii_plot(
@@ -292,7 +293,7 @@ def parse_arguments():
 
     if params.multi:
         with open(os.path.join(params.path_project, 'config.list'), 'rt') as fin:
-            config_jsons = fin.readlines()
+            config_jsons = fin.read().splitlines()
     else:
         config_jsons = ['config.json']
 
@@ -305,7 +306,7 @@ if __name__ == "__main__":
 
     for config_json in config_jsons:
 
-        if os.path.exists(os.path.join(params.path_project, config_json)) == False:
+        if not os.path.exists(os.path.join(params.path_project, config_json)):
             raise Exception("Unable to find {}".format(config_json))
-        
-        run(params, envs, config_json)
+
+        run(envs[ENV_MATLAB_KEY], params.path_project, config_json)
