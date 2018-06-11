@@ -3,21 +3,22 @@ import subprocess
 import json
 import argparse
 
-ENV_MATLAB_KEY='matlab'
+ENV_MATLAB_KEY = 'matlab'
+CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
 
-FILE_SIMULATION_NEWICK='simulation.newick'
-FILE_RECONSTRUCTED_NEWICK='reconstructed.newick'
-FILE_TMC_LOG='tmc.log'
-FILE_MUTATION_TABLE='mutation_table.txt'
-FILE_RECONSTRUCTED_PNG='reconstructed.png'
-FILE_COMPARISON_METRICS='scores.out'
-CONFIG_PATH_RELATIVE_OUTPUT='pathRelativeOutput'
+FILE_SIMULATION_NEWICK = 'simulation.newick'
+FILE_RECONSTRUCTED_NEWICK = 'reconstructed.newick'
+FILE_TMC_LOG = 'tmc.log'
+FILE_MUTATION_TABLE = 'mutation_table.txt'
+FILE_RECONSTRUCTED_PNG = 'reconstructed.png'
+FILE_COMPARISON_METRICS_RAW = 'scores.raw.out'
+FILE_COMPARISON_METRICS_PRETTY = 'scores.pretty.out'
 
+PATH_ESTGT = './eSTGt/eSTGt'
+PATH_SIMULATION_LIB = './src/simulation'
+PATH_RECONSTRUCT_LIB = './src/reconstruction'
+PATH_TREECMP_BIN = './TreeCmp/bin/treeCmp.jar'
 
-PATH_ESTGT='./eSTGt/eSTGt'
-PATH_SIMULATION_LIB='./src/simulation'
-PATH_RECONSTRUCT_LIB='./src/reconstruction'
-PATH_TREECMP_BIN='./TreeCmp/bin/treeCmp.jar'
 
 def read_json_config(path):
 
@@ -64,8 +65,8 @@ def generate_tree_ascii_plot(path_output, newick_filename):
 def simulate(path_matlab):
     "run simulation"
 
-    path_working='./examples/example-01'
-    path_working='./analysis/tmc'
+    path_working = './examples/example-01'
+    path_working = './analysis/tmc'
 
     config_filename = 'config-01.json'
 
@@ -79,7 +80,9 @@ def simulate(path_matlab):
     # read simulation configuration
     config = read_json_config(os.path.join(path_working, config_filename))
 
-    path_simulation_output = os.path.join(path_working, config[CONFIG_PATH_RELATIVE_OUTPUT])
+    path_simulation_output = os.path.join(
+        path_working, config[CONFIG_PATH_RELATIVE_OUTPUT]
+    )
 
     return path_simulation_output
 
@@ -99,7 +102,9 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
     from sequencing.phylo.triplets_wrapper import get_cells_and_root, parse_mutations_table, run_sagis_triplets, run_sagis_triplets_binary
 
     # construct path for input mutation table
-    path_mutation_table =  os.path.join(path_simulation_output, FILE_MUTATION_TABLE)
+    path_mutation_table = os.path.join(
+        path_simulation_output, FILE_MUTATION_TABLE
+    )
 
     # parse mutation table
     calling = parse_mutations_table(path_mutation_table, inverse=False)
@@ -126,8 +131,10 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
     import dendropy
 
     # run sagis triplets
-    rldr = [root_cell_notation] # cf. 'Ave'
-    triplets_tree_path = os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK)
+    rldr = [root_cell_notation]  # cf. 'Ave'
+    triplets_tree_path = os.path.join(
+        path_simulation_output, FILE_RECONSTRUCTED_NEWICK
+    )
 
     run_sagis_triplets(
         textual_mutation_dict=tcalling,
@@ -139,7 +146,10 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
         loci_filter='ncnr')
 
     # fixme: would be nice if we can do this when calling `run_sagis_triplets`
-    os.rename("treeReconstruction.log", os.path.join(path_simulation_output, FILE_TMC_LOG))
+    os.rename(
+        "treeReconstruction.log",
+        os.path.join(path_simulation_output, FILE_TMC_LOG)
+    )
 
     # load reconstructed tree
     tree_reconstructed = dendropy.Tree.get_from_path(
@@ -148,11 +158,14 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
     )
 
     # prune root
-    root_node = tree_reconstructed.find_node_with_taxon_label(root_cell_notation)
-    tree_reconstructed.prune_subtree(root_node);
+    root_node = tree_reconstructed.find_node_with_taxon_label(
+        root_cell_notation
+    )
+    tree_reconstructed.prune_subtree(root_node)
 
     # re-save the newwick after eliminating quotes around taxa labels
-    tree_reconstructed.write_to_path(triplets_tree_path, schema='newick', unquoted_underscores=True)
+    tree_reconstructed.write_to_path(
+        triplets_tree_path, schema='newick', unquoted_underscores=True)
 
 
 def plot_recontructed_tree(path_matlab, path_simulation_output, newick_filename, png_filename):
@@ -168,23 +181,49 @@ def plot_recontructed_tree(path_matlab, path_simulation_output, newick_filename,
 def compare(path_simulation_newick, path_reconstructed_newick, path_score_output):
 
     #  Metrics for rooted trees
-    metrics_r="mc rc ns tt mp mt co"
-
-    # metrics for unrooted trees
-    metrics_ur="ms rf pd qt um"
+    metrics = {
+        "rooted": "mc rc ns tt mp mt co",
+        "unrooted": "ms rf pd qt um"
+    }
 
     cmd = [
         'java', '-jar', PATH_TREECMP_BIN,
-        '-P', '-N', '-I'        
+        '-P', '-N', '-I'
         '-r', path_simulation_newick,
         '-i', path_reconstructed_newick,
         '-o', path_score_output,
         '-d'
     ]
 
-    cmd.extend(metrics_r.split(' '))
+    cmd.extend(metrics['rooted'].split(' '))
 
     run_command(cmd)
+
+
+def report(path_score_output_raw, path_score_output_pretty):
+
+    from io import StringIO
+    import pandas as pd
+    import os
+
+    # read the first two lines that contain various metrics
+    df_metrics = pd.read_csv(path_score_output_raw, sep='\t', nrows=1)
+
+    # transpose and rename the column to 'metrics'
+    df_metrics = df_metrics.T.rename(columns={0:'metrics'})
+
+    # display to the screen
+    print(df_metrics)
+    print()
+
+    # read the summary section
+    df_summary = pd.read_csv(path_scores, sep='\t', skiprows=4)
+
+    print(df_summary)
+
+    with open(path_score_output_pretty, 'wt') as fout:
+        fout.write(df_metrics);
+        fout.write(df_summary);
 
 
 def main():
@@ -227,7 +266,12 @@ def main():
     compare(
         os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK),
         os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK),
-        os.path.join(path_simulation_output, FILE_COMPARISON_METRICS)
+        os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_RAW)
+    )
+
+    report(
+        os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_RAW),
+        os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_PRETTY),
     )
 
 
