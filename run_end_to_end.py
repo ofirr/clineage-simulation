@@ -161,11 +161,11 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
         triplets_tree_path, schema='newick', unquoted_underscores=True)
 
 
-def plot_recontructed_tree(path_matlab, path_newick, path_png):
+def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstructed_newick, path_png):
 
     # run MATLAB simulation
-    matlab_code = "addpath('{0}', '{1}'); plot_reconstructed_tree('{2}', '{3}'); exit;".format(
-        PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_newick, path_png
+    matlab_code = "addpath('{0}', '{1}'); plot_reconstructed_tree('{2}', '{3}', '{4}'); exit;".format(
+        PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick, path_png
     )
 
     run_matlab_code(path_matlab, matlab_code)
@@ -243,6 +243,7 @@ def run(path_matlab, path_project, config_json):
     # plot the reconstructed tree
     plot_recontructed_tree(
         envs[ENV_MATLAB_KEY],
+        os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK),
         os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK),
         os.path.join(path_simulation_output, FILE_RECONSTRUCTED_PNG)
     )
