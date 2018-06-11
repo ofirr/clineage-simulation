@@ -62,7 +62,7 @@ def convert_metrics_to_html(directory, filename):
         for index, row in df.iterrows():
             rows.append([ index, row['metrics'] ])
 
-        return convert_row_cols_to_html(rows)    
+        return convert_row_cols_to_html(rows)
 
     # read the first two lines that contain various metrics
     df_metrics = pd.read_csv(os.path.join(
@@ -70,6 +70,9 @@ def convert_metrics_to_html(directory, filename):
 
     # transpose and rename the column to 'metrics'
     df_metrics = df_metrics.T.rename(columns={0: 'metrics'})
+
+    # remove the first three unnecessary
+    df_metrics = df_metrics.drop(['No', 'RefTree', 'Tree'], axis=0)
 
     half = int( len(df_metrics) / 2 )
 
@@ -134,8 +137,8 @@ templ = """
     </table>
 
     {{item.metrics}}
-    
-    {% endfor %}    
+
+    {% endfor %}
 
 </body>
 </html>
