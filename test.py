@@ -175,12 +175,14 @@ def compare(path_simulation_newick, path_reconstructed_newick, path_score_output
 
     cmd = [
         'java', '-jar', PATH_TREECMP_BIN,
+        '-P', '-N', '-I'        
         '-r', path_simulation_newick,
-        '-d', metrics_r.split(' '),
         '-i', path_reconstructed_newick,
         '-o', path_score_output,
-        '-P', '-N', '-I'
+        '-d'
     ]
+
+    cmd.extend(metrics_r.split(' '))
 
     run_command(cmd)
 
