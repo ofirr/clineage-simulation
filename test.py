@@ -211,7 +211,7 @@ def report(path_scores_output_raw, path_scores_output_pretty):
     df_metrics = pd.read_csv(path_scores_output_raw, sep='\t', nrows=1)
 
     # transpose and rename the column to 'metrics'
-    df_metrics = df_metrics.T.rename(columns={0:'metrics'})
+    df_metrics = df_metrics.T.rename(columns={0: 'metrics'})
 
     # display to the screen
     print(df_metrics)
@@ -223,8 +223,8 @@ def report(path_scores_output_raw, path_scores_output_pretty):
     print(df_summary)
 
     with open(path_scores_output_pretty, 'wt') as fout:
-        fout.write(df_metrics.to_string());
-        fout.write(df_summary.to_string());
+        fout.write(df_metrics.to_string())
+        fout.write(df_summary.to_string())
 
 
 def main():
