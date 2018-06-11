@@ -30,6 +30,12 @@ path_eSTGt='~/projects/eSTGt/eSTGt'
 
 ## Run End-to-End
 
+Use a proper config file for your environment:
+
+- `config.math102-lx.env` for math102-lx
+- `config.windows.env` for Windows
+- `config.mac.env` for Mac OS X
+
 ```bash
 $ python run_end_to_end.py --env config.math102-lx.env
 ```
