@@ -43,7 +43,7 @@ def simulate(path_matlab):
     run_command(cmd)
 
     # read simulation configuration
-    config = read_json_config(os.path.join(path_working, config_filename)
+    config = read_json_config(os.path.join(path_working, config_filename))
 
     path_simulation_output = os.path.join(path_working, config['pathRelativeOutput'])
 
