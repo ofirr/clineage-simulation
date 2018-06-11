@@ -19,8 +19,9 @@ function create_tree(rules, my_run, path_newick, path_png)
         'BranchNames', 'false' ...
     );
 
+    % use plot2 for now because it gives us the labels
     %plot1(T.tree, rules.AllNames);
-    plot2(T.tree);
+    plot2(path_newick);
 
     % set plot title with seed number and simulation time
     ha = gca;
@@ -42,9 +43,10 @@ function create_tree(rules, my_run, path_newick, path_png)
         
     end
 
-    function [] = plot2(tree)
+    function [] = plot2(path_newick)
     % plot tree using MATLAB built-in function
-    
+        
+        tree = phytreeread(path_newick)
         plot(tree);
         
     end
