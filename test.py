@@ -76,7 +76,7 @@ def main():
     params = parser.parse_args()
 
     # read environment configuration
-    envs = read_json_config(params.path_config)
+    envs = read_json_config(params.path_config_env)
 
     # run simulation
     simulate(envs['matlab'])
