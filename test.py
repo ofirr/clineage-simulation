@@ -14,19 +14,13 @@ def run_command(cmd):
 def simulate(path_matlab):
     "run simulation"
 
-    # path_matlab='/usr/wisdom/matlabR2017a/bin'
-    # path_matlab='/Applications/MATLAB_R2017b.app/bin'
-    # path_matlab='C:\\Program Files\\MATLAB\\R2017b\\bin'
-
-
     path_eSTGt='./eSTGt/eSTGt'
     path_simul_lib='./src/simulation'
 
     path_working='./examples/example-01'
     path_working='./analysis/tmc'
 
-    
-
+    # run MATLAB simulation
     matlab_code = "addpath('{0}', '{1}', '{2}'); run_simul('{2}', '{3}'); exit;".format(
         path_eSTGt, path_simul_lib, path_working, 'config-01.json'
     )
@@ -38,6 +32,19 @@ def simulate(path_matlab):
     ]
 
     run_command(cmd)
+
+    import dendropy
+
+    # read simulation.newick
+    tree = dendropy.Tree.get_from_path(
+        os.path.join(path_working, 'simulation.newick'),
+        "newick"
+    )
+
+    # write ascii plot for simulation tree
+    with open(os.path.join(path_working, 'simulation.ascii_plot.txt'), 'wt') as fout:
+        fout.write(tree.as_ascii_plot())
+        fout.write('\n')
 
 
 def main():
