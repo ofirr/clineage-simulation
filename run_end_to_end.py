@@ -310,7 +310,7 @@ if __name__ == "__main__":
             raise Exception("Unable to find {}".format(config_json))
 
         print()
-        print("{} ########################".format(config_json))
+        print("{} #############################################".format(config_json))
         print()
 
         run(envs[ENV_MATLAB_KEY], params.path_project, config_json)
