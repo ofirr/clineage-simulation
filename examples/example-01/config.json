@@ -1,0 +1,7 @@
+{
+    "pathOutput": "./outputs/",
+    "addMutations": true,
+    "addAllelicDropOuts": true,
+    "addNoises": true,
+    "earlyStopPopulation": 0
+}
