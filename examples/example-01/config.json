@@ -1,5 +1,5 @@
 {
-    "pathOutput": "outputs",
+    "pathRelativeOutput": "outputs",
     "addMutations": true,
     "addAllelicDropOuts": true,
     "addNoises": true,
