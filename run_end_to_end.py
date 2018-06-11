@@ -294,7 +294,7 @@ def parse_arguments():
         with open(os.path.join(params.path_project, 'config.list'), 'rt') as fin:
             config_jsons = fin.readlines()
     else:
-        config_jsons = 'config.json'
+        config_jsons = ['config.json']
 
     return params, envs, config_jsons
 
@@ -304,4 +304,8 @@ if __name__ == "__main__":
     params, envs, config_jsons = parse_arguments()
 
     for config_json in config_jsons:
+
+        if not os.path.exists(os.path.join(params.path_project, config_json)):            
+            throw "Unable to find " + config_json
+        
         run(params, envs, config_json)
