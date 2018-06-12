@@ -52,6 +52,12 @@ def convert_mutation_table_to_html(directory, filename):
 
     rows = convert_tsv_to_rows_cols(directory, filename)
 
+    # remove Run1_ from cell names to reduce the width of the final table
+    row0 = []
+    for col in rows[0]:
+        row0.append(col.replace('Run1_', ''))
+    rows[0] = row0
+
     return convert_row_cols_to_html(rows)
 
 
@@ -127,6 +133,9 @@ templ = """
     <h2>Mutation Table</h2>
     {{item.simulation.mutationTable}}
 
+    <p style="page-break-after: always;">&nbsp;</p>
+    <p style="page-break-before: always;">&nbsp;</p>
+
     <table>
     <tr>
         <td>
@@ -139,6 +148,9 @@ templ = """
     </table>
 
     {{item.metrics}}
+
+    <p style="page-break-after: always;">&nbsp;</p>
+    <p style="page-break-before: always;">&nbsp;</p>
 
     {% endfor %}
 
