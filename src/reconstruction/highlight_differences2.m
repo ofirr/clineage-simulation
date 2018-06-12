@@ -27,7 +27,7 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
     for idx = 1:length(names1)
 
-        leaf_name = names1(idx);
+        leaf_name = names1{idx};
 
         if hops1.(leaf_name) ~= hops2.(leaf_name)
             highlight(t1, paths1, leaf_name);
@@ -47,7 +47,7 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
         for idx1 = 1:length(leaf_names)
 
-            leaf_name = leaf_names(idx1);
+            leaf_name = leaf_names{idx1};
 
             x_loc_idx = find( strcmp(leaf_name, labels) );
             [T, PRED] = graphminspantree(CM, root_loc);
@@ -109,7 +109,7 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
         idx = ~cellfun('isempty', regexp(all_names, "^Run") );
 
         % only keep names of leaves (filtering out branches)
-        names = string(all_names(idx));
+        names = all_names(idx);
     end
 
 end
