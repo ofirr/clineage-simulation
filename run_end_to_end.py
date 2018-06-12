@@ -243,7 +243,7 @@ def run(path_matlab, path_project, config_json, quiet):
     )
 
     # reconstruct based on mutation table generated from simulation
-    reconstruct(path_simulation_output, root_cell_notation='root', quiet)
+    reconstruct(path_simulation_output, 'root', quiet)
 
     # take reconstructed tree and make ascii plot
     generate_tree_ascii_plot(
