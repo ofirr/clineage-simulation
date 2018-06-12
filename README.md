@@ -30,7 +30,7 @@ or you can create a new `.env` file for your own environment.
 ## Run End-to-End
 
 ```bash
-$ python run_end_to_end.py --env config.math102-lx.env --project ./analysis/tmc
+$ ./run-tmc.sh
 ```
 
 ## For Developers
