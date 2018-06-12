@@ -79,7 +79,7 @@ def simulate(path_matlab, path_project, config_filename):
     return path_simulation_output
 
 
-def reconstruct(path_simulation_output, root_cell_notation='root', quiet=True):
+def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
 
     import sys
     sys.path.append("/home/chun/clineage/")
@@ -243,7 +243,7 @@ def run(path_matlab, path_project, config_json, quiet):
     )
 
     # reconstruct based on mutation table generated from simulation
-    reconstruct(path_simulation_output, quiet)
+    reconstruct(path_simulation_output, root_cell_notation='root', quiet)
 
     # take reconstructed tree and make ascii plot
     generate_tree_ascii_plot(
