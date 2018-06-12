@@ -111,9 +111,11 @@ templ = """
     {% for item in items %}
     <h1>{{item.config.contents.title}} ({{item.config.filename}})</h1>
     <hr/>
+
+    <h2>Parameters</h2>
     <table>
     <tr>
-        <td>Mutation:</td>
+        <td style="width:200px">Mutation:</td>
         <td>{{item.config.contents.addMutations}}</td>
     </tr>
     <tr>
