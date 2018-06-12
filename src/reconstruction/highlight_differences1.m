@@ -19,7 +19,7 @@ function [] = highlight_differences1(path_simulation_tree, path_reconstructed_tr
     t2 = plot(reconstructed_tree_reordered);
     title('Reconstructed (Reordered)');
 
-    
+
     % get names and edge lenghts of leaf nodes for simulation and reconstructed tree
     [edge_lengths1, names1] = get_names_edge_lengths(simulation_tree);
     [edge_lengths2, names2] = get_names_edge_lengths(reconstructed_tree_reordered);
@@ -59,7 +59,7 @@ function [] = highlight_differences1(path_simulation_tree, path_reconstructed_tr
     % save to png
     saveas(t1.axes, [path_simulation_tree '.png'], 'png');
     saveas(t2.axes, [path_reconstructed_tree '.png'], 'png');
-    
+
 
     function highlight(tree, leaf_name)
 

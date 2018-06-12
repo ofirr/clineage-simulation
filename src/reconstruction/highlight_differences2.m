@@ -29,7 +29,7 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
         leaf_name = names1(idx);
 
-        if hops1.(leaf_name) ~= hops2.(leaf_name)        
+        if hops1.(leaf_name) ~= hops2.(leaf_name)
             highlight(t1, paths1, leaf_name);
             highlight(t2, paths2, leaf_name);
         end
@@ -69,22 +69,22 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
         bg_color = 'yellow';
 
         idx = find_idx_by_leaf_name(tree, leaf_name);
-        if idx ~= -1        
-            set(tree.BranchLines(paths.(leaf_name)), 'LineWidth', line_width);        
-            set(tree.terminalNodeLabels(idx), 'Background', bg_color, 'FontWeight', 'bold'); 
+        if idx ~= -1
+            set(tree.BranchLines(paths.(leaf_name)), 'LineWidth', line_width);
+            set(tree.terminalNodeLabels(idx), 'Background', bg_color, 'FontWeight', 'bold');
         end
 
     end
 
     function [] = beautify_tree(tree, fig_title)
-               
+
         marker_size = 10;
         marker_face_color = 'red';
 
         set(tree.LeafDots, 'MarkerSize', marker_size, 'MarkerFaceColor', marker_face_color);
         set(tree.BranchDots, 'MarkerSize', marker_size);
         title(fig_title);
-    
+
     end
 
     function [idx] = find_idx_by_leaf_name(tree, leaf_name)
