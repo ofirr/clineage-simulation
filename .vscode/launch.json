@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: make html report",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": [
+                "--project", "./analysis/tmc", "--multi"
+            ]
+        },
+        {
             "name": "Attach (Remote Debug)",
             "type": "python",
             "request": "attach",
