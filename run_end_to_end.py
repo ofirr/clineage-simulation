@@ -79,7 +79,7 @@ def simulate(path_matlab, path_project, config_filename):
     return path_simulation_output
 
 
-def reconstruct(path_simulation_output, root_cell_notation='root'):
+def reconstruct(path_simulation_output, root_cell_notation='root', quiet=True):
 
     import sys
     sys.path.append("/home/chun/clineage/")
@@ -113,9 +113,9 @@ def reconstruct(path_simulation_output, root_cell_notation='root'):
         cells.append((cell, calling[cell]))
     assert len(cells) > 2
 
-    print(possible_roots)
-
-    print(cells)
+    if not quiet:
+        print(possible_roots)
+        print(cells)
 
     # transpose
     tcalling = transpose_dict(calling)
@@ -173,7 +173,7 @@ def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstruct
 
 def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick):
 
-    matlab_code = "addpath('{0}', '{1}'); highlight_different_edge_lengths('{2}', '{3}'); exit;".format(
+    matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}'); exit;".format(
         PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick
     )
 
@@ -202,7 +202,7 @@ def compare(path_simulation_newick, path_reconstructed_newick, path_score_output
     run_command(cmd)
 
 
-def report(path_scores_output_raw, path_scores_output_pretty):
+def report(path_scores_output_raw, path_scores_output_pretty, quiet=True):
 
     import pandas as pd
 
@@ -212,14 +212,14 @@ def report(path_scores_output_raw, path_scores_output_pretty):
     # transpose and rename the column to 'metrics'
     df_metrics = df_metrics.T.rename(columns={0: 'metrics'})
 
-    # display to the screen
-    print(df_metrics)
-    print()
-
     # read the summary section
     df_summary = pd.read_csv(path_scores_output_raw, sep='\t', skiprows=4)
 
-    print(df_summary)
+    if not quiet:
+        # display to the screen
+        print(df_metrics)
+        print()
+        print(df_summary)
 
     with open(path_scores_output_pretty, 'wt') as fout:
         fout.write(df_metrics.to_string())
@@ -229,7 +229,7 @@ def report(path_scores_output_raw, path_scores_output_pretty):
         fout.write('\n')
 
 
-def run(path_matlab, path_project, config_json):
+def run(path_matlab, path_project, config_json, quiet):
     "run function"
 
     # run simulation
@@ -243,7 +243,7 @@ def run(path_matlab, path_project, config_json):
     )
 
     # reconstruct based on mutation table generated from simulation
-    reconstruct(path_simulation_output)
+    reconstruct(path_simulation_output, quiet)
 
     # take reconstructed tree and make ascii plot
     generate_tree_ascii_plot(
@@ -268,6 +268,7 @@ def run(path_matlab, path_project, config_json):
     report(
         os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_RAW),
         os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_PRETTY),
+        quiet
     )
 
 
@@ -293,6 +294,12 @@ def parse_arguments():
         "--multi",
         action="store_true",
         dest="multi"
+    )
+
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        dest="quiet"
     )
 
     # parse arguments
@@ -326,4 +333,4 @@ if __name__ == "__main__":
         print("{} #############################################".format(config_json))
         print()
 
-        run(envs[ENV_MATLAB_KEY], params.path_project, config_json)
+        run(envs[ENV_MATLAB_KEY], params.path_project, config_json, params.quiet)
