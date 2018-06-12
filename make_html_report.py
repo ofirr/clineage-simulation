@@ -164,9 +164,6 @@ def make_html(path_project, config_jsons):
 </html>
 """
 
-    with open(os.path.join(path_project, 'config.list'), 'rt') as fin:
-        config_jsons = fin.read().splitlines()
-
     items = []
 
     for config_json in config_jsons:
@@ -180,8 +177,6 @@ def make_html(path_project, config_jsons):
         config = read_json_config(os.path.join(path_project, config_json))
 
         path_output = os.path.join(path_project, config['pathRelativeOutput'])
-
-
 
         item = {
             "config": {
@@ -199,7 +194,6 @@ def make_html(path_project, config_jsons):
         }
 
         items.append(item)
-
 
     template = Template(templ)
     html = template.render(items=items)

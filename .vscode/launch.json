@@ -5,12 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: make html report",
+            "name": "Python: make_html_report (TMC)",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "make_html_report.py",
             "args": [
                 "--project", "./analysis/tmc", "--multi"
+            ]
+        },
+        {
+            "name": "Python: make_html_report (example-01)",
+            "type": "python",
+            "request": "launch",
+            "program": "make_html_report.py",
+            "args": [
+                "--project", "./examples/example-01"
             ]
         },
         {
