@@ -1,5 +1,8 @@
 from jinja2 import Template
-
+import os
+import json
+import pandas as pd
+import argparse
 
 def read_json_config(path):
 
@@ -91,8 +94,9 @@ def convert_metrics_to_html(directory, filename):
     return '<table><tr valign="top"><td>{}</td><td>{}</td></tr></table>'.format(table1, table2)
 
 
+def make_html(path_project, config_jsons):
 
-templ = """
+    templ = """
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans" />
@@ -160,54 +164,82 @@ templ = """
 </html>
 """
 
-import json
-import os
-import pandas as pd
+    with open(os.path.join(path_project, 'config.list'), 'rt') as fin:
+        config_jsons = fin.read().splitlines()
+
+    items = []
+
+    for config_json in config_jsons:
+
+        if not config_json:
+            continue
+        if not os.path.exists(os.path.join(path_project, config_json)):
+            raise Exception("Unable to find {}".format(config_json))
+
+        # read simulation configuration
+        config = read_json_config(os.path.join(path_project, config_json))
+
+        path_output = os.path.join(path_project, config['pathRelativeOutput'])
 
 
 
-path_project = './analysis/tmc/'
+        item = {
+            "config": {
+                "filename": config_json,
+                "contents": config
+            },
+            "simulation": {
+                "mutationTable": convert_mutation_table_to_html(path_output, 'mutation_table.txt'),
+                "img": config['pathRelativeOutput'] + '/simulation.newick.png'
+            },
+            "reconstructed": {
+                "img": config['pathRelativeOutput'] + '/reconstructed.newick.png'
+            },
+            "metrics": convert_metrics_to_html(path_output, 'scores.raw.out')
+        }
 
-with open(os.path.join(path_project, 'config.list'), 'rt') as fin:
-    config_jsons = fin.read().splitlines()
-
-items = []
-
-for config_json in config_jsons:
-
-    if not config_json:
-        continue
-    if not os.path.exists(os.path.join(path_project, config_json)):
-        raise Exception("Unable to find {}".format(config_json))
-
-    # read simulation configuration
-    config = read_json_config(os.path.join(path_project, config_json))
-
-    path_output = os.path.join(path_project, config['pathRelativeOutput'])
+        items.append(item)
 
 
+    template = Template(templ)
+    html = template.render(items=items)
 
-    item = {
-        "config": {
-            "filename": config_json,
-            "contents": config
-        },
-        "simulation": {
-            "mutationTable": convert_mutation_table_to_html(path_output, 'mutation_table.txt'),
-            "img": config['pathRelativeOutput'] + '/simulation.newick.png'
-        },
-        "reconstructed": {
-            "img": config['pathRelativeOutput'] + '/reconstructed.newick.png'
-        },
-        "metrics": convert_metrics_to_html(path_output, 'scores.raw.out')
-    }
-
-    items.append(item)
+    with open(os.path.join(path_project, 'report.html'), 'wt') as fout:
+        fout.write(html)
+        fout.write('\n')
 
 
-template = Template(templ)
-html = template.render(items=items)
+def parse_arguments():
 
-with open(os.path.join(path_project, 'report.html'), 'wt') as fout:
-    fout.write(html)
-    fout.write('\n')
+    parser = argparse.ArgumentParser(description='make html report')
+
+    parser.add_argument(
+        "--project",
+        action="store",
+        dest="path_project",
+        required=True
+    )
+
+    parser.add_argument(
+        "--multi",
+        action="store_true",
+        dest="multi"
+    )
+
+    # parse arguments
+    params = parser.parse_args()
+
+    if params.multi:
+        with open(os.path.join(params.path_project, 'config.list'), 'rt') as fin:
+            config_jsons = fin.read().splitlines()
+    else:
+        config_jsons = ['config.json']
+
+    return params, config_jsons
+
+
+if __name__ == "__main__":
+
+    params, config_jsons = parse_arguments()
+
+    make_html(params.path_project, config_jsons)
