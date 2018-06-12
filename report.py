@@ -99,7 +99,7 @@ templ = """
     <style>
         table {
             font-family: "Open Sans";
-            font-size: 16px;
+            font-size: 14px;
         }
         .tree-img {
             width: 650px;
