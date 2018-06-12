@@ -1,4 +1,6 @@
-function [] = highlight_different_edge_lengths(path_simulation_tree, path_reconstructed_tree)
+function [] = highlight_differences1(path_simulation_tree, path_reconstructed_tree)
+% calculate distance from leaf to the first encountering branch point and
+% compare
 
     % read simulation tree from newick file
     simulation_tree = phytreeread(path_simulation_tree);
