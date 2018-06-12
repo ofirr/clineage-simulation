@@ -85,13 +85,10 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     sys.path.append("/home/chun/clineage/")
     import clineage.wsgi
 
-    import os
-    from frogress import bar
-
     # transpose dictionary
     from sequencing.calling.queries.mutation_maps import transpose_dict
 
-    from sequencing.phylo.triplets_wrapper import get_cells_and_root, parse_mutations_table, run_sagis_triplets, run_sagis_triplets_binary
+    from sequencing.phylo.triplets_wrapper import parse_mutations_table, run_sagis_triplets
 
     # construct path for input mutation table
     path_mutation_table = os.path.join(
@@ -105,7 +102,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     possible_roots = [cell for cell in calling if root_cell_notation in cell]
     assert len(possible_roots) == 1
     root_label = possible_roots[0]
-    root = (root_label, calling[root_label])
+    # root = (root_label, calling[root_label])
     cells = []
     for cell in calling:
         if cell == root_label:
