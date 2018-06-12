@@ -18,7 +18,7 @@ function [] = highlight_different_edge_lengths(path_simulation_tree, path_recons
     title('Reconstructed (Reordered)');
 
     
-    % get names and edge lenghts for simulation and reconstructed tree
+    % get names and edge lenghts of leaf nodes for simulation and reconstructed tree
     [edge_lengths1, names1] = get_names_edge_lengths(simulation_tree);
     [edge_lengths2, names2] = get_names_edge_lengths(reconstructed_tree_reordered);
 
