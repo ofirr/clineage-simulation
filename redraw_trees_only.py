@@ -95,6 +95,12 @@ def parse_arguments():
         required=True
     )
 
+    parser.add_argument(
+        "--multi",
+        action="store_true",
+        dest="multi"
+    )
+
     # parse arguments
     params = parser.parse_args()
 

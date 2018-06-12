@@ -36,6 +36,12 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
     end
 
+
+    % save to png
+    saveas(t1.axes, [path_simulation_tree '.png'], 'png');
+    saveas(t2.axes, [path_reconstructed_tree '.png'], 'png');
+
+
     function [hops, paths] = get_hops_to_root(tree, leaf_names)
 
         % https://www.mathworks.com/help/bioinfo/ref/graphpred2path.html
