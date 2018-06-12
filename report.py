@@ -192,10 +192,10 @@ for config_json in config_jsons:
         },
         "simulation": {
             "mutationTable": convert_mutation_table_to_html(path_output, 'mutation_table.txt'),
-            "img": config['pathRelativeOutput'] + '/simulation.png'
+            "img": config['pathRelativeOutput'] + '/simulation.newick.png'
         },
         "reconstructed": {
-            "img": config['pathRelativeOutput'] + '/reconstructed.png'
+            "img": config['pathRelativeOutput'] + '/reconstructed.newick.png'
         },
         "metrics": convert_metrics_to_html(path_output, 'scores.raw.out')
     }
