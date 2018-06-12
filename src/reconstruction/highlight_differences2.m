@@ -29,6 +29,12 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
         leaf_name = names1{idx};
 
+        % leaf that exists in simulation doesn't exist in reconstruction
+        if ~isfield(hops2, leaf_name)
+            %fixme: do something
+            continue
+        end
+        
         if hops1.(leaf_name) ~= hops2.(leaf_name)
             highlight(t1, paths1, leaf_name);
             highlight(t2, paths2, leaf_name);
