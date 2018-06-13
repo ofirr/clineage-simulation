@@ -33,7 +33,8 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
         % leaf that exists in simulation doesn't exist in reconstruction
         if ~isfield(hops2, leaf_name)
-            %fixme: do something
+            % use a different color for this absent leaf
+            mark_as_absent(t1, leaf_name);
             continue
         end
 
@@ -82,7 +83,7 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
     end
 
-    function highlight(tree, paths, leaf_name)
+    function [] = highlight(tree, paths, leaf_name)
 
         line_width = 5;
         bg_color = 'yellow';
@@ -97,6 +98,27 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
             % make the leaf name highlighted
             set(tree.terminalNodeLabels(idx), 'Background', bg_color, 'FontWeight', 'bold');
+        end
+
+    end
+
+
+    function [] = mark_as_absent(tree, leaf_name)
+
+        fg_color = 'white';
+        bg_color = [0.5 0.5 0.5];
+
+        % find the index of the leaf that we're interested in
+        % -1 means not found
+        idx = find_idx_by_leaf_name(tree, leaf_name);
+
+        if idx ~= -1
+            % make the leaf name highlighted
+            set(tree.terminalNodeLabels(idx), ...
+                'Background', bg_color, ...
+                'Color', fg_color, ...
+                'FontWeight', 'bold' ...
+            );
         end
 
     end
