@@ -8,7 +8,7 @@
             "name": "Python: make_html_report (TMC)",
             "type": "python",
             "request": "launch",
-            "program": "make_html_report.py",
+            "program": "${workspaceFolder}/make_html_report.py",
             "args": [
                 "--project", "./analysis/tmc", "--multi"
             ]
@@ -17,7 +17,7 @@
             "name": "Python: make_html_report (example-01)",
             "type": "python",
             "request": "launch",
-            "program": "make_html_report.py",
+            "program": "${workspaceFolder}/make_html_report.py",
             "args": [
                 "--project", "./examples/example-01"
             ]
