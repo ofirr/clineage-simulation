@@ -1,0 +1,18 @@
+ENV_MATLAB_KEY = 'matlab'
+CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
+
+FILE_SIMULATION_NEWICK = 'simulation.newick'
+FILE_RECONSTRUCTED_NEWICK = 'reconstructed.newick'
+FILE_TMC_LOG = 'tmc.log'
+FILE_MUTATION_TABLE = 'mutation_table.txt'
+FILE_RECONSTRUCTED_PNG = 'reconstructed.png'
+FILE_COMPARISON_METRICS_RAW = 'scores.raw.out'
+FILE_COMPARISON_METRICS_PRETTY = 'scores.pretty.out'
+FILE_REPORT_HTML = 'report.html'
+FILE_JSON_CONFIG_LIST = 'config.list'
+FILE_JSON_CONFIG = 'config.json'
+
+PATH_ESTGT = './eSTGt/eSTGt'
+PATH_SIMULATION_LIB = './src/simulation'
+PATH_RECONSTRUCT_LIB = './src/reconstruction'
+PATH_TREECMP_BIN = './TreeCmp/bin/treeCmp.jar'

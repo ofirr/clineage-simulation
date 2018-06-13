@@ -3,21 +3,7 @@ import subprocess
 import json
 import argparse
 
-ENV_MATLAB_KEY = 'matlab'
-CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
-
-FILE_SIMULATION_NEWICK = 'simulation.newick'
-FILE_RECONSTRUCTED_NEWICK = 'reconstructed.newick'
-FILE_TMC_LOG = 'tmc.log'
-FILE_MUTATION_TABLE = 'mutation_table.txt'
-FILE_RECONSTRUCTED_PNG = 'reconstructed.png'
-FILE_COMPARISON_METRICS_RAW = 'scores.raw.out'
-FILE_COMPARISON_METRICS_PRETTY = 'scores.pretty.out'
-
-PATH_ESTGT = './eSTGt/eSTGt'
-PATH_SIMULATION_LIB = './src/simulation'
-PATH_RECONSTRUCT_LIB = './src/reconstruction'
-PATH_TREECMP_BIN = './TreeCmp/bin/treeCmp.jar'
+from src import const
 
 
 def read_json_config(path):
@@ -64,7 +50,7 @@ def simulate(path_matlab, path_project, config_filename):
 
     # run MATLAB simulation
     matlab_code = "addpath('{0}', '{1}', '{2}'); run_simul('{2}', '{3}'); exit;".format(
-        PATH_ESTGT, PATH_SIMULATION_LIB, path_project, config_filename
+        const.PATH_ESTGT, const.PATH_SIMULATION_LIB, path_project, config_filename
     )
 
     run_matlab_code(path_matlab, matlab_code)
@@ -73,7 +59,7 @@ def simulate(path_matlab, path_project, config_filename):
     config = read_json_config(os.path.join(path_project, config_filename))
 
     path_simulation_output = os.path.join(
-        path_project, config[CONFIG_PATH_RELATIVE_OUTPUT]
+        path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
     )
 
     return path_simulation_output
@@ -92,7 +78,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
 
     # construct path for input mutation table
     path_mutation_table = os.path.join(
-        path_simulation_output, FILE_MUTATION_TABLE
+        path_simulation_output, const.FILE_MUTATION_TABLE
     )
 
     # parse mutation table
@@ -122,7 +108,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     # run sagis triplets
     rldr = [root_cell_notation]  # cf. 'Ave'
     triplets_tree_path = os.path.join(
-        path_simulation_output, FILE_RECONSTRUCTED_NEWICK
+        path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK
     )
 
     run_sagis_triplets(
@@ -137,7 +123,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     # fixme: would be nice if we can do this when calling `run_sagis_triplets`
     os.rename(
         "treeReconstruction.log",
-        os.path.join(path_simulation_output, FILE_TMC_LOG)
+        os.path.join(path_simulation_output, const.FILE_TMC_LOG)
     )
 
     # load reconstructed tree
@@ -162,7 +148,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
 def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstructed_newick, path_png):
 
     matlab_code = "addpath('{0}', '{1}'); plot_reconstructed_tree('{2}', '{3}', '{4}'); exit;".format(
-        PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick, path_png
+        const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick, path_png
     )
 
     run_matlab_code(path_matlab, matlab_code)
@@ -171,7 +157,7 @@ def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstruct
 def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick):
 
     matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}'); exit;".format(
-        PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick
+        const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick
     )
 
     run_matlab_code(path_matlab, matlab_code)
@@ -186,7 +172,7 @@ def compare(path_simulation_newick, path_reconstructed_newick, path_score_output
     }
 
     cmd = [
-        'java', '-jar', PATH_TREECMP_BIN,
+        'java', '-jar', const.PATH_TREECMP_BIN,
         '-P', '-N', '-I'
         '-r', path_simulation_newick,
         '-i', path_reconstructed_newick,
@@ -236,7 +222,7 @@ def run(path_matlab, path_project, config_json, quiet):
 
     # take simulation tree and make ascii plot
     generate_tree_ascii_plot(
-        os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK)
+        os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK)
     )
 
     # reconstruct based on mutation table generated from simulation
@@ -244,27 +230,27 @@ def run(path_matlab, path_project, config_json, quiet):
 
     # take reconstructed tree and make ascii plot
     generate_tree_ascii_plot(
-        os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK)
+        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK)
     )
 
     # highlight tree differences and save to png
     highlight_tree_differences_to_png(
-        envs[ENV_MATLAB_KEY],
-        os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK),
-        os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK)
+        envs[const.ENV_MATLAB_KEY],
+        os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK),
+        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK)
     )
 
     # compare simulation tree and reconstructed tree
     compare(
-        os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK),
-        os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK),
-        os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_RAW)
+        os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK),
+        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK),
+        os.path.join(path_simulation_output, const.FILE_COMPARISON_METRICS_RAW)
     )
 
     # report the final comparison metrics in a pretty format
     report(
-        os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_RAW),
-        os.path.join(path_simulation_output, FILE_COMPARISON_METRICS_PRETTY),
+        os.path.join(path_simulation_output, const.FILE_COMPARISON_METRICS_RAW),
+        os.path.join(path_simulation_output, const.FILE_COMPARISON_METRICS_PRETTY),
         quiet
     )
 
@@ -306,10 +292,10 @@ def parse_arguments():
     envs = read_json_config(params.path_env)
 
     if params.multi:
-        with open(os.path.join(params.path_project, 'config.list'), 'rt') as fin:
+        with open(os.path.join(params.path_project, const.FILE_JSON_CONFIG_LIST), 'rt') as fin:
             config_jsons = fin.read().splitlines()
     else:
-        config_jsons = ['config.json']
+        config_jsons = [const.FILE_JSON_CONFIG]
 
     return params, envs, config_jsons
 
@@ -330,4 +316,5 @@ if __name__ == "__main__":
         print("{} #############################################".format(config_json))
         print()
 
-        run(envs[ENV_MATLAB_KEY], params.path_project, config_json, params.quiet)
+        run(envs[const.ENV_MATLAB_KEY], params.path_project,
+            config_json, params.quiet)

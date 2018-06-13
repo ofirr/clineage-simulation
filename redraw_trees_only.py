@@ -3,14 +3,7 @@ import subprocess
 import json
 import argparse
 
-ENV_MATLAB_KEY = 'matlab'
-CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
-
-FILE_SIMULATION_NEWICK = 'simulation.newick'
-FILE_RECONSTRUCTED_NEWICK = 'reconstructed.newick'
-
-PATH_ESTGT = './eSTGt/eSTGt'
-PATH_RECONSTRUCT_LIB = './src/reconstruction'
+from src import const
 
 
 def read_json_config(path):
@@ -45,7 +38,7 @@ def get_simulation_output_path(path_project, config_filename):
     config = read_json_config(os.path.join(path_project, config_filename))
 
     path_simulation_output = os.path.join(
-        path_project, config[CONFIG_PATH_RELATIVE_OUTPUT]
+        path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
     )
 
     return path_simulation_output
@@ -54,11 +47,10 @@ def get_simulation_output_path(path_project, config_filename):
 def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick):
 
     matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}'); exit;".format(
-        PATH_ESTGT, PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick
+        const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick
     )
 
     run_matlab_code(path_matlab, matlab_code)
-
 
 
 def run(path_matlab, path_project, config_json):
@@ -71,9 +63,9 @@ def run(path_matlab, path_project, config_json):
 
     # highlight tree differences and save to png
     highlight_tree_differences_to_png(
-        envs[ENV_MATLAB_KEY],
-        os.path.join(path_simulation_output, FILE_SIMULATION_NEWICK),
-        os.path.join(path_simulation_output, FILE_RECONSTRUCTED_NEWICK)
+        envs[const.ENV_MATLAB_KEY],
+        os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK),
+        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK)
     )
 
 
@@ -108,10 +100,10 @@ def parse_arguments():
     envs = read_json_config(params.path_env)
 
     if params.multi:
-        with open(os.path.join(params.path_project, 'config.list'), 'rt') as fin:
+        with open(os.path.join(params.path_project, const.FILE_JSON_CONFIG_LIST), 'rt') as fin:
             config_jsons = fin.read().splitlines()
     else:
-        config_jsons = ['config.json']
+        config_jsons = [const.FILE_JSON_CONFIG]
 
     return params, envs, config_jsons
 
@@ -132,4 +124,4 @@ if __name__ == "__main__":
         print("{} #############################################".format(config_json))
         print()
 
-        run(envs[ENV_MATLAB_KEY], params.path_project, config_json)
+        run(envs[const.ENV_MATLAB_KEY], params.path_project, config_json)

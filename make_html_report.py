@@ -4,6 +4,9 @@ import json
 import pandas as pd
 import argparse
 
+from src import const
+
+
 def read_json_config(path):
 
     with open(path, 'rt') as file_in:
@@ -176,7 +179,7 @@ def make_html(path_project, config_jsons):
         # read simulation configuration
         config = read_json_config(os.path.join(path_project, config_json))
 
-        path_output = os.path.join(path_project, config['pathRelativeOutput'])
+        path_output = os.path.join(path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT])
 
         item = {
             "config": {
@@ -184,13 +187,13 @@ def make_html(path_project, config_jsons):
                 "contents": config
             },
             "simulation": {
-                "mutationTable": convert_mutation_table_to_html(path_output, 'mutation_table.txt'),
-                "img": config['pathRelativeOutput'] + '/simulation.newick.png'
+                "mutationTable": convert_mutation_table_to_html(path_output, const.FILE_MUTATION_TABLE),
+                "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_SIMULATION_NEWICK)
             },
             "reconstructed": {
-                "img": config['pathRelativeOutput'] + '/reconstructed.newick.png'
+                "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_RECONSTRUCTED_NEWICK)
             },
-            "metrics": convert_metrics_to_html(path_output, 'scores.raw.out')
+            "metrics": convert_metrics_to_html(path_output, const.FILE_COMPARISON_METRICS_RAW)
         }
 
         items.append(item)
@@ -198,7 +201,7 @@ def make_html(path_project, config_jsons):
     template = Template(templ)
     html = template.render(items=items)
 
-    with open(os.path.join(path_project, 'report.html'), 'wt') as fout:
+    with open(os.path.join(path_project, const.FILE_REPORT_HTML), 'wt') as fout:
         fout.write(html)
         fout.write('\n')
 
@@ -224,10 +227,10 @@ def parse_arguments():
     params = parser.parse_args()
 
     if params.multi:
-        with open(os.path.join(params.path_project, 'config.list'), 'rt') as fin:
+        with open(os.path.join(params.path_project, const.FILE_JSON_CONFIG_LIST), 'rt') as fin:
             config_jsons = fin.read().splitlines()
     else:
-        config_jsons = ['config.json']
+        config_jsons = [const.FILE_JSON_CONFIG]
 
     return params, config_jsons
 
