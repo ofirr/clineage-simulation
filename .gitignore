@@ -2,3 +2,4 @@
 *.asv
 TreeCmp
 eSTGt
+__pycache__
