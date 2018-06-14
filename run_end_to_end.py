@@ -165,12 +165,18 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
         .rename(columns={'index': 'cellname'})
     df_mapping.index.name = 'index'
 
+    # iterate through triplets list
+    # parse so that we can construct a nice pandas dataframe out of it
     tmp = []
     with open(path_triplets_list_raw, 'rt') as fin:
         data = fin.read()
+        # e.g.
+        # 8,0|3:0.5774 18,8|11:1.4142 15,0|9:0.3416 6,0|3:1.2041
         triplets = data.split(' ')
         for triplet in triplets:
             try:
+                # e.g.
+                # 1,12|11:0.8165
                 match = re.search(r'(\d+),(\d+)\|(\d+):(.*)', triplet)
                 if match:
                     sa, sb, sc, dist = match.groups()
@@ -178,19 +184,25 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
                     sb = int(sb)
                     sc = int(sc)
                     dist = float(dist)
+
+                    # lookup the actuall cell that corresponds to the id
+                    # from the mapping dataframe
+                    cellnames = list(df_mapping.loc[[sa, sb, sc]].cellname)
+
                     tmp.append(
-                        [sa, sb, sc] +
-                        list(df_mapping.loc[[sa, sb, sc]].cellname) + [dist]
+                        [sa, sb, sc] + cellnames + [dist]
                     )
             except:
                 raise Exception(triplet)
 
+    # create a dataframe and save to csv
     df_triplets = pd.DataFrame(
         tmp, columns=['sai', 'sbi', 'sci', 'sa', 'sb', 'sc', 'dist']
     )
     df_triplets.to_csv(path_triplets_list_csv, index=False)
 
 
+# deprecated
 def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstructed_newick, path_png):
 
     matlab_code = "addpath('{0}', '{1}'); plot_reconstructed_tree('{2}', '{3}', '{4}'); exit;".format(
