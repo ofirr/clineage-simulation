@@ -212,11 +212,11 @@ def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstruct
     run_matlab_code(path_matlab, matlab_code)
 
 
-def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick):
+def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick, path_diff_metrics):
 
     matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}', '{4}'); exit;".format(
         const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB,
-        path_simulation_newick, path_reconstructed_newick, const.FILE_DIFF_METRICS
+        path_simulation_newick, path_reconstructed_newick, path_diff_metrics
     )
 
     run_matlab_code(path_matlab, matlab_code)
@@ -294,7 +294,8 @@ def run(path_matlab, path_project, config_json, quiet):
     highlight_tree_differences_to_png(
         envs[const.ENV_MATLAB_KEY],
         os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK),
-        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK)
+        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK),
+        os.path.join(path_simulation_output, const.FILE_DIFF_METRICS)
     )
 
     # compare simulation tree and reconstructed tree
