@@ -334,9 +334,10 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--multi",
-        action="store_true",
-        dest="multi"
+        "--config",
+        nargs='+',
+        dest="configs",
+        required=True
     )
 
     parser.add_argument(
@@ -351,11 +352,14 @@ def parse_arguments():
     # read environment configuration
     envs = read_json_config(params.path_env)
 
-    if params.multi:
+    #fixme: right now, config.lst must be specified as a first element
+    if params.configs[0] == const.FILE_JSON_CONFIG_LIST:
         with open(os.path.join(params.path_project, const.FILE_JSON_CONFIG_LIST), 'rt') as fin:
             config_jsons = fin.read().splitlines()
+            # remove empty strings
+            config_jsons = list(filter(None, config_jsons))
     else:
-        config_jsons = [const.FILE_JSON_CONFIG]
+        config_jsons = params.configs
 
     return params, envs, config_jsons
 

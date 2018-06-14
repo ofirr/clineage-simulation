@@ -14,7 +14,6 @@ FILE_COMPARISON_METRICS_PRETTY = 'scores.pretty.out'
 FILE_DIFF_METRICS = 'diff-score.json'
 FILE_REPORT_HTML = 'report.html'
 FILE_JSON_CONFIG_LIST = 'config.list'
-FILE_JSON_CONFIG = 'config.json'
 
 PATH_ESTGT = './eSTGt/eSTGt'
 PATH_SIMULATION_LIB = './src/simulation'

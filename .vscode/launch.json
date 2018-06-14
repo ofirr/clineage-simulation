@@ -23,6 +23,28 @@
             ]
         },
         {
+            "name": "Python: run_end_to_end (config enumerated)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/run_end_to_end.py",
+            "args": [
+                "--env", "config.mac.env",
+                "--project", "./examples/example-01",
+                "--config", "config-01.json", "config-02.json", "config-03.json"
+            ]
+        },
+        {
+            "name": "Python: run_end_to_end (config.list)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/run_end_to_end.py",
+            "args": [
+                "--env", "config.mac.env",
+                "--project", "./analysis/tmc",
+                "--config", "config.list"
+            ]
+        },
+        {
             "name": "Attach (Remote Debug)",
             "type": "python",
             "request": "attach",
@@ -36,10 +58,7 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
-            "args": [
-                "--env", "config.windows.env"
-            ]
+            "program": "${file}"
         },
         {
             "name": "Python: Attach",
