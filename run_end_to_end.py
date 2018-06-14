@@ -2,6 +2,8 @@ import os
 import subprocess
 import json
 import argparse
+import re
+import pandas as pd
 
 from src import const
 
@@ -94,15 +96,18 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     )
 
     # construct path for triplets list
-    path_triplets_list = os.path.join(
-        path_simulation_output, const.FILE_TRIPLETS_LIST
+    path_triplets_list_raw = os.path.join(
+        path_simulation_output, const.FILE_TRIPLETS_LIST_RAW
+    )
+    path_triplets_list_csv = os.path.join(
+        path_simulation_output, const.FILE_TRIPLETS_LIST_CSV
     )
 
     # create triplets list using given parameters
     rldr = [root_cell_notation]  # cf. 'Ave'
     cell_id_map_for_sagi = calculate_triplets_tree(
         textual_mutation_dict=calling,
-        triplets_file=path_triplets_list,
+        triplets_file=path_triplets_list_raw,
         cells_to_be_used_as_root=rldr,
         score_threshold=0,
         choosing_method="mms",
@@ -116,7 +121,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     # run sagis triplets binary
     # the output newick will have the numeric ids which correspond to the actual cell names
     ret_code = run_sagis_triplets_binary(
-        path_triplets_list,
+        path_triplets_list_raw,
         path_reconstructed_tmp_newick
     )
 
@@ -152,6 +157,38 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     tree_reconstructed.write_to_path(
         path_reconstructed_newick, schema='newick', unquoted_underscores=True
     )
+
+    # construct easy triplet lookup table
+    df_mapping = pd.DataFrame.from_dict(cell_id_map_for_sagi, orient='index')
+    df_mapping = df_mapping.reset_index() \
+        .set_index(0) \
+        .rename(columns={'index': 'cellname'})
+    df_mapping.index.name = 'index'
+
+    tmp = []
+    with open(path_triplets_list_raw, 'rt') as fin:
+        data = fin.read()
+        triplets = data.split(' ')
+        for triplet in triplets:
+            try:
+                match = re.search(r'(\d+),(\d+)\|(\d+):(.*)', triplet)
+                if match:
+                    sa, sb, sc, dist = match.groups()
+                    sa = int(sa)
+                    sb = int(sb)
+                    sc = int(sc)
+                    dist = float(dist)
+                    tmp.append(
+                        [sa, sb, sc] +
+                        list(df_mapping.loc[[sa, sb, sc]].cellname) + [dist]
+                    )
+            except:
+                raise Exception(triplet)
+
+    df_triplets = pd.DataFrame(
+        tmp, columns=['sai', 'sbi', 'sci', 'sa', 'sb', 'sc', 'dist']
+    )
+    df_triplets.to_csv(path_triplets_list_csv, index=False)
 
 
 def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstructed_newick, path_png):
@@ -195,8 +232,6 @@ def compare(path_simulation_newick, path_reconstructed_newick, path_score_output
 
 
 def report(path_scores_output_raw, path_scores_output_pretty, quiet=True):
-
-    import pandas as pd
 
     # read the first two lines that contain various metrics
     df_metrics = pd.read_csv(path_scores_output_raw, sep='\t', nrows=1)
