@@ -19,10 +19,10 @@ def read_textfile(directory, filename):
         return file_in.read()
 
 
-def convert_row_cols_to_html(rows):
+def convert_row_cols_to_html(rows, style_class_name=""):
 
     templ = """
-<table border="1" style="border-spacing:0px">
+<table border="1" style="border-spacing:0px" class="{{style_class_name}}">
 {% for row in rows %}
 <tr>
     {% for col in row %}
@@ -36,7 +36,7 @@ def convert_row_cols_to_html(rows):
 """
 
     template = Template(templ)
-    html = template.render(rows=rows)
+    html = template.render(rows=rows, style_class_name=style_class_name)
 
     return html
 
@@ -74,7 +74,7 @@ def convert_metrics_to_html(directory, filename):
         for index, row in df.iterrows():
             rows.append([index, row['metrics']])
 
-        return convert_row_cols_to_html(rows)
+        return convert_row_cols_to_html(rows, "metrics-table")
 
     # read the first two lines that contain various metrics
     df_metrics = pd.read_csv(os.path.join(
@@ -94,7 +94,16 @@ def convert_metrics_to_html(directory, filename):
     table1 = to_table(df1)
     table2 = to_table(df2)
 
-    return '<table><tr valign="top"><td>{}</td><td>{}</td></tr></table>'.format(table1, table2)
+    return ''''
+<table>
+<tbody>
+    <tr valign="top">
+        <td>{}</td>
+        <td>{}</td>
+    </tr>
+</tbody>
+</table>
+'''.format(table1, table2)
 
 
 def get_diff_metrics(path):
@@ -116,6 +125,9 @@ def make_html(path_project, config_jsons):
         }
         .tree-img {
             width: 650px;
+        }
+        .metrics-table {
+            min-width: 390px;
         }
         .similarity-score {
             font-family: "Open Sans";
