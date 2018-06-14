@@ -1,4 +1,4 @@
-function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tree)
+function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tree, path_diff_metrics)
 % calculate distance from root to each leaf and compare
 
     % read simulation tree from newick file
@@ -27,6 +27,8 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
     [hops1, paths1] = get_hops_to_root(simulation_tree, names1);
     [hops2, paths2] = get_hops_to_root(reconstructed_tree_reordered, names2);
 
+    counter = struct('total', length(names1), 'diff', 0, 'missing', 0);
+        
     for idx = 1:length(names1)
 
         leaf_name = names1{idx};
@@ -35,6 +37,9 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
         if ~isfield(hops2, leaf_name)
             % use a different color for this absent leaf
             mark_as_absent(t1, leaf_name);
+            
+            % increment diff count
+            counter.missing = counter.missing + 1;
             continue
         end
 
@@ -44,6 +49,9 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
         if hops1.(leaf_name) ~= hops2.(leaf_name)
             highlight(t1, paths1, leaf_name);
             highlight(t2, paths2, leaf_name);
+            
+            % increment diff count
+            counter.diff = counter.diff + 1;
         end
 
     end
@@ -51,7 +59,11 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
     % save to png
     saveas(t1.axes, [path_simulation_tree '.png'], 'png');
     saveas(t2.axes, [path_reconstructed_tree '.png'], 'png');
-
+        
+    fh = fopen(path_diff_metrics, 'wt');
+    fwrite(fh, jsonencode(counter));
+    fwrite(fh, newline);
+    fclose(fh);
 
     function [hops, paths] = get_hops_to_root(tree, leaf_names)
 

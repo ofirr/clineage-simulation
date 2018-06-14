@@ -72,7 +72,7 @@ def convert_metrics_to_html(directory, filename):
     def to_table(df):
         rows = []
         for index, row in df.iterrows():
-            rows.append([ index, row['metrics'] ])
+            rows.append([index, row['metrics']])
 
         return convert_row_cols_to_html(rows)
 
@@ -86,7 +86,7 @@ def convert_metrics_to_html(directory, filename):
     # remove the first three unnecessary
     df_metrics = df_metrics.drop(['No', 'RefTree', 'Tree'], axis=0)
 
-    half = int( len(df_metrics) / 2 )
+    half = int(len(df_metrics) / 2)
 
     df1 = df_metrics.iloc[:half, :]
     df2 = df_metrics.iloc[half:, :]
@@ -95,6 +95,12 @@ def convert_metrics_to_html(directory, filename):
     table2 = to_table(df2)
 
     return '<table><tr valign="top"><td>{}</td><td>{}</td></tr></table>'.format(table1, table2)
+
+
+def get_diff_metrics(path):
+
+    with open(path, 'rt') as file_in:
+        return json.loads(file_in.read())
 
 
 def make_html(path_project, config_jsons):
@@ -110,6 +116,12 @@ def make_html(path_project, config_jsons):
         }
         .tree-img {
             width: 650px;
+        }
+        .similarity-score {
+            font-family: "Open Sans";
+            font-size: 120px;
+            text-align: center;
+            width: 40%;
         }
     </style>
 </head>
@@ -156,7 +168,12 @@ def make_html(path_project, config_jsons):
     </tr>
     </table>
 
-    {{item.metrics}}
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%" width="100%">
+    <tr>
+        <td>{{item.metrics.compare1}}</td>
+        <td class="similarity-score">{{item.metrics.compare2}}</td>
+    </tr>
+    </table>
 
     <p style="page-break-after: always;">&nbsp;</p>
     <p style="page-break-before: always;">&nbsp;</p>
@@ -179,7 +196,14 @@ def make_html(path_project, config_jsons):
         # read simulation configuration
         config = read_json_config(os.path.join(path_project, config_json))
 
-        path_output = os.path.join(path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT])
+        path_output = os.path.join(
+            path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT])
+
+        path_diff_metrics = os.path.join(path_output, const.FILE_DIFF_METRICS)
+
+        diff_metrics = get_diff_metrics(path_diff_metrics)
+        similarity_score = '{0:2.1f}%'.format((diff_metrics['total'] - (
+            diff_metrics['diff'] + diff_metrics['missing'])) / diff_metrics['total'] * 100.0)
 
         item = {
             "config": {
@@ -193,7 +217,10 @@ def make_html(path_project, config_jsons):
             "reconstructed": {
                 "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_RECONSTRUCTED_NEWICK)
             },
-            "metrics": convert_metrics_to_html(path_output, const.FILE_COMPARISON_METRICS_RAW)
+            "metrics": {
+                "compare1": convert_metrics_to_html(path_output, const.FILE_COMPARISON_METRICS_RAW),
+                "compare2": similarity_score
+            }
         }
 
         items.append(item)

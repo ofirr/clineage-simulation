@@ -214,8 +214,9 @@ def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstruct
 
 def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick):
 
-    matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}'); exit;".format(
-        const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick
+    matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}', '{4}'); exit;".format(
+        const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB,
+        path_simulation_newick, path_reconstructed_newick, const.FILE_DIFF_METRICS
     )
 
     run_matlab_code(path_matlab, matlab_code)
