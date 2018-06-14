@@ -3,6 +3,8 @@ CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
 
 FILE_SIMULATION_NEWICK = 'simulation.newick'
 FILE_RECONSTRUCTED_NEWICK = 'reconstructed.newick'
+FILE_RECONSTRUCTED_TMP_NEWICK = 'reconstructed.tmp.newick'
+FILE_TRIPLETS_LIST = 'triplets-list.txt'
 FILE_TMC_LOG = 'tmc.log'
 FILE_MUTATION_TABLE = 'mutation_table.txt'
 FILE_RECONSTRUCTED_PNG = 'reconstructed.png'

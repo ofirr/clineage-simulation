@@ -71,10 +71,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     sys.path.append("/home/chun/clineage/")
     import clineage.wsgi
 
-    # transpose dictionary
-    from sequencing.calling.queries.mutation_maps import transpose_dict
-
-    from sequencing.phylo.triplets_wrapper import parse_mutations_table, run_sagis_triplets
+    from sequencing.phylo.triplets_wrapper import parse_mutations_table, calculate_triplets_tree, run_sagis_triplets_binary, convert_names_in_sagis_newick
 
     # construct path for input mutation table
     path_mutation_table = os.path.join(
@@ -82,53 +79,65 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     )
 
     # parse mutation table
-    calling = parse_mutations_table(path_mutation_table, inverse=False)
+    calling = parse_mutations_table(path_mutation_table, inverse=True)
 
-    # verify the presence of a root cell in the input data.
-    possible_roots = [cell for cell in calling if root_cell_notation in cell]
-    assert len(possible_roots) == 1
-    root_label = possible_roots[0]
-    # root = (root_label, calling[root_label])
-    cells = []
-    for cell in calling:
-        if cell == root_label:
-            continue
-        cells.append((cell, calling[cell]))
-    assert len(cells) > 2
-
-    if not quiet:
-        print(possible_roots)
-        print(cells)
-
-    # transpose
-    tcalling = transpose_dict(calling)
-
-    import dendropy
-
-    # run sagis triplets
-    rldr = [root_cell_notation]  # cf. 'Ave'
-    triplets_tree_path = os.path.join(
+    # construct path for final reconstructed newick
+    # this one will have the actual cell name
+    path_reconstructed_newick = os.path.join(
         path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK
     )
 
-    run_sagis_triplets(
-        textual_mutation_dict=tcalling,
-        cells_to_be_used_as_root=rldr,
-        newick_tree_path=triplets_tree_path,
-        tripletsnumber=5000000,
-        score_threshold=0,
-        scoring_method='uri10',
-        loci_filter='ncnr')
+    # construct path for temporary reconstructed newick
+    # this one will have the numeric ids instead which correspond to the actual cell names
+    path_reconstructed_tmp_newick = os.path.join(
+        path_simulation_output, const.FILE_RECONSTRUCTED_TMP_NEWICK
+    )
 
-    # fixme: would be nice if we can do this when calling `run_sagis_triplets`
+    # construct path for triplets list
+    path_triplets_list = os.path.join(
+        path_simulation_output, const.FILE_TRIPLETS_LIST
+    )
+
+    # create triplets list using given parameters
+    rldr = [root_cell_notation]  # cf. 'Ave'
+    cell_id_map_for_sagi = calculate_triplets_tree(
+        textual_mutation_dict=calling,
+        triplets_file=path_triplets_list,
+        cells_to_be_used_as_root=rldr,
+        score_threshold=0,
+        choosing_method="mms",
+        scoring_method="uri10",
+        printscores=True,
+        loci_filter="ncnr",
+        sabc=0,
+        tripletsnumber=5000000
+    )
+
+    # run sagis triplets binary
+    # the output newick will have the numeric ids which correspond to the actual cell names
+    ret_code = run_sagis_triplets_binary(
+        path_triplets_list,
+        path_reconstructed_tmp_newick
+    )
+
+    # convert the numeric ids in newick to the actual cell names
+    convert_names_in_sagis_newick(
+        path_reconstructed_tmp_newick,
+        triplets_tree_path,
+        cell_id_map_for_sagi
+    )
+
+    # fixme: would be nice if we can do this when calling `run_sagis_triplets_binary`
     os.rename(
         "treeReconstruction.log",
         os.path.join(path_simulation_output, const.FILE_TMC_LOG)
     )
 
+    import dendropy
+
     # load reconstructed tree
     tree_reconstructed = dendropy.Tree.get_from_path(
-        triplets_tree_path,
+        path_reconstructed_newick,
         "newick"
     )
 
@@ -139,9 +148,9 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     if root_node:
         tree_reconstructed.prune_subtree(root_node)
 
-    # re-save the newwick after eliminating quotes around taxa labels
+    # re-save the newick after eliminating quotes around taxa labels
     tree_reconstructed.write_to_path(
-        triplets_tree_path, schema='newick', unquoted_underscores=True
+        path_reconstructed_newick, schema='newick', unquoted_underscores=True
     )
 
 
@@ -249,8 +258,10 @@ def run(path_matlab, path_project, config_json, quiet):
 
     # report the final comparison metrics in a pretty format
     report(
-        os.path.join(path_simulation_output, const.FILE_COMPARISON_METRICS_RAW),
-        os.path.join(path_simulation_output, const.FILE_COMPARISON_METRICS_PRETTY),
+        os.path.join(path_simulation_output,
+                     const.FILE_COMPARISON_METRICS_RAW),
+        os.path.join(path_simulation_output,
+                     const.FILE_COMPARISON_METRICS_PRETTY),
         quiet
     )
 
