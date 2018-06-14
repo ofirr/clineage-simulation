@@ -123,7 +123,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     # convert the numeric ids in newick to the actual cell names
     convert_names_in_sagis_newick(
         path_reconstructed_tmp_newick,
-        triplets_tree_path,
+        path_reconstructed_newick,
         cell_id_map_for_sagi
     )
 
