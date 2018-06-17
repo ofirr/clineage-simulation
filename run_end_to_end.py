@@ -198,11 +198,11 @@ def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstruct
     utils.run_matlab_code(path_matlab, matlab_code)
 
 
-def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick, path_diff_metrics):
+def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick, path_sisters_csv, path_diff_metrics):
 
-    matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}', '{4}'); exit;".format(
+    matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}', '{4}', '{5}'); exit;".format(
         const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB,
-        path_simulation_newick, path_reconstructed_newick, path_diff_metrics
+        path_simulation_newick, path_reconstructed_newick, path_sisters_csv, path_diff_metrics
     )
 
     utils.run_matlab_code(path_matlab, matlab_code)
@@ -281,6 +281,7 @@ def run(path_matlab, path_project, config_json, quiet):
         envs[const.ENV_MATLAB_KEY],
         os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK),
         os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK),
+        os.path.join(path_simulation_newick, const.FILE_SISTERS_COUNT,
         os.path.join(path_simulation_output, const.FILE_DIFF_METRICS)
     )
 
