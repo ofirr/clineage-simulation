@@ -6,12 +6,7 @@ import re
 import pandas as pd
 
 from src import const
-from src import common
-
-def read_json_config(path):
-
-    with open(path, 'rt') as file_in:
-        return json.loads(file_in.read())
+from src import utils
 
 
 def run_command(cmd):
@@ -58,7 +53,8 @@ def simulate(path_matlab, path_project, config_filename):
     run_matlab_code(path_matlab, matlab_code)
 
     # read simulation configuration
-    config = read_json_config(os.path.join(path_project, config_filename))
+    config = utils.read_json_config(
+        os.path.join(path_project, config_filename))
 
     path_simulation_output = os.path.join(
         path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
@@ -115,7 +111,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
         printscores=True,
         loci_filter="ncnr",
         sabc=0,
-        tripletsnumber=5000000 # basically, max num of triplets
+        tripletsnumber=5000000  # basically, max num of triplets
     )
 
     # run sagis triplets binary
@@ -350,10 +346,11 @@ def parse_arguments():
     params = parser.parse_args()
 
     # read environment configuration
-    envs = read_json_config(params.path_env)
+    envs = utils.read_json_config(params.path_env)
 
     # get config json files
-    config_jsons = common.handle_config_args(params.path_project, params.configs)
+    config_jsons = utils.handle_config_args(
+        params.path_project, params.configs)
 
     return params, envs, config_jsons
 

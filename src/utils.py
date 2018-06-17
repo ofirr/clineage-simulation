@@ -1,4 +1,12 @@
 import os
+import json
+
+
+def read_json_config(path):
+
+    with open(path, 'rt') as file_in:
+        return json.loads(file_in.read())
+
 
 def handle_config_args(path_project, configs):
 
