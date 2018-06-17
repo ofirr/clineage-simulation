@@ -6,7 +6,7 @@ import re
 import pandas as pd
 
 from src import const
-
+from src import common
 
 def read_json_config(path):
 
@@ -352,14 +352,8 @@ def parse_arguments():
     # read environment configuration
     envs = read_json_config(params.path_env)
 
-    #fixme: right now, config.lst must be specified as a first element
-    if params.configs[0] == const.FILE_JSON_CONFIG_LIST:
-        with open(os.path.join(params.path_project, const.FILE_JSON_CONFIG_LIST), 'rt') as fin:
-            config_jsons = fin.read().splitlines()
-            # remove empty strings
-            config_jsons = list(filter(None, config_jsons))
-    else:
-        config_jsons = params.configs
+    # get config json files
+    config_jsons = common.handle_config_args(params.path_project, params.configs)
 
     return params, envs, config_jsons
 
