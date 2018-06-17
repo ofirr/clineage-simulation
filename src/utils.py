@@ -8,6 +8,26 @@ def read_json_config(path):
         return json.loads(file_in.read())
 
 
+def run_command(cmd):
+    "run command"
+
+    process = subprocess.Popen(cmd)
+
+    process.wait()
+
+
+def run_matlab_code(path_matlab, matlab_code):
+    "run matlab script"
+
+    cmd = [
+        os.path.join(path_matlab, 'matlab'),
+        '-nodisplay', '-nosplash', '-nodesktop',
+        '-r', matlab_code
+    ]
+
+    run_command(cmd)
+
+
 def handle_config_args(path_project, configs):
 
     config_jsons = []

@@ -9,26 +9,6 @@ from src import const
 from src import utils
 
 
-def run_command(cmd):
-    "run command"
-
-    process = subprocess.Popen(cmd)
-
-    process.wait()
-
-
-def run_matlab_code(path_matlab, matlab_code):
-    "run matlab script"
-
-    cmd = [
-        os.path.join(path_matlab, 'matlab'),
-        '-nodisplay', '-nosplash', '-nodesktop',
-        '-r', matlab_code
-    ]
-
-    run_command(cmd)
-
-
 def generate_tree_ascii_plot(path_newick):
 
     import dendropy
@@ -50,7 +30,7 @@ def simulate(path_matlab, path_project, config_filename):
         const.PATH_ESTGT, const.PATH_SIMULATION_LIB, path_project, config_filename
     )
 
-    run_matlab_code(path_matlab, matlab_code)
+    utils.run_matlab_code(path_matlab, matlab_code)
 
     # read simulation configuration
     config = utils.read_json_config(
@@ -205,7 +185,7 @@ def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstruct
         const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick, path_png
     )
 
-    run_matlab_code(path_matlab, matlab_code)
+    utils.run_matlab_code(path_matlab, matlab_code)
 
 
 def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick, path_diff_metrics):
@@ -215,7 +195,7 @@ def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_
         path_simulation_newick, path_reconstructed_newick, path_diff_metrics
     )
 
-    run_matlab_code(path_matlab, matlab_code)
+    utils.run_matlab_code(path_matlab, matlab_code)
 
 
 def compare(path_simulation_newick, path_reconstructed_newick, path_score_output):
@@ -237,7 +217,7 @@ def compare(path_simulation_newick, path_reconstructed_newick, path_score_output
 
     cmd.extend(metrics['rooted'].split(' '))
 
-    run_command(cmd)
+    utils.run_command(cmd)
 
 
 def report(path_scores_output_raw, path_scores_output_pretty, quiet=True):
@@ -350,7 +330,8 @@ def parse_arguments():
 
     # get config json files
     config_jsons = utils.handle_config_args(
-        params.path_project, params.configs)
+        params.path_project, params.configs
+    )
 
     return params, envs, config_jsons
 

@@ -4,38 +4,13 @@ import json
 import argparse
 
 from src import const
-
-
-def read_json_config(path):
-
-    with open(path, 'rt') as file_in:
-        return json.loads(file_in.read())
-
-
-def run_command(cmd):
-    "run command"
-
-    process = subprocess.Popen(cmd)
-
-    process.wait()
-
-
-def run_matlab_code(path_matlab, matlab_code):
-    "run matlab script"
-
-    cmd = [
-        os.path.join(path_matlab, 'matlab'),
-        '-nodisplay', '-nosplash', '-nodesktop',
-        '-r', matlab_code
-    ]
-
-    run_command(cmd)
+from src import utils
 
 
 def get_simulation_output_path(path_project, config_filename):
 
     # read simulation configuration
-    config = read_json_config(os.path.join(path_project, config_filename))
+    config = utils.read_json_config(os.path.join(path_project, config_filename))
 
     path_simulation_output = os.path.join(
         path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
@@ -50,7 +25,7 @@ def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_
         const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB, path_simulation_newick, path_reconstructed_newick
     )
 
-    run_matlab_code(path_matlab, matlab_code)
+    utils.run_matlab_code(path_matlab, matlab_code)
 
 
 def run(path_matlab, path_project, config_json):
@@ -98,16 +73,12 @@ def parse_arguments():
     params = parser.parse_args()
 
     # read environment configuration
-    envs = read_json_config(params.path_env)
+    envs = utils.read_json_config(params.path_env)
 
-    #fixme: right now, config.lst must be specified as a first element
-    if params.configs[0] == const.FILE_JSON_CONFIG_LIST:
-        with open(os.path.join(params.path_project, const.FILE_JSON_CONFIG_LIST), 'rt') as fin:
-            config_jsons = fin.read().splitlines()
-            # remove empty strings
-            config_jsons = list(filter(None, config_jsons))
-    else:
-        config_jsons = params.configs
+    # get config json files
+    config_jsons = utils.handle_config_args(
+        params.path_project, params.configs
+    )
 
     return params, envs, config_jsons
 

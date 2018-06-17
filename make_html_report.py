@@ -5,12 +5,7 @@ import pandas as pd
 import argparse
 
 from src import const
-
-
-def read_json_config(path):
-
-    with open(path, 'rt') as file_in:
-        return json.loads(file_in.read())
+from src import utils
 
 
 def read_textfile(directory, filename):
@@ -206,7 +201,7 @@ def make_html(path_project, config_jsons):
             raise Exception("Unable to find {}".format(config_json))
 
         # read simulation configuration
-        config = read_json_config(os.path.join(path_project, config_json))
+        config = utils.read_json_config(os.path.join(path_project, config_json))
 
         path_output = os.path.join(
             path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT])
@@ -266,14 +261,10 @@ def parse_arguments():
     # parse arguments
     params = parser.parse_args()
 
-    #fixme: right now, config.lst must be specified as a first element
-    if params.configs[0] == const.FILE_JSON_CONFIG_LIST:
-        with open(os.path.join(params.path_project, const.FILE_JSON_CONFIG_LIST), 'rt') as fin:
-            config_jsons = fin.read().splitlines()
-            # remove empty strings
-            config_jsons = list(filter(None, config_jsons))
-    else:
-        config_jsons = params.configs
+    # get config json files
+    config_jsons = utils.handle_config_args(
+        params.path_project, params.configs
+    )
 
     return params, config_jsons
 
