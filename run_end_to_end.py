@@ -115,7 +115,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
         printscores=True,
         loci_filter="ncnr",
         sabc=0,
-        tripletsnumber=5000000
+        tripletsnumber=5000000 # basically, max num of triplets
     )
 
     # run sagis triplets binary
