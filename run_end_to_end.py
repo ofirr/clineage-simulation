@@ -176,6 +176,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     )
     df_triplets.to_csv(path_triplets_list_csv, index=False)
 
+    # get the number of sisters for each node
     from ete3 import Tree
     with open(path_reconstructed_newick, 'rt') as fin:
         newick = fin.read()
@@ -184,7 +185,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
         for n in ete_tree.get_leaves():
             sisters.append([n.name, len(n.get_sisters())])
         df = pd.DataFrame(sisters, columns=['cell_name', 'num_sisters'])
-        df.to_csv(os.path.join(path_simulation_output, 'sisters.csv'), index=False)
+        df.to_csv(os.path.join(path_simulation_output, const.FILE_SISTERS_COUNT), index=False)
 
 
 # deprecated

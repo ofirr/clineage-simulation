@@ -1,4 +1,9 @@
-function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tree, path_diff_metrics)
+function [] = highlight_differences2(...
+    path_simulation_tree, ...
+    path_reconstructed_tree, ...
+    path_sisters_count, ...
+    path_diff_metrics ...
+)
 % calculate distance from root to each leaf and compare
 
     % read simulation tree from newick file
@@ -6,7 +11,7 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
 
     % read reconstructed tree from newick file
     reconstructed_tree = phytreeread(path_reconstructed_tree);
-
+    
     % reorder leaves in reconstructed tree to match leaf order in simulation tree
     reconstructed_tree_reordered = reorder(reconstructed_tree, simulation_tree);
 
@@ -54,6 +59,14 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
             counter.diff = counter.diff + 1;
         end
 
+    end
+    
+    fileID = fopen(path_sisters_count);
+    sisters = textscan(fileID, '%s %d', 'Delimiter', ',', 'HeaderLines', 1);
+    fclose(fileID);
+    sisters = { sisters{1}{sisters{2} > 1} };
+    for jj = 1:length(sisters)
+        mark_as_not_binary(t2, sisters(jj));
     end
 
     % save to png
@@ -108,6 +121,22 @@ function [] = highlight_differences2(path_simulation_tree, path_reconstructed_tr
             % make the branch line thicker
             set(tree.BranchLines(paths.(leaf_name)), 'LineWidth', line_width);
 
+            % make the leaf name highlighted
+            set(tree.terminalNodeLabels(idx), 'Background', bg_color, 'FontWeight', 'bold');
+        end
+
+    end
+
+    
+    function [] = mark_as_not_binary(tree, leaf_name)
+
+        bg_color = 'red';
+
+        % find the index of the leaf that we're interested in
+        % -1 means not found
+        idx = find_idx_by_leaf_name(tree, leaf_name);
+
+        if idx ~= -1
             % make the leaf name highlighted
             set(tree.terminalNodeLabels(idx), 'Background', bg_color, 'FontWeight', 'bold');
         end

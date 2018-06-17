@@ -14,10 +14,11 @@ addpath('/Users/dchun/projects/eSTGt/eSTGt/');
 %% Reconstruction
 
 path_working='../analysis/tmc/case-09/';
-%path_working='../examples/example-01/outputs';
+path_working='../examples/example-03/case-05';
 
 path_simulation_tree = fullfile(path_working, 'simulation.newick');
 path_reconstructed_tree = fullfile(path_working, 'reconstructed.newick');
+path_sisters_count = fullfile(path_working, 'sisters.csv');
 path_diff_metrics = fullfile(path_working, 'diff-score.json');
 
 %% Simulation
