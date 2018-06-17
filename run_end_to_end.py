@@ -281,7 +281,7 @@ def run(path_matlab, path_project, config_json, quiet):
         envs[const.ENV_MATLAB_KEY],
         os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK),
         os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK),
-        os.path.join(path_simulation_newick, const.FILE_SISTERS_COUNT),
+        os.path.join(path_simulation_output, const.FILE_SISTERS_COUNT),
         os.path.join(path_simulation_output, const.FILE_DIFF_METRICS)
     )
 
