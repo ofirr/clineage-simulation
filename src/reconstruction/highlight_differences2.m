@@ -130,7 +130,7 @@ function [] = highlight_differences2(...
     
     function [] = mark_as_not_binary(tree, leaf_name)
 
-        bg_color = 'red';
+        color = 'red';
 
         % find the index of the leaf that we're interested in
         % -1 means not found
@@ -138,7 +138,7 @@ function [] = highlight_differences2(...
 
         if idx ~= -1
             % make the leaf name highlighted
-            set(tree.terminalNodeLabels(idx), 'Background', bg_color, 'FontWeight', 'bold');
+            set(tree.terminalNodeLabels(idx), 'Color', color, 'FontWeight', 'bold');
         end
 
     end
