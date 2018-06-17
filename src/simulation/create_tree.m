@@ -1,4 +1,9 @@
-function create_tree(rules, my_run, path_newick, path_png)
+function [phytree_obj] = create_tree( ...
+    rules, ...
+    my_run, ...
+    path_newick_without_distance, path_newick_with_distance, ...
+    path_png_without_distance, path_png_with_distance ...
+)
 
     % get the root node
     root_node = my_run.Nodes{1}(1);
@@ -13,25 +18,23 @@ function create_tree(rules, my_run, path_newick, path_png)
 
     % save as newtick
     phytreewrite(...
-        path_newick, ...
+        path_newick_without_distance, ...
         phytree_obj, ...
         'Distances', 'false', ...
         'BranchNames', 'false' ...
     );
 
-    % use plot2 for now because it gives us the labels
-    %plot1(T.tree, rules.AllNames);
-    plot2(path_newick);
+    phytreewrite(...
+        path_newick_with_distance, ...
+        phytree_obj, ...
+        'Distances', 'true', ...
+        'BranchNames', 'false' ...
+    );
 
-    % set plot title with seed number and simulation time
-    ha = gca;
-    ha.Title.String = sprintf('Simulation - Seed: %d / SimTime: %d', rules.Seed, rules.SimTime);
-
-    % save as png file
-    saveas(gcf, path_png, 'png');
-
+    plot_tree(path_newick_without_distance, path_png_without_distance, rules);
+    plot_tree(path_newick_with_distance, path_png_with_distance, rules);
     
-    function [] = plot1(tree, node_names)
+    function [] = plot_method_01(tree, node_names)
     % plot tree using eSTGt plotter
     % this doesn't add labels currently
     
@@ -43,12 +46,26 @@ function create_tree(rules, my_run, path_newick, path_png)
         
     end
 
-    function [] = plot2(path_newick)
+    function [] = plot_method_02(path_newick)
     % plot tree using MATLAB built-in function
         
-        tree = phytreeread(path_newick)
+        tree = phytreeread(path_newick);
         plot(tree);
         
     end
-    
+        
+    function [] = plot_tree(path_newick, path_png, rules)
+        
+        % use plot2 for now because it gives us the labels
+        plot_method_02(path_newick);    
+
+        % set plot title with seed number and simulation time
+        ha = gca;
+        ha.Title.String = sprintf('Simulation - Seed: %d / SimTime: %d', rules.Seed, rules.SimTime);
+
+        % save as png file
+        saveas(gcf, path_png, 'png');
+
+    end
+
 end
