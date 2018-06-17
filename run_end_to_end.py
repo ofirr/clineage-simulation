@@ -176,6 +176,16 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     )
     df_triplets.to_csv(path_triplets_list_csv, index=False)
 
+    from ete3 import Tree
+    with open(path_reconstructed_newick, 'rt') as fin:
+        newick = fin.read()
+        ete_tree = Tree(newick)
+        sisters = []
+        for n in ete_tree.get_leaves():
+            sisters.append([n.name, len(n.get_sisters())])
+        df = pd.DataFrame(sisters, columns=['cell_name', 'num_sisters'])
+        df.to_csv(os.path.join(path_simulation_output, 'sisters.csv'), index=False)
+
 
 # deprecated
 def plot_recontructed_tree(path_matlab, path_simulation_newick, path_reconstructed_newick, path_png):
