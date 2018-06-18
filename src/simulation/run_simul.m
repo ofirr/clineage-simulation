@@ -59,7 +59,6 @@ rules = ParseeSTGProgram(program_file);
 % get the number of microsatellite loci from the file
 % overwrite the rule
 % rules.Prod{1,1}.InternalStates.MS.DupNum = size(om6_ms, 1);
-rules.Prod{1,1}.InternalStates.MS.DupNum = 10;
 num_of_ms_loci = rules.Prod{1,1}.InternalStates.MS.DupNum;
 
 % overwrite the rule
