@@ -2,6 +2,8 @@
 import math
 import os
 import subprocess
+import argparse
+
 
 def run_command(cmd):
     "run command"
@@ -11,14 +13,16 @@ def run_command(cmd):
     process.wait()
 
 
-xml = """
+def main(seed):
+
+    xml = """
 <Program>
 <ExecParams>
     <SimTime>
         100
     </SimTime>
     <Seed>
-        875887
+        {0}
     </Seed>
 </ExecParams>
 <FunHandleName> update_rules </FunHandleName>
@@ -30,7 +34,7 @@ xml = """
         <Name> MS </Name>
         <InitVal> -1 </InitVal>
         <FuncHandleName> update_microsatellite </FuncHandleName>
-        <DuplicateNum> {} </DuplicateNum>
+        <DuplicateNum> {1} </DuplicateNum>
     </InternalState>
     <InternalState>
         <Name> Gen </Name>
@@ -44,23 +48,56 @@ xml = """
 </Program>
 """
 
-loci_num_list = []
-for i in range(1, 14):
-  loci = int(math.pow(2, i))
-  loci_num_list.append(loci)
+    loci_num_list = []
+    for i in range(1, 14):
+        loci = int(math.pow(2, i))
+        loci_num_list.append(loci)
 
-loci_num_list.append(9936)
+    loci_num_list.append(9936)
 
-for i, loci_num in enumerate(loci_num_list):
+    for i, loci_num in enumerate(loci_num_list):
 
-  path_work = "tmc-{0:03d}".format(i + 1)
+        path_work = "tmc-{0:03d}".format(i + 1)
 
-  os.makedirs(path_work, exist_ok=True)
+        os.makedirs(path_work, exist_ok=True)
 
-  run_command(
-    ['unzip', 'tmc-template.zip', '-d', path_work]
-  )
+        run_command(
+            ['unzip', 'tmc-template.zip', '-d', path_work]
+        )
 
-  with open(os.path.join(path_work, "simulation.xml"), 'wt') as fout:
-    fout.write( xml.format(loci_num) )
-    fout.write('\n')
+        with open(os.path.join(path_work, "simulation.xml"), 'wt') as fout:
+            fout.write(xml.format(seed, loci_num))
+            fout.write('\n')
+
+
+def parse_arguments():
+
+    # 431414
+    # 910648
+    # 181848
+    # 263803
+    # 145539
+    # 136069
+    # 869293
+    # 579705
+    # 549861
+    # 875887
+
+    parser = argparse.ArgumentParser(description='generate')
+
+    parser.add_argument(
+        "--seed",
+        action="store",
+        dest="seed",
+        required=True
+    )
+
+    # parse arguments
+    params = parser.parse_args()
+
+    return params
+
+
+if __name__ == "__main__":
+
+    params = parse_arguments()
