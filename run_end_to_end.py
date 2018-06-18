@@ -108,10 +108,11 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
     )
 
     # fixme: would be nice if we can do this when calling `run_sagis_triplets_binary`
-    os.rename(
-        "treeReconstruction.log",
-        os.path.join(path_simulation_output, const.FILE_TMC_LOG)
-    )
+    # fixme: problematic when running multiple simultaneously using SGE
+    # os.rename(
+    #     "treeReconstruction.log",
+    #     os.path.join(path_simulation_output, const.FILE_TMC_LOG)
+    # )
 
     import dendropy
 
