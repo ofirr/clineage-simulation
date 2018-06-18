@@ -1,7 +1,5 @@
 #!/bin/bash
 
-path_project="/home/chun/projects/clineage-simulation/analysis/tmc/tmc-001"
-
 for nn in {1..14}
 do
 
