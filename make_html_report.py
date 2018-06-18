@@ -107,7 +107,7 @@ def get_diff_metrics(path):
         return json.loads(file_in.read())
 
 
-def make_html(path_project, config_jsons):
+def make_html(path_project, config_jsons, exclude_mutation_table):
 
     templ = """
 <html>
@@ -212,13 +212,18 @@ def make_html(path_project, config_jsons):
         similarity_score = '{0:2.1f}%'.format((diff_metrics['total'] - (
             diff_metrics['diff'] + diff_metrics['missing'])) / diff_metrics['total'] * 100.0)
 
+        if exclude_mutation_table:
+            mutation_table = "excluded"
+        else:
+            mutation_table = convert_mutation_table_to_html(path_output, const.FILE_MUTATION_TABLE)
+
         item = {
             "config": {
                 "filename": config_json,
                 "contents": config
             },
             "simulation": {
-                "mutationTable": convert_mutation_table_to_html(path_output, const.FILE_MUTATION_TABLE),
+                "mutationTable": mutation_table,
                 "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_SIMULATION_NEWICK)
             },
             "reconstructed": {
@@ -258,6 +263,13 @@ def parse_arguments():
         required=True
     )
 
+    parser.add_argument(
+        "--exclude-mutation-table",
+        nargs='+',
+        dest="exclude_mutation_table",
+        required=False
+    )
+
     # parse arguments
     params = parser.parse_args()
 
@@ -273,4 +285,4 @@ if __name__ == "__main__":
 
     params, config_jsons = parse_arguments()
 
-    make_html(params.path_project, config_jsons)
+    make_html(params.path_project, config_jsons, params.exclude_mutation_table)
