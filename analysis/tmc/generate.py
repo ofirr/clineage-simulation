@@ -101,3 +101,5 @@ def parse_arguments():
 if __name__ == "__main__":
 
     params = parse_arguments()
+
+    main(params.seed)
