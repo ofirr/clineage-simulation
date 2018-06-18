@@ -1,0 +1,3 @@
+names	Run1_C_2	Run1_C_5	Run1_C_6	Run1_C_8	Run1_C_10	Run1_C_11	root
+LOC_1	19	18	17	17	17	17	19
+LOC_2	21	20	20	21	21	20	20

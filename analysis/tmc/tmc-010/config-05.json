@@ -1,0 +1,8 @@
+{
+    "title": "8 leaves",
+    "pathRelativeOutput": "case-05",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 7
+}

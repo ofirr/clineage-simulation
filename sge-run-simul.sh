@@ -12,10 +12,8 @@ path_project=$1
 config_json_file=$2
 
 # write SGE job info to a file
-cat << EOF > ${path_project}/sge-job-info.txt
+cat << EOF >> ${path_project}/sge-job-info.txt
 $JOB_ID
-$HOME/cluster_output/$JOB_ID.stdout
-$HOME/cluster_output/$JOB_ID.stderr
 EOF
 
 # run simulation
