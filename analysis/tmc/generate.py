@@ -61,12 +61,6 @@ for i, loci_num in enumerate(loci_num_list):
     ['unzip', 'tmc-template.zip', '-d', path_work]
   )
 
-
   with open(os.path.join(path_work, "simulation.xml"), 'wt') as fout:
     fout.write( xml.format(loci_num) )
     fout.write('\n')
-
-
-
-
-
