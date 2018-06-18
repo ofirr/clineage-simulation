@@ -32,4 +32,5 @@ fi
 qsub \
 	-N test \
 	-q all2.q \
-	/home/chun/projects/clineage-simulation/sge-run-simul.sh ${path_program} ${path_project} ${config_file}
+	-cwd \
+	./sge-run-simul.sh ${path_program} ${path_project} ${config_file}

@@ -22,8 +22,8 @@ EOF
 cd ${path_program}
 
 # run simulation
-python ./run_end_to_end.py \
-  --env ./config.math102-lx.env \
+python ${path_program}/run_end_to_end.py \
+  --env ${path_program}/config.math102-lx.env \
   --project ${path_project} \
   --config ${config_json_file}
 
