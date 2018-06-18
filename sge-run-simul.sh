@@ -8,9 +8,8 @@ ulimit -c 10
 
 source "/home/chun/miniconda3/bin/activate" cl
 
-path_program=$1
-path_project=$2
-config_json_file=$3
+path_project=$1
+config_json_file=$2
 
 # write SGE job info to a file
 cat << EOF > ${path_project}/sge-job-info.txt
@@ -19,11 +18,9 @@ $HOME/cluster_output/$JOB_ID.stdout
 $HOME/cluster_output/$JOB_ID.stderr
 EOF
 
-cd ${path_program}
-
 # run simulation
-python ${path_program}/run_end_to_end.py \
-  --env ${path_program}/config.math102-lx.env \
+python ./run_end_to_end.py \
+  --env ./config.math102-lx.env \
   --project ${path_project} \
   --config ${config_json_file}
 
