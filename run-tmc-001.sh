@@ -1,6 +1,6 @@
 #!/bin/bash
 
-path_project='./analysis/tmc/'
+path_project='./analysis/tmc-001/'
 
 python run_end_to_end.py \
   --env config.math102-lx.env \

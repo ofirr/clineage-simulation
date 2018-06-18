@@ -17,7 +17,7 @@ addpath('~/projects/clineage-simulation/eSTGt/');
 
 %% Reconstruction
 
-path_working='../analysis/tmc/case-09/';
+path_working='../analysis/tmc-001/case-09/';
 path_working='../examples/example-02/outputs';
 
 path_simulation_tree = fullfile(path_working, 'simulation.newick');
