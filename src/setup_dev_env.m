@@ -11,10 +11,14 @@ addpath('C:\Users\chun\projects\eSTGt\eSTGt');
 
 addpath('/Users/dchun/projects/eSTGt/eSTGt/');
 
+%% path to eSTGt (math102-lx)
+
+addpath('~/projects/clineage-simulation/eSTGt/');
+
 %% Reconstruction
 
 path_working='../analysis/tmc/case-09/';
-path_working='../examples/example-03/case-05';
+path_working='../examples/example-02/outputs';
 
 path_simulation_tree = fullfile(path_working, 'simulation.newick');
 path_reconstructed_tree = fullfile(path_working, 'reconstructed.newick');
