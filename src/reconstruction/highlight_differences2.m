@@ -6,6 +6,9 @@ function [] = highlight_differences2(...
 )
 % calculate distance from root to each leaf and compare
 
+    % when set to true, it will output very simple plan trees
+    add_beautification = true;
+
     % read simulation tree from newick file
     simulation_tree = phytreeread(path_simulation_tree);
 
@@ -13,15 +16,19 @@ function [] = highlight_differences2(...
     reconstructed_tree = phytreeread(path_reconstructed_tree);
     
     % reorder leaves in reconstructed tree to match leaf order in simulation tree
-    reconstructed_tree_reordered = reorder(reconstructed_tree, simulation_tree);
+    reconstructed_tree_reordered = reorder(reconstructed_tree, simulation_tree);    
 
     % plot simulation tree
     t1 = plot(simulation_tree);
-    beautify_tree(t1, 'Simulation');
+    beautify_tree(t1, 'Simulation', add_beautification);
 
     % plot reconstructed tree
     t2 = plot(reconstructed_tree_reordered);
-    beautify_tree(t2, 'Reconstructed (Reordered)');
+    beautify_tree(t2, 'Reconstructed (Reordered)', add_beautification);
+    
+    if add_beautification == false
+        return;
+    end
 
     % get leaf names from simulation and reconstructed tree
     names1 = get_leaf_names(simulation_tree);
@@ -164,16 +171,18 @@ function [] = highlight_differences2(...
 
     end
 
-    function [] = beautify_tree(tree, fig_title)
+    function [] = beautify_tree(tree, fig_title, add_beautification)
 
-        marker_size = 10;
-        marker_face_color = 'red';
+        if add_beautification
+            marker_size = 10;
+            marker_face_color = 'red';
 
-        % change size and face color of the leaf dots
-        set(tree.LeafDots, 'MarkerSize', marker_size, 'MarkerFaceColor', marker_face_color);
+            % change size and face color of the leaf dots
+            set(tree.LeafDots, 'MarkerSize', marker_size, 'MarkerFaceColor', marker_face_color);
 
-        % change size of the branch dots
-        set(tree.BranchDots, 'MarkerSize', marker_size);
+            % change size of the branch dots
+            set(tree.BranchDots, 'MarkerSize', marker_size);
+        end
 
         % change figure title
         title(fig_title);
