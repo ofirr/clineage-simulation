@@ -265,7 +265,7 @@ def parse_arguments():
 
     parser.add_argument(
         "--exclude-mutation-table",
-        nargs='+',
+        action="store_true",
         dest="exclude_mutation_table",
         required=False
     )
