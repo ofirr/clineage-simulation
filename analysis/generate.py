@@ -57,7 +57,7 @@ def main(seed):
 
     for i, loci_num in enumerate(loci_num_list):
 
-        path_work = "tmc-{0}/tmc-{1:03d}".format(seed, i + 1)
+        path_work = "tmc-{0}/n-{1:03d}".format(seed, i + 1)
 
         os.makedirs(path_work, exist_ok=True)
 

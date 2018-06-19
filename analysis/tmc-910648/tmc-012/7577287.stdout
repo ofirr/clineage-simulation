@@ -1,102 +1,0 @@
-
-                            < M A T L A B (R) >
-                  Copyright 1984-2017 The MathWorks, Inc.
-                   R2017a (9.2.0.538062) 64-bit (glnxa64)
-                             February 23, 2017
-
- 
-To get started, type one of these: helpwin, helpdesk, or demo.
-For product information, visit www.mathworks.com.
- 
-Running "Run1", Seed: 910648
-Current Simulation Time (Real Clock): 3.2075 (5.2336 sec.)
- *** Finished Simulation Run ***
-
-config-09.json #############################################
-
-[#.........] | Progress: 1 | Time: 0.0s | ETA: --[.#........] | Progress: 3 | Time: 0.1s | ETA: --[..#.......] | Progress: 5 | Time: 0.2s | ETA: --[...#......] | Progress: 7 | Time: 0.2s | ETA: --[....#.....] | Progress: 9 | Time: 0.3s | ETA: --[.....#....] | Progress: 11 | Time: 0.4s | ETA: --[......#...] | Progress: 13 | Time: 0.4s | ETA: --[.......#..] | Progress: 15 | Time: 0.5s | ETA: --[........#.] | Progress: 17 | Time: 0.6s | ETA: --[.........#] | Progress: 19 | Time: 0.7s | ETA: --[........#.] | Progress: 21 | Time: 0.7s | ETA: --[.......#..] | Progress: 23 | Time: 0.8s | ETA: --[......#...] | Progress: 25 | Time: 0.9s | ETA: --[.....#....] | Progress: 27 | Time: 0.9s | ETA: --[....#.....] | Progress: 29 | Time: 1.0s | ETA: --[...#......] | Progress: 31 | Time: 1.1s | ETA: --[..#.......] | Progress: 33 | Time: 1.1s | ETA: --[.#........] | Progress: 35 | Time: 1.2s | ETA: --[#.........] | Progress: 37 | Time: 1.3s | ETA: --[.#........] | Progress: 39 | Time: 1.3s | ETA: --[..#.......] | Progress: 41 | Time: 1.4s | ETA: --[...#......] | Progress: 43 | Time: 1.5s | ETA: --[....#.....] | Progress: 45 | Time: 1.5s | ETA: --[.....#....] | Progress: 47 | Time: 1.6s | ETA: --[......#...] | Progress: 49 | Time: 1.7s | ETA: --[.......#..] | Progress: 51 | Time: 1.7s | ETA: --[........#.] | Progress: 53 | Time: 1.8s | ETA: --[.........#] | Progress: 55 | Time: 1.9s | ETA: --[........#.] | Progress: 57 | Time: 1.9s | ETA: --[.......#..] | Progress: 59 | Time: 2.0s | ETA: --[......#...] | Progress: 61 | Time: 2.1s | ETA: --[.....#....] | Progress: 63 | Time: 2.1s | ETA: --[....#.....] | Progress: 65 | Time: 2.2s | ETA: --[...#......] | Progress: 67 | Time: 2.3s | ETA: --[..#.......] | Progress: 69 | Time: 2.3s | ETA: --[.#........] | Progress: 71 | Time: 2.4s | ETA: --[#.........] | Progress: 73 | Time: 2.5s | ETA: --[.#........] | Progress: 75 | Time: 2.5s | ETA: --[..#.......] | Progress: 77 | Time: 2.6s | ETA: --[...#......] | Progress: 79 | Time: 2.7s | ETA: --[....#.....] | Progress: 81 | Time: 2.7s | ETA: --[.....#....] | Progress: 83 | Time: 2.8s | ETA: --[......#...] | Progress: 85 | Time: 2.9s | ETA: --[.......#..] | Progress: 87 | Time: 2.9s | ETA: --[........#.] | Progress: 89 | Time: 3.0s | ETA: --[.........#] | Progress: 91 | Time: 3.1s | ETA: --[........#.] | Progress: 93 | Time: 3.1s | ETA: --[.......#..] | Progress: 95 | Time: 3.2s | ETA: --[......#...] | Progress: 97 | Time: 3.3s | ETA: --[.....#....] | Progress: 99 | Time: 3.4s | ETA: --[....#.....] | Progress: 101 | Time: 3.4s | ETA: --[...#......] | Progress: 103 | Time: 3.5s | ETA: --[..#.......] | Progress: 105 | Time: 3.6s | ETA: --[.#........] | Progress: 107 | Time: 3.6s | ETA: --[#.........] | Progress: 109 | Time: 3.7s | ETA: --[.#........] | Progress: 111 | Time: 3.8s | ETA: --[..#.......] | Progress: 113 | Time: 3.8s | ETA: --[...#......] | Progress: 115 | Time: 3.9s | ETA: --[....#.....] | Progress: 117 | Time: 4.0s | ETA: --[.....#....] | Progress: 119 | Time: 4.0s | ETA: --[......#...] | Progress: 121 | Time: 4.1s | ETA: --[.......#..] | Progress: 123 | Time: 4.2s | ETA: --[........#.] | Progress: 125 | Time: 4.2s | ETA: --[.........#] | Progress: 127 | Time: 4.3s | ETA: --[........#.] | Progress: 129 | Time: 4.4s | ETA: --[.......#..] | Progress: 131 | Time: 4.4s | ETA: --[......#...] | Progress: 133 | Time: 4.5s | ETA: --[.....#....] | Progress: 135 | Time: 4.6s | ETA: --[....#.....] | Progress: 137 | Time: 4.6s | ETA: --[...#......] | Progress: 139 | Time: 4.7s | ETA: --[..#.......] | Progress: 141 | Time: 4.8s | ETA: --[.#........] | Progress: 143 | Time: 4.8s | ETA: --[#.........] | Progress: 145 | Time: 4.9s | ETA: --[.#........] | Progress: 147 | Time: 5.0s | ETA: --[..#.......] | Progress: 149 | Time: 5.0s | ETA: --[...#......] | Progress: 151 | Time: 5.1s | ETA: --[....#.....] | Progress: 153 | Time: 5.2s | ETA: --[.....#....] | Progress: 155 | Time: 5.2s | ETA: --[......#...] | Progress: 157 | Time: 5.3s | ETA: --[.......#..] | Progress: 159 | Time: 5.4s | ETA: --[........#.] | Progress: 161 | Time: 5.4s | ETA: --[.........#] | Progress: 163 | Time: 5.5s | ETA: --[........#.] | Progress: 165 | Time: 5.6s | ETA: --[.......#..] | Progress: 167 | Time: 5.6s | ETA: --[##########] | Progress: 168 | Time: 5.7s | ETA: --fit<>, fid</home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-012/case-09/triplets-list.raw.txt>, flg<treeReconstruction.log>, frt<resTree.tree>, frtN</home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-012/case-09/reconstructed.tmp.newick>, fsd<qqq.dat>, fst<simul.tree>, -->index=2
-Read triplets from file...
-Read triplets from file...Finished
-N_triplets = 168, idMaxFound = 12
-treeBuildBasedOnTriplets_run...
-make_isTogetherInTripletAndDeleteExtraTriplets: Finished
-maxCut with 10 nodes: Finished
-treeBuildBasedOnTriplets_run...Finished
-Saving tree to file...
-Saving tree to file...Finished
-
-                            < M A T L A B (R) >
-                  Copyright 1984-2017 The MathWorks, Inc.
-                   R2017a (9.2.0.538062) 64-bit (glnxa64)
-                             February 23, 2017
-
- 
-To get started, type one of these: helpwin, helpdesk, or demo.
-For product information, visit www.mathworks.com.
- 
-TreeCmp version build2
-
-Active options:
-Type of the analysis:  ref-to-all comparison mode (-r)
-Metrics:
-  1. MatchingCluster (mc)
-  2. R-F_Cluster (rc)
-  3. NodalSplitted (ns)
-  4. Triples (tt)
-  5. MatchingPair (mp)
-  6. MAST (mt)
-  7. CopheneticL2Metric (co)
-Input file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-012/case-09/reconstructed.newick
-Output file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-012/case-09/scores.raw.out
-Additional options:
-N - Report normalized distances.
-P - Prune compared trees if needed (trees can have different leaf sets).
-I - Include summary section in the output file.
------
-2018-06-19 08:05:54: Start of reading random statistics.
-2018-06-19 08:05:54: End of reading random statistics.
-2018-06-19 08:05:54: Start of scanning input file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-012/case-09/reconstructed.newick
-2018-06-19 08:05:54: End of scanning input file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-012/case-09/reconstructed.newick
-2018-06-19 08:05:54: 1 valid trees found in file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-012/case-09/reconstructed.newick
-2018-06-19 08:05:54: Start of calculation...please wait...
-2018-06-19 08:05:54: 0.00% completed...
-2018-06-19 08:05:54: 100.00% completed.
-2018-06-19 08:05:54: End of calculation.
-2018-06-19 08:05:54: Total calculation time: 23 ms.
-                              metrics
-No                             1.0000
-RefTree                        1.0000
-Tree                           1.0000
-RefTree_taxa                  12.0000
-Tree_taxa                     12.0000
-Common_taxa                   12.0000
-MatchingCluster               17.0000
-MatchingCluster_toYuleAvg      0.4789
-MatchingCluster_toUnifAvg      0.4496
-R-F_Cluster                    3.5000
-R-F_Cluster_toYuleAvg          0.3590
-R-F_Cluster_toUnifAvg          0.3575
-NodalSplitted                 13.7477
-NodalSplitted_toYuleAvg        0.5047
-NodalSplitted_toUnifAvg        0.4595
-Triples                       33.0000
-Triples_toYuleAvg              0.2242
-Triples_toUnifAvg              0.2249
-MatchingPair                  15.0000
-MatchingPair_toYuleAvg         0.3546
-MatchingPair_toUnifAvg         0.3593
-MAST                           3.0000
-MAST_toYuleAvg                 0.4354
-MAST_toUnifAvg                 0.4311
-CopheneticL2Metric            12.9228
-CopheneticL2Metric_toYuleAvg   0.5961
-CopheneticL2Metric_toUnifAvg   0.5485
-
-                 Name        Avg  Std        Min        Max  Count
-0     MatchingCluster  17.000000  0.0  17.000000  17.000000      1
-1         R-F_Cluster   3.500000  0.0   3.500000   3.500000      1
-2       NodalSplitted  13.747727  0.0  13.747727  13.747727      1
-3             Triples  33.000000  0.0  33.000000  33.000000      1
-4        MatchingPair  15.000000  0.0  15.000000  15.000000      1
-5                MAST   3.000000  0.0   3.000000   3.000000      1
-6  CopheneticL2Metric  12.922848  0.0  12.922848  12.922848      1

@@ -1,103 +1,0 @@
-
-                            < M A T L A B (R) >
-                  Copyright 1984-2017 The MathWorks, Inc.
-                   R2017a (9.2.0.538062) 64-bit (glnxa64)
-                             February 23, 2017
-
- 
-To get started, type one of these: helpwin, helpdesk, or demo.
-For product information, visit www.mathworks.com.
- 
-Running "Run1", Seed: 910648
- *** Finished Simulation Run ***
-
-config-17.json #############################################
-
-[#.........] | Progress: 1 | Time: 0.0s | ETA: --[.#........] | Progress: 28 | Time: 0.1s | ETA: --[..#.......] | Progress: 55 | Time: 0.1s | ETA: --[...#......] | Progress: 82 | Time: 0.2s | ETA: --[....#.....] | Progress: 109 | Time: 0.2s | ETA: --[.....#....] | Progress: 135 | Time: 0.3s | ETA: --[......#...] | Progress: 162 | Time: 0.3s | ETA: --[.......#..] | Progress: 188 | Time: 0.4s | ETA: --[........#.] | Progress: 215 | Time: 0.4s | ETA: --[.........#] | Progress: 242 | Time: 0.5s | ETA: --[........#.] | Progress: 268 | Time: 0.5s | ETA: --[.......#..] | Progress: 294 | Time: 0.6s | ETA: --[......#...] | Progress: 321 | Time: 0.6s | ETA: --[.....#....] | Progress: 348 | Time: 0.7s | ETA: --[....#.....] | Progress: 375 | Time: 0.7s | ETA: --[...#......] | Progress: 402 | Time: 0.8s | ETA: --[..#.......] | Progress: 428 | Time: 0.8s | ETA: --[.#........] | Progress: 455 | Time: 0.9s | ETA: --[#.........] | Progress: 480 | Time: 0.9s | ETA: --[.#........] | Progress: 506 | Time: 1.0s | ETA: --[..#.......] | Progress: 533 | Time: 1.0s | ETA: --[...#......] | Progress: 560 | Time: 1.1s | ETA: --[....#.....] | Progress: 587 | Time: 1.1s | ETA: --[.....#....] | Progress: 614 | Time: 1.2s | ETA: --[......#...] | Progress: 641 | Time: 1.2s | ETA: --[.......#..] | Progress: 668 | Time: 1.3s | ETA: --[........#.] | Progress: 694 | Time: 1.3s | ETA: --[.........#] | Progress: 720 | Time: 1.4s | ETA: --[........#.] | Progress: 746 | Time: 1.4s | ETA: --[##########] | Progress: 767 | Time: 1.5s | ETA: --fit<>, fid</home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-008/case-17/triplets-list.raw.txt>, flg<treeReconstruction.log>, frt<resTree.tree>, frtN</home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-008/case-17/reconstructed.tmp.newick>, fsd<qqq.dat>, fst<simul.tree>, -->index=2
-Read triplets from file...
-Read triplets from file...Finished
-N_triplets = 767, idMaxFound = 20
-treeBuildBasedOnTriplets_run...
-make_isTogetherInTripletAndDeleteExtraTriplets: Finished
-maxCut with 20 nodes: Finished
-maxCut with 13 nodes: Finished
-maxCut with 7 nodes: Finished
-treeBuildBasedOnTriplets_run...Finished
-Saving tree to file...
-Saving tree to file...Finished
-
-                            < M A T L A B (R) >
-                  Copyright 1984-2017 The MathWorks, Inc.
-                   R2017a (9.2.0.538062) 64-bit (glnxa64)
-                             February 23, 2017
-
- 
-To get started, type one of these: helpwin, helpdesk, or demo.
-For product information, visit www.mathworks.com.
- 
-TreeCmp version build2
-
-Active options:
-Type of the analysis:  ref-to-all comparison mode (-r)
-Metrics:
-  1. MatchingCluster (mc)
-  2. R-F_Cluster (rc)
-  3. NodalSplitted (ns)
-  4. Triples (tt)
-  5. MatchingPair (mp)
-  6. MAST (mt)
-  7. CopheneticL2Metric (co)
-Input file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-008/case-17/reconstructed.newick
-Output file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-008/case-17/scores.raw.out
-Additional options:
-N - Report normalized distances.
-P - Prune compared trees if needed (trees can have different leaf sets).
-I - Include summary section in the output file.
------
-2018-06-19 08:04:55: Start of reading random statistics.
-2018-06-19 08:04:55: End of reading random statistics.
-2018-06-19 08:04:55: Start of scanning input file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-008/case-17/reconstructed.newick
-2018-06-19 08:04:55: End of scanning input file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-008/case-17/reconstructed.newick
-2018-06-19 08:04:55: 1 valid trees found in file: /home/chun/projects/clineage-simulation/analysis/tmc-910648/tmc-008/case-17/reconstructed.newick
-2018-06-19 08:04:55: Start of calculation...please wait...
-2018-06-19 08:04:55: 0.00% completed...
-2018-06-19 08:04:55: 100.00% completed.
-2018-06-19 08:04:55: End of calculation.
-2018-06-19 08:04:55: Total calculation time: 25 ms.
-                              metrics
-No                             1.0000
-RefTree                        1.0000
-Tree                           1.0000
-RefTree_taxa                  20.0000
-Tree_taxa                     20.0000
-Common_taxa                   20.0000
-MatchingCluster               22.0000
-MatchingCluster_toYuleAvg      0.2582
-MatchingCluster_toUnifAvg      0.2261
-R-F_Cluster                    6.0000
-R-F_Cluster_toYuleAvg          0.3378
-R-F_Cluster_toUnifAvg          0.3362
-NodalSplitted                 26.5707
-NodalSplitted_toYuleAvg        0.4566
-NodalSplitted_toUnifAvg        0.3697
-Triples                       26.0000
-Triples_toYuleAvg              0.0340
-Triples_toUnifAvg              0.0342
-MatchingPair                  15.0000
-MatchingPair_toYuleAvg         0.1115
-MatchingPair_toUnifAvg         0.1140
-MAST                           5.0000
-MAST_toYuleAvg                 0.3748
-MAST_toUnifAvg                 0.3716
-CopheneticL2Metric            11.0000
-CopheneticL2Metric_toYuleAvg   0.2477
-CopheneticL2Metric_toUnifAvg   0.2025
-
-                 Name        Avg  Std        Min        Max  Count
-0     MatchingCluster  22.000000  0.0  22.000000  22.000000      1
-1         R-F_Cluster   6.000000  0.0   6.000000   6.000000      1
-2       NodalSplitted  26.570661  0.0  26.570661  26.570661      1
-3             Triples  26.000000  0.0  26.000000  26.000000      1
-4        MatchingPair  15.000000  0.0  15.000000  15.000000      1
-5                MAST   5.000000  0.0   5.000000   5.000000      1
-6  CopheneticL2Metric  11.000000  0.0  11.000000  11.000000      1

@@ -9,7 +9,7 @@ def run(seed):
     for sim_no in range(1, 15):
 
         list = glob.glob(
-            "./tmc-{0}/tmc-{1:03d}/*/diff-score.json".format(seed, sim_no)
+            "./tmc-{0}/n-{1:03d}/*/diff-score.json".format(seed, sim_no)
         )
 
         global_total = 0
