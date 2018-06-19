@@ -3,6 +3,7 @@ import os
 import json
 import pandas as pd
 import argparse
+import xml.etree.ElementTree
 
 from src import const
 from src import utils
@@ -112,6 +113,21 @@ def get_diff_metrics(path):
         return json.loads(file_in.read())
 
 
+def read_simulation_xml(path_xml):
+
+    e = xml.etree.ElementTree.parse(path_xml).getroot()
+
+    return e
+
+
+def get_sim_seed_time(xml_root):
+
+    seed = int(xml_root.find('./ExecParams/Seed').text.strip())
+    sim_time = int(xml_root.find('./ExecParams/SimTime').text.strip())
+
+    return (seed, sim_time)
+
+
 def make_html(path_project, config_jsons, exclude_mutation_table):
 
     templ = """
@@ -145,6 +161,14 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
 
     <h2>Parameters</h2>
     <table>
+    <tr>
+        <td>Simulation Seed:</td>
+        <td>{{item.simulation.seed}}</td>
+    </tr>
+    <tr>
+        <td>Simulation Time:</td>
+        <td>{{item.simulation.time}}</td>
+    </tr>
     <tr>
         <td style="width:200px">Mutation:</td>
         <td>{{item.config.contents.addMutations}}</td>
@@ -227,12 +251,20 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
         df_metrics, metrics_html = convert_metrics_to_html(
             path_output, const.FILE_COMPARISON_METRICS_RAW)
 
+        sim_xml_root = read_simulation_xml(
+            os.path.join(path_project, const.FILE_SIMULATION_XML)
+        )
+
+        sim_seed, sim_time = get_sim_seed_time(sim_xml_root)
+
         item = {
             "config": {
                 "filename": config_json,
                 "contents": config
             },
             "simulation": {
+                "time": sim_time,
+                "seed": sim_seed,
                 "mutationTable": mutation_table,
                 "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_SIMULATION_NEWICK)
             },

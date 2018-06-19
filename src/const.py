@@ -1,6 +1,7 @@
 ENV_MATLAB_KEY = 'matlab'
 CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
 
+FILE_SIMULATION_XML = 'simulation.xml'
 FILE_SIMULATION_NEWICK = 'simulation.newick'
 FILE_RECONSTRUCTED_NEWICK = 'reconstructed.newick'
 FILE_RECONSTRUCTED_TMP_NEWICK = 'reconstructed.tmp.newick'
