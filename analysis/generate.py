@@ -86,6 +86,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='generate')
 
     parser.add_argument(
+        "-s",
         "--seed",
         action="store",
         dest="seed",
