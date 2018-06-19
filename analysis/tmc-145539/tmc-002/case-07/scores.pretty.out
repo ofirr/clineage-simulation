@@ -1,0 +1,37 @@
+                              metrics
+No                             1.0000
+RefTree                        1.0000
+Tree                           1.0000
+RefTree_taxa                  10.0000
+Tree_taxa                     10.0000
+Common_taxa                   10.0000
+MatchingCluster               17.0000
+MatchingCluster_toYuleAvg      0.6689
+MatchingCluster_toUnifAvg      0.6430
+R-F_Cluster                    7.5000
+R-F_Cluster_toYuleAvg          0.9690
+R-F_Cluster_toUnifAvg          0.9645
+NodalSplitted                 14.3875
+NodalSplitted_toYuleAvg        0.7105
+NodalSplitted_toUnifAvg        0.6685
+Triples                       61.0000
+Triples_toYuleAvg              0.7610
+Triples_toUnifAvg              0.7677
+MatchingPair                  23.0000
+MatchingPair_toYuleAvg         0.8316
+MatchingPair_toUnifAvg         0.8502
+MAST                           5.0000
+MAST_toYuleAvg                 0.9289
+MAST_toUnifAvg                 0.9344
+CopheneticL2Metric             9.0000
+CopheneticL2Metric_toYuleAvg   0.5496
+CopheneticL2Metric_toUnifAvg   0.5242
+
+                 Name        Avg  Std        Min        Max  Count
+0     MatchingCluster  17.000000  0.0  17.000000  17.000000      1
+1         R-F_Cluster   7.500000  0.0   7.500000   7.500000      1
+2       NodalSplitted  14.387495  0.0  14.387495  14.387495      1
+3             Triples  61.000000  0.0  61.000000  61.000000      1
+4        MatchingPair  23.000000  0.0  23.000000  23.000000      1
+5                MAST   5.000000  0.0   5.000000   5.000000      1
+6  CopheneticL2Metric   9.000000  0.0   9.000000   9.000000      1

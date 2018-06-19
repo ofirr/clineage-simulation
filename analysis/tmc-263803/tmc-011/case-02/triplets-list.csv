@@ -1,0 +1,10 @@
+sai,sbi,sci,sa,sb,sc,dist
+5,1,4,Run1_C_8,Run1_C_6,Run1_C_4,3.118
+5,1,0,Run1_C_8,Run1_C_6,Run1_C_2,10.0474
+4,1,0,Run1_C_4,Run1_C_6,Run1_C_2,6.9294
+3,5,4,Run1_C_9,Run1_C_8,Run1_C_4,12.5486
+3,5,0,Run1_C_9,Run1_C_8,Run1_C_2,18.902
+3,1,4,Run1_C_9,Run1_C_6,Run1_C_4,3.6267
+4,5,0,Run1_C_4,Run1_C_8,Run1_C_2,5.738
+4,3,0,Run1_C_4,Run1_C_9,Run1_C_2,6.3534
+3,1,0,Run1_C_9,Run1_C_6,Run1_C_2,10.5561

@@ -1,0 +1,109 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.538062) 64-bit (glnxa64)
+                             February 23, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+Running "Run1", Seed: 263803
+ *** Finished Simulation Run ***
+
+config-20.json #############################################
+
+[#.........] | Progress: 1 | Time: 0.0s | ETA: --[.#........] | Progress: 195 | Time: 0.1s | ETA: --[..#.......] | Progress: 389 | Time: 0.1s | ETA: --[...#......] | Progress: 581 | Time: 0.2s | ETA: --[....#.....] | Progress: 771 | Time: 0.2s | ETA: --[.....#....] | Progress: 959 | Time: 0.3s | ETA: --[......#...] | Progress: 1145 | Time: 0.3s | ETA: --[##########] | Progress: 1236 | Time: 0.3s | ETA: --fit<>, fid</home/chun/projects/clineage-simulation/analysis/tmc-263803/tmc-004/case-20/triplets-list.raw.txt>, flg<treeReconstruction.log>, frt<resTree.tree>, frtN</home/chun/projects/clineage-simulation/analysis/tmc-263803/tmc-004/case-20/reconstructed.tmp.newick>, fsd<qqq.dat>, fst<simul.tree>, -->index=2
+Read triplets from file...
+Read triplets from file...Finished
+N_triplets = 1175, idMaxFound = 23
+treeBuildBasedOnTriplets_run...
+make_isTogetherInTripletAndDeleteExtraTriplets: Finished
+maxCut with 23 nodes: Finished
+maxCut with 17 nodes: Finished
+maxCut with 10 nodes: Finished
+maxCut with 7 nodes: Finished
+maxCut with 5 nodes: Finished
+maxCut with 7 nodes: Finished
+maxCut with 5 nodes: Finished
+maxCut with 6 nodes: Finished
+maxCut with 5 nodes: Finished
+treeBuildBasedOnTriplets_run...Finished
+Saving tree to file...
+Saving tree to file...Finished
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.538062) 64-bit (glnxa64)
+                             February 23, 2017
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+TreeCmp version build2
+
+Active options:
+Type of the analysis:  ref-to-all comparison mode (-r)
+Metrics:
+  1. MatchingCluster (mc)
+  2. R-F_Cluster (rc)
+  3. NodalSplitted (ns)
+  4. Triples (tt)
+  5. MatchingPair (mp)
+  6. MAST (mt)
+  7. CopheneticL2Metric (co)
+Input file: /home/chun/projects/clineage-simulation/analysis/tmc-263803/tmc-004/case-20/reconstructed.newick
+Output file: /home/chun/projects/clineage-simulation/analysis/tmc-263803/tmc-004/case-20/scores.raw.out
+Additional options:
+N - Report normalized distances.
+P - Prune compared trees if needed (trees can have different leaf sets).
+I - Include summary section in the output file.
+-----
+2018-06-19 06:29:13: Start of reading random statistics.
+2018-06-19 06:29:13: End of reading random statistics.
+2018-06-19 06:29:13: Start of scanning input file: /home/chun/projects/clineage-simulation/analysis/tmc-263803/tmc-004/case-20/reconstructed.newick
+2018-06-19 06:29:13: End of scanning input file: /home/chun/projects/clineage-simulation/analysis/tmc-263803/tmc-004/case-20/reconstructed.newick
+2018-06-19 06:29:13: 1 valid trees found in file: /home/chun/projects/clineage-simulation/analysis/tmc-263803/tmc-004/case-20/reconstructed.newick
+2018-06-19 06:29:13: Start of calculation...please wait...
+2018-06-19 06:29:13: 0.00% completed...
+2018-06-19 06:29:13: 100.00% completed.
+2018-06-19 06:29:13: End of calculation.
+2018-06-19 06:29:13: Total calculation time: 33 ms.
+                               metrics
+No                              1.0000
+RefTree                         1.0000
+Tree                            1.0000
+RefTree_taxa                   23.0000
+Tree_taxa                      23.0000
+Common_taxa                    23.0000
+MatchingCluster                62.0000
+MatchingCluster_toYuleAvg       0.5847
+MatchingCluster_toUnifAvg       0.5003
+R-F_Cluster                    11.0000
+R-F_Cluster_toYuleAvg           0.5294
+R-F_Cluster_toUnifAvg           0.5284
+NodalSplitted                  43.8862
+NodalSplitted_toYuleAvg         0.6221
+NodalSplitted_toUnifAvg         0.4896
+Triples                       760.0000
+Triples_toYuleAvg               0.6430
+Triples_toUnifAvg               0.6459
+MatchingPair                  116.0000
+MatchingPair_toYuleAvg          0.6355
+MatchingPair_toUnifAvg          0.6494
+MAST                           14.0000
+MAST_toYuleAvg                  0.8824
+MAST_toUnifAvg                  0.8742
+CopheneticL2Metric             32.2955
+CopheneticL2Metric_toYuleAvg    0.5962
+CopheneticL2Metric_toUnifAvg    0.4783
+
+                 Name         Avg  Std         Min         Max  Count
+0     MatchingCluster   62.000000  0.0   62.000000   62.000000      1
+1         R-F_Cluster   11.000000  0.0   11.000000   11.000000      1
+2       NodalSplitted   43.886217  0.0   43.886217   43.886217      1
+3             Triples  760.000000  0.0  760.000000  760.000000      1
+4        MatchingPair  116.000000  0.0  116.000000  116.000000      1
+5                MAST   14.000000  0.0   14.000000   14.000000      1
+6  CopheneticL2Metric   32.295511  0.0   32.295511   32.295511      1
