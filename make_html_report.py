@@ -72,8 +72,11 @@ def convert_metrics_to_html(directory, filename):
         return convert_row_cols_to_html(rows, "metrics-table")
 
     # read the first two lines that contain various metrics
-    df_metrics = pd.read_csv(os.path.join(
-        directory, filename), sep='\t', nrows=1)
+    df_metrics = pd.read_csv(
+        os.path.join(directory, filename),
+        sep='\t',
+        nrows=1
+    )
 
     # transpose and rename the column to 'metrics'
     df_metrics = df_metrics.T.rename(columns={0: 'metrics'})
@@ -89,7 +92,7 @@ def convert_metrics_to_html(directory, filename):
     table1 = to_table(df1)
     table2 = to_table(df2)
 
-    return ''''
+    html = ''''
 <table>
 <tbody>
     <tr valign="top">
@@ -99,6 +102,8 @@ def convert_metrics_to_html(directory, filename):
 </tbody>
 </table>
 '''.format(table1, table2)
+
+    return (df_metrics, html)
 
 
 def get_diff_metrics(path):
@@ -124,7 +129,7 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
         .metrics-table {
             min-width: 390px;
         }
-        .similarity-score {
+        .overall-score {
             font-family: "Open Sans";
             font-size: 120px;
             text-align: center;
@@ -178,7 +183,7 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
     <table cellpadding="0" cellspacing="0" border="0" style="width:100%" width="100%">
     <tr>
         <td>{{item.metrics.compare1}}</td>
-        <td class="similarity-score">{{item.metrics.compare2}}</td>
+        <td class="overall-score">{{item.metrics.compare2}}</td>
     </tr>
     </table>
 
@@ -201,7 +206,8 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
             raise Exception("Unable to find {}".format(config_json))
 
         # read simulation configuration
-        config = utils.read_json_config(os.path.join(path_project, config_json))
+        config = utils.read_json_config(
+            os.path.join(path_project, config_json))
 
         path_output = os.path.join(
             path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT])
@@ -209,13 +215,17 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
         path_diff_metrics = os.path.join(path_output, const.FILE_DIFF_METRICS)
 
         diff_metrics = get_diff_metrics(path_diff_metrics)
-        similarity_score = '{0:2.1f}%'.format((diff_metrics['total'] - (
+        overall_score = '{0:2.1f}%'.format((diff_metrics['total'] - (
             diff_metrics['diff'] + diff_metrics['missing'])) / diff_metrics['total'] * 100.0)
 
         if exclude_mutation_table:
             mutation_table = "excluded"
         else:
-            mutation_table = convert_mutation_table_to_html(path_output, const.FILE_MUTATION_TABLE)
+            mutation_table = convert_mutation_table_to_html(
+                path_output, const.FILE_MUTATION_TABLE)
+
+        df_metrics, metrics_html = convert_metrics_to_html(
+            path_output, const.FILE_COMPARISON_METRICS_RAW)
 
         item = {
             "config": {
@@ -230,8 +240,8 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
                 "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_RECONSTRUCTED_NEWICK)
             },
             "metrics": {
-                "compare1": convert_metrics_to_html(path_output, const.FILE_COMPARISON_METRICS_RAW),
-                "compare2": similarity_score
+                "compare1": metrics_html,
+                "compare2": df_metrics.loc['Triples'][0]
             }
         }
 
