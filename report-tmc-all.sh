@@ -25,10 +25,10 @@ then
     exit 1
 fi
 
-for nn in {1..14}
+for nn in {3..14}
 do
 
-  path_project="/home/chun/projects/clineage-simulation/analysis/tmc-${seed}/tmc-`printf '%03d' $nn`"
+  path_project="/home/chun/projects/clineage-simulation/analysis/tmc/seed-${seed}/n-`printf '%03d' $nn`"
 
   echo ${path_project}
 

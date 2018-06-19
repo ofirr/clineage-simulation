@@ -1,6 +1,6 @@
 #!/bin/bash
 
-path_project="/home/chun/projects/clineage-simulation/analysis/tmc-002/"
+path_project="/home/chun/projects/clineage-simulation/analysis/tmc/seed-002/"
 
 for i in {1..20}
 do

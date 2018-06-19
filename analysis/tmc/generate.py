@@ -13,7 +13,7 @@ def run_command(cmd):
     process.wait()
 
 
-def main(seed):
+def run(seed):
 
     xml = """
 <Program>
@@ -48,16 +48,18 @@ def main(seed):
 </Program>
 """
 
+    # power of 2 (n=3 to 14)
     loci_num_list = []
-    for i in range(1, 14):
-        loci = int(math.pow(2, i))
-        loci_num_list.append(loci)
+    for n in range(3, 14):
+        loci = int(math.pow(2, n))
+        loci_num_list.append( (n, loci) )
 
-    loci_num_list.append(9936)
+    # currently, the max num of loci (OM6 AC only)
+    loci_num_list.append( (14, 9936) )
 
-    for i, loci_num in enumerate(loci_num_list):
+    for n, loci_num in loci_num_list:
 
-        path_work = "tmc-{0}/n-{1:03d}".format(seed, i + 1)
+        path_work = "seed-{0}/n-{1:03d}".format(seed, n)
 
         os.makedirs(path_work, exist_ok=True)
 
@@ -71,17 +73,6 @@ def main(seed):
 
 
 def parse_arguments():
-
-    # 431414
-    # 910648
-    # 181848
-    # 263803
-    # 145539
-    # 136069
-    # 869293
-    # 579705
-    # 549861
-    # 875887
 
     parser = argparse.ArgumentParser(description='generate')
 
@@ -103,4 +94,4 @@ if __name__ == "__main__":
 
     params = parse_arguments()
 
-    main(params.seed)
+    run(params.seed)

@@ -9,7 +9,7 @@ def run(seed):
     for sim_no in range(1, 15):
 
         list = glob.glob(
-            "./tmc-{0}/n-{1:03d}/*/diff-score.json".format(seed, sim_no)
+            "./seed-{0}/n-{1:03d}/*/diff-score.json".format(seed, sim_no)
         )
 
         global_total = 0
@@ -38,7 +38,7 @@ def parse_arguments():
         action="store",
         dest="seed",
         required=True,
-        help="Either a single seed number or 'all' for all seeds (e.g. tmc-123, tmc-456, ...)"
+        help="Either a single seed number or 'all' for all seeds (e.g. seed-123, seed-456, ...)"
     )
 
     # parse arguments
@@ -52,9 +52,9 @@ if __name__ == "__main__":
     params = parse_arguments()
 
     if params.seed == 'all':
-        projects = glob.glob('./tmc-*')
+        projects = glob.glob('./seed-*')
         for prj in projects:
-            match = re.search(r'tmc-(\d+)', prj)
+            match = re.search(r'seed-(\d+)', prj)
             if not match:
                 continue
             seed = match.group(1)
