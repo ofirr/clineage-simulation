@@ -25,4 +25,4 @@ then
     exit 1
 fi
 
-find tmc-${seed} -name "*.stderr" ! -size 0
+find seed-${seed} -name "*.stderr" ! -size 0
