@@ -3,7 +3,7 @@ import os
 import json
 import pandas as pd
 import argparse
-import xml.etree.ElementTree
+from lxml import etree
 
 from src import const
 from src import utils
@@ -115,17 +115,23 @@ def get_diff_metrics(path):
 
 def read_simulation_xml(path_xml):
 
-    e = xml.etree.ElementTree.parse(path_xml).getroot()
+    parser = etree.XMLParser(remove_blank_text=True)
+    xdoc = etree.parse(path_xml, parser=parser)
 
-    return e
+    return xdoc
 
 
-def get_sim_seed_time(xml_root):
+def get_sim_seed_time(xdoc):
 
-    seed = int(xml_root.find('./ExecParams/Seed').text.strip())
-    sim_time = int(xml_root.find('./ExecParams/SimTime').text.strip())
+    seed = int(xdoc.xpath('./ExecParams/Seed')[0].text.strip())
+    sim_time = int(xdoc.xpath('./ExecParams/SimTime')[0].text.strip())
 
     return (seed, sim_time)
+
+
+def get_num_of_ms_loci(xdoc):
+
+    return int(xdoc.xpath('./Rule/InternalState[Name[normalize-space()="MS"]]/DuplicateNum')[0].text.strip())
 
 
 def make_html(path_project, config_jsons, exclude_mutation_table):
@@ -162,7 +168,7 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
     <h2>Parameters</h2>
     <table>
     <tr>
-        <td>Simulation Seed:</td>
+        <td style="width:230px">Simulation Seed:</td>
         <td>{{item.simulation.seed}}</td>
     </tr>
     <tr>
@@ -170,7 +176,11 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
         <td>{{item.simulation.time}}</td>
     </tr>
     <tr>
-        <td style="width:200px">Mutation:</td>
+        <td>Number of Microsatellite Loci:</td>
+        <td>{{item.simulation.numOfLoci}}
+    </tr>
+    <tr>
+        <td>Mutation:</td>
         <td>{{item.config.contents.addMutations}}</td>
     </tr>
     <tr>
@@ -251,11 +261,12 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
         df_metrics, metrics_html = convert_metrics_to_html(
             path_output, const.FILE_COMPARISON_METRICS_RAW)
 
-        sim_xml_root = read_simulation_xml(
+        sim_xdoc = read_simulation_xml(
             os.path.join(path_project, const.FILE_SIMULATION_XML)
         )
 
-        sim_seed, sim_time = get_sim_seed_time(sim_xml_root)
+        sim_seed, sim_time = get_sim_seed_time(sim_xdoc)
+        num_of_ms_loci = get_num_of_ms_loci(sim_xdoc)
 
         item = {
             "config": {
@@ -265,6 +276,7 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
             "simulation": {
                 "time": sim_time,
                 "seed": sim_seed,
+                "numOfLoci": num_of_ms_loci,
                 "mutationTable": mutation_table,
                 "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_SIMULATION_NEWICK)
             },
