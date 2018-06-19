@@ -1,8 +1,10 @@
 import glob
 import json
 import argparse
+import re
 
-def main(seed):
+
+def run(seed):
 
     for sim_no in range(1, 15):
 
@@ -19,7 +21,8 @@ def main(seed):
                 global_total += total
                 global_same += same
 
-        print("tmc-{0:03d}: {1:2.1f}%".format(sim_no, global_same / global_total * 100.0))
+        ratio = global_same / global_total
+        print("{0}\ttmc-{1:03d}\t{2:1.3f}\t{3:2.1f}%".format(seed, sim_no, ratio, ratio * 100.0))
 
 
 def parse_arguments():
@@ -43,5 +46,15 @@ if __name__ == "__main__":
 
     params = parse_arguments()
 
-    main(params.seed)
+    if params.seed == 'all':
+        projects = glob.glob('./tmc-*')
+        for prj in projects:
+            match = re.search(r'tmc-(\d+)', prj)
+            if match:
+                seed = match.group(1)
+                run(seed)
+                print()
+
+    else:
+        run(params.seed)
 
