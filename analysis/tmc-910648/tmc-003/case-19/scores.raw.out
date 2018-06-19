@@ -1,0 +1,12 @@
+No	RefTree	Tree	RefTree_taxa	Tree_taxa	Common_taxa	MatchingCluster	MatchingCluster_toYuleAvg	MatchingCluster_toUnifAvg	R-F_Cluster	R-F_Cluster_toYuleAvg	R-F_Cluster_toUnifAvg	NodalSplitted	NodalSplitted_toYuleAvg	NodalSplitted_toUnifAvg	Triples	Triples_toYuleAvg	Triples_toUnifAvg	MatchingPair	MatchingPair_toYuleAvg	MatchingPair_toUnifAvg	MAST	MAST_toYuleAvg	MAST_toUnifAvg	CopheneticL2Metric	CopheneticL2Metric_toYuleAvg	CopheneticL2Metric_toUnifAvg
+1	1	1	22	22	22	70.0000	0.7083	0.6044	17.0000	0.8598	0.8561	41.0853	0.6168	0.4829	860.0000	0.8382	0.8356	139.0000	0.8438	0.8584	13.0000	0.8668	0.8605	27.9285	0.5495	0.4450
+---------
+Summary:
+Name	Avg	Std	Min	Max	Count
+MatchingCluster	70.0	0.0	70.0	70.0	1
+R-F_Cluster	17.0	0.0	17.0	17.0	1
+NodalSplitted	41.08527716834828	0.0	41.08527716834828	41.08527716834828	1
+Triples	860.0	0.0	860.0	860.0	1
+MatchingPair	139.0	0.0	139.0	139.0	1
+MAST	13.0	0.0	13.0	13.0	1
+CopheneticL2Metric	27.92848008753788	0.0	27.92848008753788	27.92848008753788	1
