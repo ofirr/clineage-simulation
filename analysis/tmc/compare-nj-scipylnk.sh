@@ -37,7 +37,7 @@ do
 
       	num=`printf "%02d\n" $ii`
 
-        python ./scipylnk-nj-compare.py \
+        python ./compare_nj_scipylnk.py \
             --seed ${seed} \
             --n ${nn} \
             --case ${ii}
