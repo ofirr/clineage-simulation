@@ -25,4 +25,10 @@ then
     exit 1
 fi
 
-find seed-${seed} -name "*.stderr" ! -size 0
+if [ "$seed" == "all" ]
+then
+    find . -name "*.stderr" ! -size 0
+else
+    find seed-${seed} -name "*.stderr" ! -size 0
+fi
+
