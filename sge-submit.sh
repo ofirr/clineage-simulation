@@ -11,7 +11,7 @@ USAGE: `basename $0` [options]
 EOF
 }
 
-while getopts “p:c:h” OPTION
+while getopts "p:c:h" OPTION
 do
     case $OPTION in
 		p) path_project=$OPTARG ;;

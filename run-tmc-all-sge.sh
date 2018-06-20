@@ -10,7 +10,7 @@ USAGE: `basename $0` [options]
 EOF
 }
 
-while getopts “s:h” OPTION
+while getopts "s:h" OPTION
 do
     case $OPTION in
         s) seed=$OPTARG ;;
