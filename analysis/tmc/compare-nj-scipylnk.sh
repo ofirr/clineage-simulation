@@ -5,21 +5,25 @@ usage()
 cat << EOF
 USAGE: `basename $0` [options]
 
+    -p    project directory
     -s    seed
+    -o    output base directory
 
 EOF
 }
 
-while getopts "s:h" OPTION
+while getopts "p:s:o:h" OPTION
 do
     case $OPTION in
+        p) path_project=$OPTARG ;;
         s) seed=$OPTARG ;;
+        o) path_output_base=$OPTARG ;;
         h) usage; exit 1 ;;
         *) usage; exit 1 ;;
     esac
 done
 
-if [ -z "$seed" ]
+if [ -z "$path_project" ] || [ -z "$seed" ] || [ -z "$path_output_base" ]
 then
     usage
     exit 1
@@ -27,11 +31,6 @@ fi
 
 for nn in {3..14}
 do
-
-    path_project="/home/chun/projects/clineage-simulation/analysis/tmc/"
-    path_output_base="/home/chun/tmp/"
-
-    echo ${path_project}
 
     for ii in {1..20}
     do
