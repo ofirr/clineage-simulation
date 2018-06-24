@@ -28,7 +28,8 @@ fi
 for nn in {3..14}
 do
 
-    path_project="/home/chun/projects/clineage-simulation/analysis/tmc/seed-${seed}/n-`printf '%03d' $nn`"
+    path_project="/home/chun/projects/clineage-simulation/analysis/tmc/"
+    path_output_base="/home/chun/tmp/"
 
     echo ${path_project}
 
@@ -38,9 +39,11 @@ do
       	num=`printf "%02d\n" $ii`
 
         python ./compare_nj_scipylnk.py \
+            --project ${path_project} \
             --seed ${seed} \
             --n ${nn} \
-            --case ${ii}
+            --case ${ii} \
+            --outdir ${path_output_base}
 
     done
 

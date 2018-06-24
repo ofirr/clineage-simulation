@@ -61,6 +61,7 @@ def reconstruct_scipy_linkage(df_mutation_table, path_out_newick):
 
     from scipy.cluster import hierarchy
 
+    # get newick without distance
     def getNewick(node, newick, parentdist, leaf_names):
         if node.is_leaf():
             return "%s%s" % (leaf_names[node.id], newick)
@@ -121,18 +122,24 @@ def plot_ascii_ete(path_newick):
         return ascii
 
 
-def run(seed_num, n_num, case_num):
+def run(path_project, seed_num, n_num, case_num, path_output_base):
 
-    path_work = '/home/chun/projects/clineage-simulation/analysis/tmc/seed-{0}/n-{1:03d}/case-{2:02d}'.format(
+    path_part_seed_n_case = 'seed-{0}/n-{1:03d}/case-{2:02d}'.format(
         seed_num, n_num, case_num)
 
-    path_output_dir = '/home/chun/tmp/seed-{0}/n-{1:03d}/case-{2:02d}'.format(seed_num, n_num, case_num)
+    # construct working path
+    path_work = os.path.join(path_project, path_part_seed_n_case)
 
+    # construct output path
+    path_output_dir = os.path.join(path_output_base, path_part_seed_n_case)
+
+    # create output directory
     os.makedirs(path_output_dir, exist_ok=True)
 
     FILE_RECONSTRUCTED_NEWICK_NJ = 'reconstructed.nj.newick'
     FILE_RECONSTRUCTED_NEWICK_SCIPYLINKAGE = 'reconstructed.scipylnk.newick'
 
+    # construct other paths
     path_scipylnk_newick = os.path.join(
         path_output_dir, FILE_RECONSTRUCTED_NEWICK_SCIPYLINKAGE
     )
@@ -160,37 +167,48 @@ def run(seed_num, n_num, case_num):
 
     path_mutation_table = os.path.join(path_work, 'mutation_table.txt')
 
+    # read mutation table
     df_mutation_table = pd.read_csv(
         path_mutation_table, sep='\t', index_col='names'
     )
 
+    # reconstruct using scipy linkage
     reconstruct_scipy_linkage(df_mutation_table, path_scipylnk_newick)
 
+    # reconstruct using neighbor joining
     tree_nj = reconstruct_neighborjoining(df_mutation_table, path_nj_newick)
 
-    # suppress edge lengths
+    # write back reconstructed tree using neighbor joining
+    # after suppressing edge lengths
     tree = dendropy.Tree.get_from_path(path_nj_newick, "newick")
-    tree.write_to_path(path_nj_newick, schema='newick',
-                       suppress_edge_lengths=True)
+    tree.write_to_path(
+        path_nj_newick,
+        schema='newick',
+        suppress_edge_lengths=True
+    )
 
+    # get triples score for reconstructed tree using scipy linkage
     score_scipylnk = get_triples_score(
         path_simulation_newick,
         path_scipylnk_newick,
         path_scipylnk_score
     )
 
+    # get triples score for reconstructed tree using neighbor joining
     score_nj = get_triples_score(
         path_simulation_newick,
         path_nj_newick,
         path_nj_score
     )
 
+    # get triples score for reconstructed tree using TMC
     score_tmc = get_triples_score(
         path_simulation_newick,
         path_tmc_newick,
         path_tmc_score
     )
 
+    # generate ascii plot and write to a file
     ascii_plot_scipylnk = plot_ascii_ete(path_scipylnk_newick)
     ascii_plot_nj = plot_ascii_ete(path_nj_newick)
 
@@ -200,6 +218,7 @@ def run(seed_num, n_num, case_num):
     print(ascii_plot_scipylnk)
     print(ascii_plot_nj)
 
+    # write triples scores to a file
     with open(os.path.join(path_output_dir, 'final-score.csv'), 'at') as fout:
         cols = []
         cols.append(seed_num)
@@ -215,6 +234,13 @@ def run(seed_num, n_num, case_num):
 def parse_arguments():
 
     parser = argparse.ArgumentParser(description='run simulation')
+
+    parser.add_argument(
+        "--project",
+        action="store",
+        dest="path_project",
+        required=True
+    )
 
     parser.add_argument(
         "-s",
@@ -239,6 +265,13 @@ def parse_arguments():
         required=True
     )
 
+    parser.add_argument(
+        "--outdir",
+        action="store",
+        dest="path_output_base",
+        required=True
+    )
+
     # parse arguments
     params = parser.parse_args()
 
@@ -250,12 +283,9 @@ if __name__ == "__main__":
     params = parse_arguments()
 
     run(
+        params.path_project,
         int(params.seed_num),
         int(params.n_num),
-        int(params.case_num)
+        int(params.case_num),
+        params.path_output_base
     )
-
-
-# seed_num = 910648
-# n_num = 13
-# case_num = 4
