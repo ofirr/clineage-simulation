@@ -128,7 +128,7 @@ if simul_options.addAllelicDropOuts
     );
 
     % apply allelic dropout to the mutation table
-    % dropped-out will be marked as NaN
+    % dropped-out will be marked as NaN (1 becomes NaN)
     mutation_table(ado_truth_table) = NaN;
 
 end

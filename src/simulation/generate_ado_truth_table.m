@@ -9,6 +9,11 @@ P = dropout_prob.P(sample_idx);
 ms_loci_idx = randi([1 length(dropout_prob.Q)], 1, num_of_ms_loci);
 Q = dropout_prob.Q(ms_loci_idx);
 
+% generate threshold values (randomized)
 threshold = rand(num_of_ms_loci, num_of_samples);
+
+% compute signal values
 signal_prob = Q'*P;
+
+% signal that is less than threshold will be marked as dropout
 ado_truth_table = signal_prob < threshold;
