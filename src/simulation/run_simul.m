@@ -54,6 +54,10 @@ end
 
 % parse eSTGt rules from the program file
 program_file = 'simulation.xml';
+if isfield(simul_options, 'programFile')
+    % overwrite if specified in config
+    program_file = simul_options.programFile;
+end
 rules = ParseeSTGProgram(program_file);
 
 % get the number of microsatellite loci from the file
@@ -69,6 +73,9 @@ rules.Prod{1,1}.InternalStates.MS.InitVal = -1;
 
 % the very first run (we only have one run in fact)
 my_run = runs(1);
+
+fprintf("End Time: %f\n", my_run.T(end));
+fprintf("End Population: %d\n", my_run.X(end));
 
 %% create tree
 
@@ -185,3 +192,5 @@ switch class(mutation_table_final)
         fclose(file_out);
         
 end
+
+save(fullfile(path_output, 'workspace.mat'));
