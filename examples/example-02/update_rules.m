@@ -15,7 +15,7 @@ function [ Rules ] = update_rules( Rules, T, X )
     % early stop only if `earlyStopPopulation` is defined and not zero
     if isfield(simul_options, 'earlyStopPopulation')
         if simul_options.earlyStopPopulation ~= 0
-            if Pop.C > simul_options.earlyStopPopulation
+            if Pop.C >= simul_options.earlyStopPopulation
                 Rules.Prod{I.C}.Rate = 0;
             end
         end

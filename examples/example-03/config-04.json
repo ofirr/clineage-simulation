@@ -4,5 +4,5 @@
     "addMutations": true,
     "addAllelicDropOuts": false,
     "addNoises": false,
-    "earlyStopPopulation": 6
+    "earlyStopPopulation": 7
 }
