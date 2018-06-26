@@ -211,7 +211,6 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
     {{item.simulation.mutationTable}}
 
     <p style="page-break-after: always;">&nbsp;</p>
-    <p style="page-break-before: always;">&nbsp;</p>
 
     <table>
     <tr>
@@ -232,7 +231,6 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
     </table>
 
     <p style="page-break-after: always;">&nbsp;</p>
-    <p style="page-break-before: always;">&nbsp;</p>
 
     <table>
     <tr>
@@ -244,6 +242,8 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
         </td>
     </tr>
     </table>
+
+    <p style="page-break-after: always;">&nbsp;</p>
 
     {% endfor %}
 
@@ -322,7 +322,7 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
                 path_output,
                 const.FILE_RECONSTRUCTED_NEWICK
             )
-        )        
+        )
 
         items.append(item)
 
