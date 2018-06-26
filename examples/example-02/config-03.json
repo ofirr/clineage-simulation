@@ -1,9 +1,9 @@
 {
-    "title": "Example 02",
-    "pathRelativeOutput": "outputs",
+    "title": "Example 02 / Speed 0.5",
+    "pathRelativeOutput": "case-03",
     "addMutations": true,
     "addAllelicDropOuts": true,
     "addNoises": true,
     "earlyStopPopulation": 0,
-    "mutationSpeed": 1.0
+    "mutationSpeed": 0.5
 }
