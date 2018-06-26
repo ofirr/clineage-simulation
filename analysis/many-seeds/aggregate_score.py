@@ -34,12 +34,15 @@ def run(path_project, seed):
             cfg = json.loads(file_in.read())
 
         try:
-           path_score = os.path.join(path_project, cfg["pathRelativeOutput"], "scores.raw.out")
-           score = get_triples_score(path_score)
+            path_score = os.path.join(
+                path_project, cfg["pathRelativeOutput"], "scores.raw.out"
+            )
+            score = get_triples_score(path_score)
 
-           print("{0}\t{1}\t{2:3.4f}".format(seed, cfg["title"], score))
+            print("{0}\t{1}\t{2:3.4f}".format(seed, cfg["title"], score))
+
         except:
-           pass
+            pass
 
 
 if __name__ == "__main__":
