@@ -117,7 +117,7 @@ function [] = highlight_differences2(...
 
     function [] = highlight(tree, paths, leaf_name)
 
-        line_width = 5;
+        line_width = 4;
         bg_color = 'yellow';
 
         % find the index of the leaf that we're interested in
@@ -174,7 +174,7 @@ function [] = highlight_differences2(...
     function [] = beautify_tree(tree, fig_title, add_beautification)
 
         if add_beautification
-            marker_size = 10;
+            marker_size = 7;
             marker_face_color = 'red';
 
             % change size and face color of the leaf dots
