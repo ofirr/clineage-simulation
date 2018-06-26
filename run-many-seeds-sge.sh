@@ -4,10 +4,10 @@ path_root='/home/chun/projects/clineage-simulation/analysis/many-seeds/'
 
 seeds=`find ${path_root} -name "seed-*" -type d`
 
-for seed in $seeds
+for path_project in $seeds
 do
 
-    path_project="${path_root}/seed-${seed}"
+    echo ${path_project}
 
     ./sge-submit.sh \
         -p ${path_project} \
