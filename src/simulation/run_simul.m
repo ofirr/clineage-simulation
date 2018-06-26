@@ -37,10 +37,15 @@ global ms_mutation_transition_prob;
 global ms_idx_rptlen_mapping;
 load('ms_mutation_transition_prob');
 
+% use mutation speed 1.0 if not specified in config
+if ~isfield(simul_options, 'mutationSpeed')
+    simul_options.mutationSpeed = 1.0;
+end
+
 % adjust ms mutation transition probabilities
 ms_mutation_transition_prob = adjust_ms_mutation_transition_prob(...
     ms_mutation_transition_prob, ...
-    1.0 ...
+    simul_options.mutationSpeed ...
 );
 
 % load om6 microsatellite ids and repeat numbers
@@ -59,12 +64,11 @@ for idx1 = 1:length(ms_idx_rptlen_mapping)
 end
 
 % parse eSTGt rules from the program file
-program_file = 'simulation.xml';
-if isfield(simul_options, 'programFile')
-    % overwrite if specified in config
-    program_file = simul_options.programFile;
+if ~isfield(simul_options, 'programFile')
+    % use simulation.xml if not specified in config
+    simul_options.programFile = 'simulation.xml';
 end
-rules = ParseeSTGProgram(program_file);
+rules = ParseeSTGProgram(simul_options.programFile);
 
 % get the number of microsatellite loci from the file
 % overwrite the rule
