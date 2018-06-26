@@ -285,7 +285,7 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
             },
             "metrics": {
                 "compare1": metrics_html,
-                "compare2": df_metrics.loc['Triples'][0]
+                "compare2": df_metrics.loc['Triples_toYuleAvg'][0]
             }
         }
 
