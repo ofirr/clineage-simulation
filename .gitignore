@@ -5,4 +5,5 @@ eSTGt
 __pycache__
 treeReconstruction.log
 analysis/tmc/seed-*
-
+analysis/many-seeds/seed-*
+analysis/many-seeds/template
