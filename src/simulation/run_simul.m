@@ -37,6 +37,12 @@ global ms_mutation_transition_prob;
 global ms_idx_rptlen_mapping;
 load('ms_mutation_transition_prob');
 
+% adjust ms mutation transition probabilities
+ms_mutation_transition_prob = adjust_ms_mutation_transition_prob(...
+    ms_mutation_transition_prob, ...
+    1.0 ...
+);
+
 % load om6 microsatellite ids and repeat numbers
 % declare as global variable so that it can be accessed from eSTGt
 global om6_ms;
