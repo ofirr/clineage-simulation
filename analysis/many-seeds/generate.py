@@ -41,6 +41,8 @@ def run(how_many_seeds):
     # iterate through seeds
     for seed in seeds:
 
+        print(seed)
+
         # create a seed directory
         path_work = "seed-{0}".format(seed)
         os.makedirs(path_work, exist_ok=True)
