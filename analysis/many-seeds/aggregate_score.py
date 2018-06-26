@@ -28,15 +28,18 @@ def run(path_project, seed):
         # add to the final list
         config_jsons.extend(names)
 
-    for path_config_json in config_jsons:
+    for config_json_filename in config_jsons:
 
-        with open(path_config_json, 'rt') as file_in:
+        with open(os.path.join(path_project, config_json_filename), 'rt') as file_in:
             cfg = json.loads(file_in.read())
-        path_score = os.path.join(path_project, cfg["pathRelativeOutput"], "scores.raw.out")
 
-        score = get_triples_score(path_score)
+        try:
+           path_score = os.path.join(path_project, cfg["pathRelativeOutput"], "scores.raw.out")
+           score = get_triples_score(path_score)
 
-        print("{0}\t{1}%".format(seed, score))
+           print("{0}\t{1}\t{2:3.4f}".format(seed, cfg["title"], score))
+        except:
+           pass
 
 
 if __name__ == "__main__":
