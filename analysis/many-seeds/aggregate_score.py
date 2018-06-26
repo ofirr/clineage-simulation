@@ -19,11 +19,24 @@ def get_triples_score(path_score):
 
 def run(path_project, seed):
 
-    score = get_triples_score(
-        os.path.join(path_project)
-    )
+    config_jsons = []
 
-    print("{0}\t{1}%".format(seed, score))
+    with open(os.path.join(path_project, "config.list"), 'rt') as fin:
+        names = fin.read().splitlines()
+        # remove empty strings
+        names = list(filter(None, names))
+        # add to the final list
+        config_jsons.extend(names)
+
+    for path_config_json in config_jsons:
+
+        with open(path_config_json, 'rt') as file_in:
+            cfg = json.loads(file_in.read())
+        path_score = os.path.join(path_project, cfg["pathRelativeOutput"], "scores.raw.out")
+
+        score = get_triples_score(path_score)
+
+        print("{0}\t{1}%".format(seed, score))
 
 
 if __name__ == "__main__":
