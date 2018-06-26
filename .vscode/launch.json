@@ -48,6 +48,16 @@
             ]
         },
         {
+            "name": "Python: generate simulation.xml with random seeds",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/analysis/many-seeds/generate.py",
+            "cwd": "${workspaceFolder}/analysis/many-seeds",
+            "args": [
+                "--count", "10"
+            ]
+        },        
+        {
             "name": "Attach (Remote Debug)",
             "type": "python",
             "request": "attach",
