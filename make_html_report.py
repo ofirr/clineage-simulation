@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import argparse
 from lxml import etree
+from ete3 import Tree
 
 from src import const
 from src import utils
@@ -134,6 +135,15 @@ def get_num_of_ms_loci(xdoc):
     return int(xdoc.xpath('./Rule/InternalState[Name[normalize-space()="MS"]]/DuplicateNum')[0].text.strip())
 
 
+def get_ascii_plot(path_newick):
+
+    with open(path_newick, 'rt') as fin:
+        newick = fin.read()
+        tree = Tree(newick)
+        tree.ladderize()
+        return tree.get_ascii()
+
+
 def make_html(path_project, config_jsons, exclude_mutation_table):
 
     templ = """
@@ -224,6 +234,17 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
     <p style="page-break-after: always;">&nbsp;</p>
     <p style="page-break-before: always;">&nbsp;</p>
 
+    <table>
+    <tr>
+        <td>
+            <pre>{{item.simulation.ascii}}</pre>
+        </td>
+        <td style="padding-left:30px;">
+            <pre>{{item.reconstructed.ascii}}</pre>
+        </td>
+    </tr>
+    </table>
+
     {% endfor %}
 
 </body>
@@ -246,11 +267,11 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
         path_output = os.path.join(
             path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT])
 
-        path_diff_metrics = os.path.join(path_output, const.FILE_DIFF_METRICS)
+        # path_diff_metrics = os.path.join(path_output, const.FILE_DIFF_METRICS)
 
-        diff_metrics = get_diff_metrics(path_diff_metrics)
-        overall_score = '{0:2.1f}%'.format((diff_metrics['total'] - (
-            diff_metrics['diff'] + diff_metrics['missing'])) / diff_metrics['total'] * 100.0)
+        # diff_metrics = get_diff_metrics(path_diff_metrics)
+        # overall_score = '{0:2.1f}%'.format((diff_metrics['total'] - (
+        #     diff_metrics['diff'] + diff_metrics['missing'])) / diff_metrics['total'] * 100.0)
 
         if exclude_mutation_table:
             mutation_table = "excluded"
@@ -288,6 +309,20 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
                 "compare2": df_metrics.loc['Triples_toYuleAvg'][0]
             }
         }
+
+        item["simulation"]["ascii"] = get_ascii_plot(
+            os.path.join(
+                path_output,
+                const.FILE_SIMULATION_NEWICK
+            )
+        )
+
+        item["reconstructed"]["ascii"] = get_ascii_plot(
+            os.path.join(
+                path_output,
+                const.FILE_RECONSTRUCTED_NEWICK
+            )
+        )        
 
         items.append(item)
 
