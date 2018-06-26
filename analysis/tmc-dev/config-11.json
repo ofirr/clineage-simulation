@@ -1,1 +1,8 @@
-{"title":"14 leaves","pathRelativeOutput":"case-11","addMutations":true,"addAllelicDropOuts":false,"addNoises":false,"earlyStopPopulation":13}
+{
+    "title": "14 leaves",
+    "pathRelativeOutput": "case-11",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 13
+}
