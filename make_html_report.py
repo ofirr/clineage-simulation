@@ -181,7 +181,7 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
     </tr>
     <tr>
         <td>Mutation:</td>
-        <td>{{item.config.contents.addMutations}}</td>
+        <td>{{item.config.contents.addMutations}} / Speed {{item.config.contents.mutationSpeed}}</td>
     </tr>
     <tr>
         <td>Allelic Dropouts:</td>
