@@ -29,15 +29,19 @@ or you can create a new `.env` file for your own environment.
 
 ## Run End-to-End
 
+Using mcluster03/SGE:
+
 ```bash
-$ ./run-tmc.sh
+$ ./run-tmc-all-sge.sh
 ```
 
 ## For Developers
 
 ### Updating Mutation Transition Table
 
-Update and run `./src/prepare.m`.
+- Update `om6_ms_only_ac_28x28.csv`.
+- Update and run `prepare.m`.
+- If the matrix size changes, there are some hardcoded number such as 28 in `run_simul.m` and `adjust_ms_mutation_transition_prob.m`.
 
 ### To Do
 
