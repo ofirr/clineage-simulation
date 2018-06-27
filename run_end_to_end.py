@@ -31,18 +31,12 @@ def simulate(path_matlab, path_project, config_filename):
 
     utils.run_matlab_code(path_matlab, matlab_code)
 
-    # read simulation configuration
-    config = utils.read_json_config(
-        os.path.join(path_project, config_filename))
 
-    path_simulation_output = os.path.join(
-        path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
-    )
+def reconstruct(path_simulation_output, root_cell_notation, scoring_method, quiet=True):
 
-    return path_simulation_output
-
-
-def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
+    # use uri10 by default if not specified
+    if not scoring_method:
+        scoring_method = 'uri10'
 
     import sys
     sys.path.append("/home/chun/clineage/")
@@ -86,7 +80,7 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
         cells_to_be_used_as_root=rldr,
         score_threshold=0,
         choosing_method="mms",
-        scoring_method="uri10",
+        scoring_method=scoring_method,
         printscores=True,
         loci_filter="ncnr",
         sabc=0,
@@ -186,7 +180,10 @@ def reconstruct(path_simulation_output, root_cell_notation, quiet=True):
         for n in ete_tree.get_leaves():
             sisters.append([n.name, len(n.get_sisters())])
         df = pd.DataFrame(sisters, columns=['cell_name', 'num_sisters'])
-        df.to_csv(os.path.join(path_simulation_output, const.FILE_SISTERS_COUNT), index=False)
+        df.to_csv(
+            os.path.join(path_simulation_output, const.FILE_SISTERS_COUNT),
+            index=False
+        )
 
 
 # deprecated
@@ -256,12 +253,20 @@ def report(path_scores_output_raw, path_scores_output_pretty, quiet=True):
         fout.write('\n')
 
 
-def run(path_matlab, path_project, config_json, quiet):
+def run(path_matlab, path_project, config_filename, quiet):
     "run function"
 
     # run simulation
-    path_simulation_output = simulate(
-        path_matlab, path_project, config_json
+    simulate(
+        path_matlab, path_project, config_filename
+    )
+
+    # read simulation configuration
+    config = utils.read_json_config(
+        os.path.join(path_project, config_filename))
+
+    path_simulation_output = os.path.join(
+        path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
     )
 
     # take simulation tree and make ascii plot
@@ -270,7 +275,12 @@ def run(path_matlab, path_project, config_json, quiet):
     )
 
     # reconstruct based on mutation table generated from simulation
-    reconstruct(path_simulation_output, 'root', quiet)
+    reconstruct(
+        path_simulation_output,
+        'root',
+        config[const.CONFIG_SCORING_METHOD],
+        quiet
+    )
 
     # take reconstructed tree and make ascii plot
     generate_tree_ascii_plot(
