@@ -27,6 +27,6 @@ path_diff_metrics = fullfile(path_working, 'diff-score.json');
 
 %% Simulation
 
-path_working='../analysis/tmc-004';
+path_working='../examples/example-01/';
 
 addpath(path_working);

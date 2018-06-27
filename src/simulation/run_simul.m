@@ -47,13 +47,14 @@ ms_mutation_transition_prob = adjust_ms_mutation_transition_prob(...
     ms_mutation_transition_prob, ...
     simul_options.mutationSpeed ...
 );
+assert( isequal(size(ms_mutation_transition_prob), [28 28]) );
 
 % load om6 microsatellite ids and repeat numbers
 % declare as global variable so that it can be accessed from eSTGt
 global om6_ms;
 
 % read from csv, skip the first row (header)
-om6_ms = csvread('om6_ms_only_legit_ac.csv', 1, 0);
+om6_ms = csvread('om6_ms_only_ac_28x28.csv', 1, 0);
 
 % convert from actual ms repeat lengths to indexes
 % this is required by ms_mutation_transition_prob

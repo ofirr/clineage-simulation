@@ -4,7 +4,7 @@ function [new_prob_matrix] = adjust_ms_mutation_transition_prob(old_prob_matrix,
 % speed >1: faster mutation rate
 
 % fix: one row in Noa's table sums up to greater 1.0
-old_prob_matrix(end - 1, end - 2) = old_prob_matrix(end - 1, end - 2) - 0.0490;
+%old_prob_matrix(end - 1, end - 2) = old_prob_matrix(end - 1, end - 2) - 0.0490;
 
 % table size
 vec_size = size(old_prob_matrix);
@@ -30,4 +30,4 @@ new_prob_matrix(idx_diag) = new_diag_values;
 
 % ensure that the sum of probabilities in each row is 1.0
 sum_new_each_row = sum(new_prob_matrix, 2);
-assert( sum(sum_new_each_row) == 30 );
+assert( sum(sum_new_each_row) == 28 );
