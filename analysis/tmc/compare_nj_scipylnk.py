@@ -124,8 +124,12 @@ def plot_ascii_ete(path_newick):
 
 def run(path_project, seed_num, n_num, case_num, path_output_base):
 
-    path_part_seed_n_case = 'seed-{0}/n-{1:03d}/case-{2:02d}'.format(
-        seed_num, n_num, case_num)
+    if n_num == None:
+        path_part_seed_n_case = 'seed-{0}/case-{1:02d}'.format(
+            seed_num, case_num)
+    else:
+        path_part_seed_n_case = 'seed-{0}/n-{1:03d}/case-{2:02d}'.format(
+            seed_num, n_num, case_num)
 
     # construct working path
     path_work = os.path.join(path_project, path_part_seed_n_case)
@@ -255,7 +259,8 @@ def parse_arguments():
         "--n",
         action="store",
         dest="n_num",
-        required=True
+        default="",
+        required=False
     )
 
     parser.add_argument(
@@ -285,7 +290,7 @@ if __name__ == "__main__":
     run(
         params.path_project,
         int(params.seed_num),
-        int(params.n_num),
+        int(params.n_num) if params.n_num else None,
         int(params.case_num),
         params.path_output_base
     )

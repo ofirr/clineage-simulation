@@ -57,6 +57,18 @@
             "args": [
                 "--count", "10"
             ]
+        },
+        {
+            "name": "Python: compare-nj-scipylnk",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/analysis/tmc/compare_nj_scipylnk.py",
+            "args": [
+                "--project", "C:\\Users\\chun\\projects\\tmp\\simul-outputs\\many-seeds",
+                "--seed", "970154",
+                "--case", "5",
+                "--outdir", "C:\\Users\\chun\\projects\\tmp\\simul-outputs\\many-seeds\\tmc-nj-scipylnk"
+            ]
         },        
         {
             "name": "Attach (Remote Debug)",
