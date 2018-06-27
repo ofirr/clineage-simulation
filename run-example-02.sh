@@ -8,6 +8,7 @@ python run_end_to_end.py \
   --config config.json
 
 python make_html_report.py \
+  --title example-02 \
   --project ${path_project} \
   --config config.json
 
