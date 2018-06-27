@@ -1,5 +1,6 @@
 ENV_MATLAB_KEY = 'matlab'
 CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
+CONFIG_SCORING_METHOD = 'scoringMethod'
 
 FILE_SIMULATION_XML = 'simulation.xml'
 FILE_SIMULATION_NEWICK = 'simulation.newick'
