@@ -32,7 +32,7 @@ def simulate(path_matlab, path_project, config_filename):
     utils.run_matlab_code(path_matlab, matlab_code)
 
 
-def reconstruct(path_simulation_output, root_cell_notation, scoring_method, quiet=True):
+def reconstruct(path_simulation_output, root_cell_notation, scoring_method, choosing_method, quiet=True):
 
     import sys
     sys.path.append("/home/chun/clineage/")
@@ -75,7 +75,7 @@ def reconstruct(path_simulation_output, root_cell_notation, scoring_method, quie
         triplets_file=path_triplets_list_raw,
         cells_to_be_used_as_root=rldr,
         score_threshold=0,
-        choosing_method="mms",
+        choosing_method=choosing_method,
         scoring_method=scoring_method,
         printscores=True,
         loci_filter="ncnr",
@@ -274,7 +274,8 @@ def run(path_matlab, path_project, config_filename, quiet):
     reconstruct(
         path_simulation_output,
         'root',
-        config.get(const.CONFIG_SCORING_METHOD, 'uri10'),
+        config.get(const.CONFIG_RECONSTRUCT_SCORING_METHOD, 'uri10'),
+        config.get(const.CONFIG_RECONSTRUCT_CHOOSING_METHOD, 'mms'),
         quiet
     )
 
