@@ -1,0 +1,36 @@
+<Program>
+<ExecParams>
+	<SimTime>
+		3
+	</SimTime>
+	<Seed>
+		875887
+	</Seed>
+</ExecParams>
+<!-- Seeds
+
+    682498
+    875887 
+
+-->
+<FunHandleName> update_rules </FunHandleName>
+<Rule>
+	<Prod>
+		C -> 1 {C,C}_1
+	</Prod>
+	<InternalState>
+		<Name> MS </Name>
+		<InitVal> -1 </InitVal>
+		<FuncHandleName> update_microsatellite </FuncHandleName>
+		<DuplicateNum> 8192 </DuplicateNum>
+	</InternalState>
+	<InternalState>
+		<Name> Gen </Name>
+		<InitVal> 0 </InitVal>
+		<FuncHandleName> update_generation </FuncHandleName>
+	</InternalState>
+	<InitPop>
+		1
+	</InitPop>
+</Rule>
+</Program>
