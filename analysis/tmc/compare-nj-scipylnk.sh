@@ -37,7 +37,7 @@ do
 
       	num=`printf "%02d\n" $ii`
 
-        python ./compare_nj_scipylnk.py \
+        python ../compare_nj_scipylnk.py \
             --project ${path_project} \
             --seed ${seed} \
             --n ${nn} \
