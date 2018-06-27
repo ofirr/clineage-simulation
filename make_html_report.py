@@ -206,6 +206,9 @@ def make_html(report_title, path_project, config_jsons, exclude_mutation_table):
         <td>Early Stop Population:</td>
         <td>{{item.config.contents.earlyStopPopulation}}</td>
     </tr>
+    <tr>
+        <td>Scoring Method:</td>
+        <td>{% if item.config.contents.scoringMethod %}{{item.config.contents.scoringMethod}}{% else %}probably uri10?{% endif %}</td>
     </table>
 
     <h2>Mutation Table</h2>
