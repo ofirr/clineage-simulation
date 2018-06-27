@@ -226,7 +226,8 @@ def run(path_project, seed_num, n_num, case_num, path_output_base):
     with open(os.path.join(path_output_dir, 'final-score.csv'), 'at') as fout:
         cols = []
         cols.append(seed_num)
-        cols.append(n_num)
+        if n_num:
+            cols.append(n_num)
         cols.append(case_num)
         cols.append(score_tmc)
         cols.append(score_nj)
