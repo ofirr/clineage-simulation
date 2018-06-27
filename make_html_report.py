@@ -144,11 +144,12 @@ def get_ascii_plot(path_newick):
         return tree.get_ascii()
 
 
-def make_html(path_project, config_jsons, exclude_mutation_table):
+def make_html(report_title, path_project, config_jsons, exclude_mutation_table):
 
     templ = """
 <html>
 <head>
+    <title>{{reportTitle}}</title>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans" />
     <style>
         table {
@@ -327,7 +328,7 @@ def make_html(path_project, config_jsons, exclude_mutation_table):
         items.append(item)
 
     template = Template(templ)
-    html = template.render(items=items)
+    html = template.render(reportTitle=report_title, items=items)
 
     with open(os.path.join(path_project, const.FILE_REPORT_HTML), 'wt') as fout:
         fout.write(html)
@@ -359,6 +360,14 @@ def parse_arguments():
         required=False
     )
 
+    parser.add_argument(
+        "--title",
+        action="store",
+        dest="report_title",
+        default="Report",
+        required=False,
+    )
+
     # parse arguments
     params = parser.parse_args()
 
@@ -374,4 +383,5 @@ if __name__ == "__main__":
 
     params, config_jsons = parse_arguments()
 
-    make_html(params.path_project, config_jsons, params.exclude_mutation_table)
+    make_html(params.report_title, params.path_project,
+              config_jsons, params.exclude_mutation_table)

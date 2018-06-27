@@ -21,6 +21,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/make_html_report.py",
             "args": [
+                "--title", "Report (Example-01)",
                 "--project", "./examples/example-01",
                 "--config", "config.json"
             ]
