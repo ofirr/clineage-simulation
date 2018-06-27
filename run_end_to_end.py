@@ -34,10 +34,6 @@ def simulate(path_matlab, path_project, config_filename):
 
 def reconstruct(path_simulation_output, root_cell_notation, scoring_method, quiet=True):
 
-    # use uri10 by default if not specified
-    if not scoring_method:
-        scoring_method = 'uri10'
-
     import sys
     sys.path.append("/home/chun/clineage/")
     import clineage.wsgi
@@ -278,7 +274,7 @@ def run(path_matlab, path_project, config_filename, quiet):
     reconstruct(
         path_simulation_output,
         'root',
-        config[const.CONFIG_SCORING_METHOD],
+        config.get(const.CONFIG_SCORING_METHOD, 'uri10'),
         quiet
     )
 
