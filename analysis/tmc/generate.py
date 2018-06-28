@@ -1,16 +1,9 @@
 #!/usr/bin/env python
 import math
 import os
+import shutil
 import subprocess
 import argparse
-
-
-def run_command(cmd):
-    "run command"
-
-    process = subprocess.Popen(cmd)
-
-    process.wait()
 
 
 def run(seed):
@@ -48,14 +41,16 @@ def run(seed):
 </Program>
 """
 
+    path_template = './template'
+
     # power of 2 (n=3 to 14)
     loci_num_list = []
     for n in range(3, 14):
         loci = int(math.pow(2, n))
-        loci_num_list.append( (n, loci) )
+        loci_num_list.append((n, loci))
 
     # currently, the max num of loci (OM6 AC only)
-    loci_num_list.append( (14, 9936) )
+    # loci_num_list.append((14, 9936))
 
     for n, loci_num in loci_num_list:
 
@@ -63,9 +58,12 @@ def run(seed):
 
         os.makedirs(path_work, exist_ok=True)
 
-        run_command(
-            ['unzip', 'tmc-template.zip', '-d', path_work]
-        )
+        # copy the template to new dir
+        src_files = os.listdir(path_template)
+        for file_name in src_files:
+            full_file_name = os.path.join(path_template, file_name)
+            if (os.path.isfile(full_file_name)):
+                shutil.copy(full_file_name, path_work)
 
         with open(os.path.join(path_work, "simulation.xml"), 'wt') as fout:
             fout.write(xml.format(seed, loci_num))

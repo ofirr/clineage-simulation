@@ -1,0 +1,8 @@
+{
+    "title": "19 leaves",
+    "pathRelativeOutput": "case-16",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 19
+}
