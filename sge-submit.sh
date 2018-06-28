@@ -28,7 +28,7 @@ then
 fi
 
 qsub \
-	-N test \
+	-N simulation \
 	-q all2.q \
 	-cwd \
 	./sge-run-simul.sh ${path_project} ${config_file}
