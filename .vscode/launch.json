@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: make_html_report (tmc-875887/tmc-014)",
+            "name": "Python: make_html_report (tmc-875887/tmc-013)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/make_html_report.py",
             "args": [
-                "--project", "./analysis/tmc-875887/tmc-014",
+                "--project", "./analysis/tmc-875887/tmc-013",
                 "--config", "config.list",
                 "--exclude-mutation-table"
             ]

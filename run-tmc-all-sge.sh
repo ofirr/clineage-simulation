@@ -25,7 +25,7 @@ then
     exit 1
 fi
 
-for nn in {3..14}
+for nn in {3..13}
 do
 
     path_project="/home/chun/projects/clineage-simulation/analysis/tmc/seed-${seed}/n-`printf '%03d' $nn`"
