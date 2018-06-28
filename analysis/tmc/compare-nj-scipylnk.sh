@@ -29,7 +29,7 @@ then
     exit 1
 fi
 
-for nn in {3..14}
+for nn in {3..13}
 do
 
     for ii in {1..20}

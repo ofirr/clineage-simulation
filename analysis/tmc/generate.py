@@ -43,9 +43,9 @@ def run(seed):
 
     path_template = './template'
 
-    # power of 2 (n=3 to 14)
+    # power of 2 (n=3 to 13)
     loci_num_list = []
-    for n in range(3, 14):
+    for n in range(3, 14): # inclusive and exclusive
         loci = int(math.pow(2, n))
         loci_num_list.append((n, loci))
 
