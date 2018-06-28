@@ -32,7 +32,8 @@ def run(how_many_seeds):
 
     # generate seeds
     seeds = random.sample(range(100000, 999999), how_many_seeds)
-
+    #seeds = [140161,234776,254361,282174,479041,544815,605395,693355,712020,741576,741867,796476,912629,970154,397701,685610]
+    
     # read the template simulation.xml
     xdoc = read_simulation_xml(
         os.path.join(path_template, 'simulation.xml')
