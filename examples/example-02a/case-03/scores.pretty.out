@@ -3,35 +3,35 @@ No                              1.0000
 RefTree                         1.0000
 Tree                            1.0000
 RefTree_taxa                   22.0000
-Tree_taxa                      17.0000
-Common_taxa                    17.0000
-MatchingCluster                51.0000
-MatchingCluster_toYuleAvg       0.7890
-MatchingCluster_toUnifAvg       0.7016
-R-F_Cluster                    12.0000
-R-F_Cluster_toYuleAvg           0.8123
-R-F_Cluster_toUnifAvg           0.8084
-NodalSplitted                  31.2090
-NodalSplitted_toYuleAvg         0.6809
-NodalSplitted_toUnifAvg         0.5700
-Triples                       296.0000
-Triples_toYuleAvg               0.6519
-Triples_toUnifAvg               0.6509
-MatchingPair                   80.0000
-MatchingPair_toYuleAvg          0.8562
-MatchingPair_toUnifAvg          0.8696
-MAST                           10.0000
-MAST_toYuleAvg                  0.9196
-MAST_toUnifAvg                  0.9134
-CopheneticL2Metric             23.0217
-CopheneticL2Metric_toYuleAvg    0.6410
-CopheneticL2Metric_toUnifAvg    0.5569
+Tree_taxa                      18.0000
+Common_taxa                    18.0000
+MatchingCluster                53.0000
+MatchingCluster_toYuleAvg       0.7460
+MatchingCluster_toUnifAvg       0.6590
+R-F_Cluster                    11.5000
+R-F_Cluster_toYuleAvg           0.7285
+R-F_Cluster_toUnifAvg           0.7267
+NodalSplitted                  32.7567
+NodalSplitted_toYuleAvg         0.6589
+NodalSplitted_toUnifAvg         0.5404
+Triples                       363.0000
+Triples_toYuleAvg               0.6640
+Triples_toUnifAvg               0.6685
+MatchingPair                   94.0000
+MatchingPair_toYuleAvg          0.8836
+MatchingPair_toUnifAvg          0.9038
+MAST                           12.0000
+MAST_toYuleAvg                  1.0224
+MAST_toUnifAvg                  1.0196
+CopheneticL2Metric             22.0454
+CopheneticL2Metric_toYuleAvg    0.5619
+CopheneticL2Metric_toUnifAvg    0.4877
 
                  Name         Avg  Std         Min         Max  Count
-0     MatchingCluster   51.000000  0.0   51.000000   51.000000      1
-1         R-F_Cluster   12.000000  0.0   12.000000   12.000000      1
-2       NodalSplitted   31.208973  0.0   31.208973   31.208973      1
-3             Triples  296.000000  0.0  296.000000  296.000000      1
-4        MatchingPair   80.000000  0.0   80.000000   80.000000      1
-5                MAST   10.000000  0.0   10.000000   10.000000      1
-6  CopheneticL2Metric   23.021729  0.0   23.021729   23.021729      1
+0     MatchingCluster   53.000000  0.0   53.000000   53.000000      1
+1         R-F_Cluster   11.500000  0.0   11.500000   11.500000      1
+2       NodalSplitted   32.756679  0.0   32.756679   32.756679      1
+3             Triples  363.000000  0.0  363.000000  363.000000      1
+4        MatchingPair   94.000000  0.0   94.000000   94.000000      1
+5                MAST   12.000000  0.0   12.000000   12.000000      1
+6  CopheneticL2Metric   22.045408  0.0   22.045408   22.045408      1
