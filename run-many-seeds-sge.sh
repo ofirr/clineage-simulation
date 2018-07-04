@@ -2,7 +2,7 @@
 
 path_root='/home/chun/projects/clineage-simulation/analysis/many-seeds/'
 
-seeds=`find ${path_root} -name "seed-*" -type d`
+seeds=`find ${path_root} -maxdepth 1 -name "seed-*" -type d`
 
 for path_project in $seeds
 do
