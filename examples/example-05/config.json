@@ -1,0 +1,8 @@
+{
+    "title": "Example 05",
+    "pathRelativeOutput": "outputs",
+    "addMutations": true,
+    "addAllelicDropOuts": true,
+    "addNoises": true,
+    "earlyStopPopulation": 5
+}

@@ -1,4 +1,4 @@
-function [mutation_table] = create_mutation_table(run, num_of_ms_loci)
+function [mutation_table] = create_mutation_table(run, num_of_ms_loci, allele)
 
 % get the indexes of the leaves by extracting the last row of the LiveNodes
 leaves_idx = run.LiveNodes{end};
@@ -15,8 +15,17 @@ for col = 1:length(leaves_idx)
         
         leaf_id = leaves_idx(col);
         
-        % use idx to get the actual ms repeat length
-        ms_repeat_length = run.Nodes{1,1}(leaf_id).InternalStates.MS(row);
+        internal_state = run.Nodes{1,1}(leaf_id).InternalStates;
+        
+        switch allele
+            case 1
+                ms_repeat_length = internal_state.MS1(row);
+            case 2
+                ms_repeat_length = internal_state.MS2(row);
+            otherwise
+                error('allele must be either 1 (Paternal) or 2 (Maternal)');
+        end
+        
         mutation_table(row, col) = ms_repeat_length;
        
     end
