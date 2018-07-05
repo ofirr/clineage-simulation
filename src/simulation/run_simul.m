@@ -31,28 +31,40 @@ path_tree_png_with_distance = fullfile(path_output, 'simulation.distance.png');
 
 %% configuration
 
-% use biallelic=false if not specified in config
+% use biallelic=false if not specified in the config
 % (for backward compatibility)
 if ~isfield(simul_options, 'biallelic')
     simul_options.biallelic = false;
 end
 
-% use mutation speed 1.0 if not specified in config
+% use mutation speed 1.0 if not specified in the config
 % (for backward compatibility)
 if ~isfield(simul_options, 'mutationSpeed')
     simul_options.mutationSpeed = 1.0;
 end
 
-% use simulation.xml if not specified in config
+% use simulation.xml if not specified in the config
 % (for backward compatibility)
 if ~isfield(simul_options, 'programFile')
     simul_options.programFile = 'simulation.xml';
 end
 
-% disable WGA bias if not specified in config
+% disable WGA bias if not specified in the config
 % (for backward compatibility)
 if ~isfield(simul_options, 'wgaBias')
     simul_options.wgaBias = false;
+end
+
+% set allelic dropout threshold to NaN if not specified in the config
+% (for backward compatibility)
+if ~isfield(simul_options, 'adoFixedThreshold')
+    simul_options.adoFixedThreshold = NaN;
+end
+
+% set defai;t mutation noise threshold if not specified in the config
+% (for backward compatibility)
+if ~isfield(simul_options, 'mutationNoiseThreshold')
+    simul_options.mutationNoiseThreshold = 0.00194622849;
 end
 
 %% simulation
@@ -165,9 +177,6 @@ for allele = 1:length(alleles)
 
     if simul_options.addNoises
 
-        % mutation noise threshold
-        mutation_noise_threshold = 0.00194622849;
-
         % generate mutation noise table
         %  0: don't change
         %  1: increment microsatellite repeat length by 1
@@ -175,7 +184,7 @@ for allele = 1:length(alleles)
         mutation_noise_table = generate_mutation_noise_table(...
             num_of_samples, ...
             num_of_ms_loci, ...
-            mutation_noise_threshold ...
+            simul_options.mutationNoiseThreshold ...
         );
 
         % add mutation noises
@@ -193,7 +202,8 @@ for allele = 1:length(alleles)
         ado_truth_table = generate_ado_truth_table(...
             num_of_samples, ...
             num_of_ms_loci, ...
-            Dropout ...
+            Dropout, ...
+            simul_options.adoFixedThreshold ...
         );
 
         % apply allelic dropout to the mutation table
@@ -248,7 +258,7 @@ if simul_options.biallelic
     % handle allelic dropout case
     ado1 = isnan(mutation_tables{1,1}); % dropouts in paternal    
     ado2 = isnan(mutation_tables{1,2}); % dropouts in maternal
-    wga_bias_proportions(ado1) = double(0.0; % only maternal seen
+    wga_bias_proportions(ado1) = 0.0; % only maternal seen
     wga_bias_proportions(ado2) = 1.0; % only paternal seen
     wga_bias_proportions(ado1 & ado2) = NaN; % both not seen
     

@@ -6,5 +6,7 @@
     "addNoises": true,
     "earlyStopPopulation": 0,
     "biallelic": true,
-    "wgaBias": true
+    "wgaBias": true,
+    "adoFixedThreshold": 0.07,
+    "mutationNoiseThreshold": 0.00194622849
 }
