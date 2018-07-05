@@ -238,13 +238,21 @@ if simul_options.biallelic
         % 50:50 between paternal and maternal
         wga_bias_proportions = ones(num_of_ms_loci, num_of_samples) - 0.5;
     end
-
+   
     if has_root
         % add proportion for root cell
         % no biad, thus set to 0.5
         wga_bias_proportions(:, num_of_samples + 1) = ones(num_of_ms_loci, 1) * 0.5;
     end
-
+        
+    % handle allelic dropout case
+    ado1 = isnan(mutation_tables{1,1}); % dropouts in paternal    
+    ado2 = isnan(mutation_tables{1,2}); % dropouts in maternal
+    wga_bias_proportions(ado1) = double(0.0; % only maternal seen
+    wga_bias_proportions(ado2) = 1.0; % only paternal seen
+    wga_bias_proportions(ado1 & ado2) = NaN; % both not seen
+    
+    % append wga bias proportions
     mutation_tables(end + 1) = { wga_bias_proportions };
 end
 
