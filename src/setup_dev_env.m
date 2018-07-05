@@ -30,3 +30,5 @@ path_diff_metrics = fullfile(path_working, 'diff-score.json');
 path_working='../examples/example-05/';
 
 addpath(path_working);
+
+% rmpath('../examples/example-01')

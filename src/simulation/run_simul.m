@@ -29,6 +29,26 @@ path_newick_with_distance = fullfile(path_output, 'simulation.distance.newick');
 path_tree_png_without_distance = fullfile(path_output, 'simulation.png');
 path_tree_png_with_distance = fullfile(path_output, 'simulation.distance.png');
 
+%% configuration
+
+% use biallelic=false if not specified in config
+% (for backward compatibility)
+if ~isfield(simul_options, 'biallelic')
+    simul_options.biallelic = false;
+end
+
+% use mutation speed 1.0 if not specified in config
+% (for backward compatibility)
+if ~isfield(simul_options, 'mutationSpeed')
+    simul_options.mutationSpeed = 1.0;
+end
+
+% use simulation.xml if not specified in config
+% (for backward compatibility)
+if ~isfield(simul_options, 'programFile')
+    simul_options.programFile = 'simulation.xml';
+end
+
 %% simulation
 
 % load microsatellite mutation transition table
@@ -36,11 +56,6 @@ path_tree_png_with_distance = fullfile(path_output, 'simulation.distance.png');
 global ms_mutation_transition_prob;
 global ms_idx_rptlen_mapping;
 load('ms_mutation_transition_prob');
-
-% use mutation speed 1.0 if not specified in config
-if ~isfield(simul_options, 'mutationSpeed')
-    simul_options.mutationSpeed = 1.0;
-end
 
 % adjust ms mutation transition probabilities
 ms_mutation_transition_prob = adjust_ms_mutation_transition_prob(...
@@ -65,28 +80,32 @@ for idx1 = 1:length(ms_idx_rptlen_mapping)
 end
 
 % parse eSTGt rules from the program file
-if ~isfield(simul_options, 'programFile')
-    % use simulation.xml if not specified in config
-    simul_options.programFile = 'simulation.xml';
-end
 rules = ParseeSTGProgram(simul_options.programFile);
 
 % get the number of microsatellite loci from the file
-% overwrite the rule
-% rules.Prod{1,1}.InternalStates.MS.DupNum = size(om6_ms, 1);
-num_of_ms1_loci = rules.Prod{1,1}.InternalStates.MS1.DupNum;
-num_of_ms2_loci = rules.Prod{1,1}.InternalStates.MS2.DupNum;
+% or use `size(om6_ms, 1)`;
+if simul_options.biallelic
+    num_of_ms1_loci = rules.Prod{1,1}.InternalStates.MS1.DupNum;
+    num_of_ms2_loci = rules.Prod{1,1}.InternalStates.MS2.DupNum;
 
-if num_of_ms2_loci ~= num_of_ms2_loci
-    error('Num of microsatellite loci must be identical in MS1 and MS2');
-    return;
+    if num_of_ms2_loci ~= num_of_ms2_loci
+        error('Num of microsatellite loci must be identical in MS1 and MS2');
+        return;
+    end
+
+    num_of_ms_loci = num_of_ms1_loci;
+else
+    num_of_ms_loci = rules.Prod{1,1}.InternalStates.MS.DupNum;
 end
 
-num_of_ms_loci = num_of_ms1_loci;
-
-% overwrite the rule
-rules.Prod{1,1}.InternalStates.MS1.InitVal = -1;
-rules.Prod{1,1}.InternalStates.MS2.InitVal = -1;
+% setting `InitVal` to -1 will signal that ms repeat length for each loci
+% should be initialized before introducing mutation
+if simul_options.biallelic
+    rules.Prod{1,1}.InternalStates.MS1.InitVal = -1;
+    rules.Prod{1,1}.InternalStates.MS2.InitVal = -1;
+else
+    rules.Prod{1,1}.InternalStates.MS.InitVal = -1;
+end
 
 % run simulation
 [ runs, RunsData ] = RunSim(rules, rules.Seed, rules.SimTime);
@@ -111,10 +130,14 @@ phytree_obj = create_tree(...
 
 %% create mutation table
 
-% biallelic/multiallelic support
-% 1: paternal
-% 2: maternal
-alleles = 1:2;
+% monoallelic/biallelic support
+if simul_options.biallelic
+    % 1: paternal, 2: maternal
+    alleles = 1:2;
+else
+    alleles = 1;
+end
+
 mutation_tables = cell(alleles);
 
 for allele = 1:length(alleles)
@@ -123,6 +146,7 @@ for allele = 1:length(alleles)
     mutation_table = create_mutation_table(...
         my_run, ...
         num_of_ms_loci, ...
+        simul_options.biallelic, ...
         allele ...
     );
 
