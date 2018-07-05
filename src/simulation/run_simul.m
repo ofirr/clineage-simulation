@@ -74,10 +74,19 @@ rules = ParseeSTGProgram(simul_options.programFile);
 % get the number of microsatellite loci from the file
 % overwrite the rule
 % rules.Prod{1,1}.InternalStates.MS.DupNum = size(om6_ms, 1);
-num_of_ms_loci = rules.Prod{1,1}.InternalStates.MS.DupNum;
+num_of_ms1_loci = rules.Prod{1,1}.InternalStates.MS1.DupNum;
+num_of_ms2_loci = rules.Prod{1,1}.InternalStates.MS2.DupNum;
+
+if num_of_ms2_loci ~= num_of_ms2_loci
+    error('Num of microsatellite loci must be identical in MS1 and MS2');
+    return;
+end
+
+num_of_ms_loci = num_of_ms1_loci;
 
 % overwrite the rule
-rules.Prod{1,1}.InternalStates.MS.InitVal = -1;
+rules.Prod{1,1}.InternalStates.MS1.InitVal = -1;
+rules.Prod{1,1}.InternalStates.MS2.InitVal = -1;
 
 % run simulation
 [ runs, RunsData ] = RunSim(rules, rules.Seed, rules.SimTime);
@@ -102,106 +111,111 @@ phytree_obj = create_tree(...
 
 %% create mutation table
 
-% create mutation table purely based on eSTGt without any post modification
-mutation_table = create_mutation_table(...
-    my_run, ...
-    num_of_ms_loci ...
-);
+% biallelic/multiallelic support
+% 1: paternal
+% 2: maternal
+alleles = 1:2;
+mutation_tables = cell(alleles);
 
-% get number of samples, number of microsatellite loci
-num_of_ms_loci = size(mutation_table, 1);
-num_of_samples = size(mutation_table, 2);
+for allele = 1:length(alleles)
 
-if simul_options.addNoises
-    
-    % mutation noise threshold
-    mutation_noise_threshold = 0.00194622849;
-
-    % generate mutation noise table
-    %  0: don't change
-    %  1: increment microsatellite repeat length by 1
-    % -1: decrement microsatellite repeat length by 1
-    mutation_noise_table = generate_mutation_noise_table(...
-        num_of_samples, ...
+    % create mutation table purely based on eSTGt without any post modification
+    mutation_table = create_mutation_table(...
+        my_run, ...
         num_of_ms_loci, ...
-        mutation_noise_threshold ...
+        allele ...
     );
 
-    % add mutation noises
-    mutation_table = mutation_table + mutation_noise_table;
+    % get number of samples, number of microsatellite loci
+    num_of_ms_loci = size(mutation_table, 1);
+    num_of_samples = size(mutation_table, 2);
 
-end
+    if simul_options.addNoises
 
-if simul_options.addAllelicDropOuts
-    
-    % load allelic dropout probability table
-    load('allelic_dropout_prob');
+        % mutation noise threshold
+        mutation_noise_threshold = 0.00194622849;
 
-    % get allelic dropout truth table
-    % 0: don't drop, 1: drop
-    ado_truth_table = generate_ado_truth_table(...
-        num_of_samples, ...
-        num_of_ms_loci, ...
-        Dropout ...
-    );
+        % generate mutation noise table
+        %  0: don't change
+        %  1: increment microsatellite repeat length by 1
+        % -1: decrement microsatellite repeat length by 1
+        mutation_noise_table = generate_mutation_noise_table(...
+            num_of_samples, ...
+            num_of_ms_loci, ...
+            mutation_noise_threshold ...
+        );
 
-    % apply allelic dropout to the mutation table
-    % dropped-out will be marked as NaN (1 becomes NaN)
-    mutation_table(ado_truth_table) = NaN;
+        % add mutation noises
+        mutation_table = mutation_table + mutation_noise_table;
 
-end
+    end
 
-% add root cell
-has_root = true;
-mutation_table(:, num_of_samples + 1) = om6_ms(1:num_of_ms_loci, 2);
+    if simul_options.addAllelicDropOuts
 
-% get mutation table with column/row header
-% this returns a cell array
-% mutation_table_final = convert_to_mutation_table_for_tmc(...
-%         my_run, ...
-%         mutation_table, ...
-%         has_root ...
-%     );
+        % load allelic dropout probability table
+        load('allelic_dropout_prob');
 
-mutation_table_final = convert_to_mutation_table_with_header(...
+        % get allelic dropout truth table
+        % 0: don't drop, 1: drop
+        ado_truth_table = generate_ado_truth_table(...
+            num_of_samples, ...
+            num_of_ms_loci, ...
+            Dropout ...
+        );
+
+        % apply allelic dropout to the mutation table
+        % dropped-out will be marked as NaN (1 becomes NaN)
+        mutation_table(ado_truth_table) = NaN;
+
+    end
+
+    % add root cell if necessary
+    % fixme: make configurable in config.json
+    has_root = true;
+
+    if has_root
+        mutation_table(:, num_of_samples + 1) = om6_ms(1:num_of_ms_loci, 2);
+    end
+
+    % get mutation table with column/row header
+    % this returns a cell array
+    mutation_table_mono = convert_to_mutation_table_with_header(...
         my_run, ...
         mutation_table, ...
         has_root ...
     );
 
-% write mutation table to a file
-switch class(mutation_table_final)
-    
-    case 'table'
-        
-        writetable(...
-            mutation_table_final, ...
-            path_mutation_table, ...
-            'WriteVariableNames', true, ...
-            'WriteRowNames', true, ...
-            'Delimiter', 'tab' ...
-        );
-    
-    case 'cell'
+    % write mutation table to a file
+    save_mutation_table( ...
+        fullfile(path_output, sprintf('mutation_table.%d.txt', allele)), ...
+        mutation_table_mono ...
+    );
 
-        % open a file
-        file_out = fopen(path_mutation_table, 'w');
-        
-        % iterate through rows in the mutation table
-        for row = 1:size(mutation_table_final, 1)
-            % convert a row in the cell array to a string array
-            line = string( mutation_table_final(row,:) );
-            % replace any missing to a text "NaN"
-            line( ismissing(line) ) = "NaN";
-            % concatenate with a tab characeter
-            line = strjoin( line, '\t' );
-            % write to a file
-            fprintf(file_out, "%s\n", line);
-        end
-        
-        % close the file
-        fclose(file_out);
-        
+    % append
+    mutation_tables(allele) = { mutation_table };
+
 end
 
+mutation_table = merge_mutation_tables(mutation_tables);
+
+%% save
+
+% get mutation table with column/row header
+% this returns a cell array
+mutation_table_final = convert_to_mutation_table_for_tmc(...
+        my_run, ...
+        mutation_table, ...
+        has_root ...
+    );
+
+% mutation_table_final = convert_to_mutation_table_with_header(...
+%         my_run, ...
+%         mutation_table, ...
+%         has_root ...
+%     );
+
+% write mutation table to a file
+save_mutation_table(path_mutation_table, mutation_table_final);
+
+% write workspace to a file
 save(fullfile(path_output, 'workspace.mat'));
