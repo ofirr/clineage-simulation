@@ -5,5 +5,6 @@
     "addAllelicDropOuts": true,
     "addNoises": true,
     "earlyStopPopulation": 5,
-    "biallelic": true
+    "biallelic": true,
+    "wgaBias": true
 }

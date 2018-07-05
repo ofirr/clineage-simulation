@@ -25,8 +25,10 @@ switch class(mutation_table)
             for col = 1:size(mutation_table, 2)
                 switch class( mutation_table{row, col} )
                     case 'char'
+                        % handle column/row header
                         line(col) = string(mutation_table(row, col));
                     case 'cell'
+                        % handle repeat lengths
                         alleles = string(mutation_table{row, col}{1, 1});
                         % replace any missing to a text "NaN"
                         alleles( ismissing(alleles) ) = "NaN";

@@ -49,6 +49,12 @@ if ~isfield(simul_options, 'programFile')
     simul_options.programFile = 'simulation.xml';
 end
 
+% disable WGA bias if not specified in config
+% (for backward compatibility)
+if ~isfield(simul_options, 'wgaBias')
+    simul_options.wgaBias = false;
+end
+
 %% simulation
 
 % load microsatellite mutation transition table
@@ -128,7 +134,7 @@ phytree_obj = create_tree(...
     path_tree_png_with_distance ...
 );
 
-%% create mutation table
+%% add dropouts and noises
 
 % monoallelic/biallelic support
 if simul_options.biallelic
@@ -139,6 +145,9 @@ else
 end
 
 mutation_tables = cell(alleles);
+
+% fixme: make configurable in config.json
+has_root = true;
 
 for allele = 1:length(alleles)
 
@@ -194,9 +203,6 @@ for allele = 1:length(alleles)
     end
 
     % add root cell if necessary
-    % fixme: make configurable in config.json
-    has_root = true;
-
     if has_root
         mutation_table(:, num_of_samples + 1) = om6_ms(1:num_of_ms_loci, 2);
     end
@@ -220,6 +226,29 @@ for allele = 1:length(alleles)
 
 end
 
+%% add WGA bias proportions
+if simul_options.biallelic
+    if simul_options.wgaBias
+        % generate WGA bias proportions
+        wga_bias_proportions = generate_wga_bias(...
+            num_of_samples, ...
+            num_of_ms_loci ...
+        );
+    else
+        % 50:50 between paternal and maternal
+        wga_bias_proportions = ones(num_of_ms_loci, num_of_samples) - 0.5;
+    end
+
+    if has_root
+        % add proportion for root cell
+        % no biad, thus set to 0.5
+        wga_bias_proportions(:, num_of_samples + 1) = ones(num_of_ms_loci, 1) * 0.5;
+    end
+
+    mutation_tables(end + 1) = { wga_bias_proportions };
+end
+
+%% merge
 mutation_table = merge_mutation_tables(mutation_tables);
 
 %% save
