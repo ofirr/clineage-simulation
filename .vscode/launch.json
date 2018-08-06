@@ -55,7 +55,7 @@
             "program": "${workspaceFolder}/analysis/many-seeds/generate.py",
             "cwd": "${workspaceFolder}/analysis/many-seeds",
             "args": [
-                "--count", "10"
+                "--template", "."
             ]
         },
         {
