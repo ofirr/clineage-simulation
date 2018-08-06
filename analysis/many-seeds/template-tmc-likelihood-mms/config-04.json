@@ -1,0 +1,10 @@
+{
+    "addMutations": true,
+    "addNoises": false,
+    "addAllelicDropOuts": false,
+    "title": "Example 02 / Speed 0.25",
+    "pathRelativeOutput": "case-04",
+    "mutationSpeed": 0.25,
+    "earlyStopPopulation": 0,
+    "scoringMethod": "likelihood"
+}
