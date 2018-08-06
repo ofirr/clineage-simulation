@@ -7,6 +7,7 @@ import argparse
 import json
 import random
 import glob
+import yaml
 from lxml import etree
 
 
@@ -26,11 +27,34 @@ def read_simulation_xml(path_xml):
     return xdoc
 
 
-def run(path_template, how_many_seeds):
+def read_yaml_config(path_yaml):
 
-    # generate seeds
-    seeds = random.sample(range(100000, 999999), how_many_seeds)
-    #seeds = [140161,234776,254361,282174,479041,544815,605395,693355,712020,741576,741867,796476,912629,970154,397701,856196]
+    with open(path_yaml, 'r') as stream:
+        return yaml.load(stream)
+
+
+def run(path_template):
+
+    # read config.yml
+    yaml_cfg = read_yaml_config(
+        os.path.join(path_template, 'config.yml')
+    )
+
+    # initialize sseds
+    seeds = []
+
+    # add if there are pre-selected seeds
+    if 'list' in yaml_cfg['seeds']:
+        seeds.extend(yaml_cfg['seeds']['list'])
+
+    # add additional seeds (random sample)
+    how_many_seeds_generate = yaml_cfg['seeds']['generate']
+    if how_many_seeds_generate > 0:
+        seeds.extend(
+            random.sample(range(100000, 999999), how_many_seeds_generate)
+        )
+
+    seeds = list(set(seeds))
 
     # read the template simulation.xml
     xdoc = read_simulation_xml(
@@ -85,13 +109,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='generate')
 
     parser.add_argument(
-        "--count",
-        action="store",
-        dest="how_many_seeds",
-        required=True
-    )
-
-    parser.add_argument(
         "--template",
         action="store",
         dest="path_template",
@@ -109,7 +126,4 @@ if __name__ == "__main__":
 
     params = parse_arguments()
 
-    run(
-        params.path_template,
-        int(params.how_many_seeds)
-    )
+    run(params.path_template)
