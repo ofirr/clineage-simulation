@@ -95,7 +95,7 @@ def parse_arguments():
         "--template",
         action="store",
         dest="path_template",
-        default="./template"
+        default="./template",
         required=False
     )
 
@@ -110,5 +110,6 @@ if __name__ == "__main__":
     params = parse_arguments()
 
     run(
-        int(params.path_template, params.how_many_seeds)
+        params.path_template,
+        int(params.how_many_seeds)
     )
