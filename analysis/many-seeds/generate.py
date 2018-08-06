@@ -26,14 +26,12 @@ def read_simulation_xml(path_xml):
     return xdoc
 
 
-def run(how_many_seeds):
-
-    path_template = './template'
+def run(path_template, how_many_seeds):
 
     # generate seeds
     seeds = random.sample(range(100000, 999999), how_many_seeds)
     #seeds = [140161,234776,254361,282174,479041,544815,605395,693355,712020,741576,741867,796476,912629,970154,397701,856196]
-    
+
     # read the template simulation.xml
     xdoc = read_simulation_xml(
         os.path.join(path_template, 'simulation.xml')
@@ -93,6 +91,14 @@ def parse_arguments():
         required=True
     )
 
+    parser.add_argument(
+        "--template",
+        action="store",
+        dest="path_template",
+        default="./template"
+        required=False
+    )
+
     # parse arguments
     params = parser.parse_args()
 
@@ -104,5 +110,5 @@ if __name__ == "__main__":
     params = parse_arguments()
 
     run(
-        int(params.how_many_seeds)
+        int(params.path_template, params.how_many_seeds)
     )
