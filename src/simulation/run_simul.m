@@ -82,21 +82,6 @@ ms_mutation_transition_prob = adjust_ms_mutation_transition_prob(...
 );
 assert( isequal(size(ms_mutation_transition_prob), [28 28]) );
 
-% load om6 microsatellite ids and repeat numbers
-% declare as global variable so that it can be accessed from eSTGt
-global om6_ms;
-
-% read from csv, skip the first row (header)
-om6_ms = csvread('om6_ms_only_ac_28x28.csv', 1, 0);
-
-% convert from actual ms repeat lengths to indexes
-% this is required by ms_mutation_transition_prob
-% e.g. repeat length 5 is mapped to index 1
-for idx1 = 1:length(ms_idx_rptlen_mapping)
-    idx2 = find(om6_ms(:, 2)' == ms_idx_rptlen_mapping(idx1));
-    om6_ms(idx2, 3) = idx1;
-end
-
 % parse eSTGt rules from the program file
 rules = ParseeSTGProgram(simul_options.programFile);
 
@@ -123,6 +108,31 @@ if simul_options.biallelic
     rules.Prod{1,1}.InternalStates.MS2.InitVal = -1;
 else
     rules.Prod{1,1}.InternalStates.MS.InitVal = -1;
+end
+
+% load om6 microsatellite ids and repeat numbers
+% declare as global variable so that it can be accessed from eSTGt
+global om6_ms;
+
+% read from csv, skip the first row (header)
+om6_ms = csvread('om6_ms_only_ac_28x28.csv', 1, 0);
+
+% om6_ms might have enough loci to cover the requested length
+% figure out how many is required
+num_copies = round( num_of_ms_loci / size(om6_ms, 1) ) + 1;
+
+% concatenate om6_ms + om6_ms + ... (`num_copies` times)
+om6_ms_n_copied = repmat(om6_ms, 2, 1);
+
+% update oms6_ms
+om6_ms = om6_ms_n_copied(1:num_of_ms_loci, :);
+
+% convert from actual ms repeat lengths to indexes
+% this is required by ms_mutation_transition_prob
+% e.g. repeat length 5 is mapped to index 1
+for idx1 = 1:length(ms_idx_rptlen_mapping)
+    idx2 = find(om6_ms(:, 2)' == ms_idx_rptlen_mapping(idx1));
+    om6_ms(idx2, 3) = idx1;
 end
 
 % run simulation
