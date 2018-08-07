@@ -67,7 +67,13 @@ if ~isfield(simul_options, 'mutationNoiseThreshold')
     simul_options.mutationNoiseThreshold = 0.00194622849;
 end
 
-%% simulation
+% monoallelic/biallelic support
+if simul_options.biallelic
+    % 1: paternal, 2: maternal
+    alleles = 1:2;
+else
+    alleles = 1;
+end
 
 % load microsatellite mutation transition table
 % declare as global variable so that it can be accessed from eSTGt
@@ -127,6 +133,18 @@ om6_ms_n_copied = repmat(om6_ms, 2, 1);
 % update oms6_ms
 om6_ms = om6_ms_n_copied(1:num_of_ms_loci, :);
 
+% this will be used to initialize the root cell
+global om6_ms_alleles;
+om6_ms_alleles = cell(alleles);
+if simul_options.biallelic
+    % for bi-allelic case, we shuffle both paternal, maternal
+    om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
+    om6_ms_alleles(2) = { om6_ms(randperm(num_of_ms_loci), :) };
+else
+    % for mono-allelic case, no shuffling to maintain backward compatibility
+    om6_ms_alleles(1) = { om6_ms };
+end
+
 % convert from actual ms repeat lengths to indexes
 % this is required by ms_mutation_transition_prob
 % e.g. repeat length 5 is mapped to index 1
@@ -134,6 +152,8 @@ for idx1 = 1:length(ms_idx_rptlen_mapping)
     idx2 = find(om6_ms(:, 2)' == ms_idx_rptlen_mapping(idx1));
     om6_ms(idx2, 3) = idx1;
 end
+
+%% simulation
 
 % run simulation
 [ runs, RunsData ] = RunSim(rules, rules.Seed, rules.SimTime);
@@ -157,14 +177,6 @@ phytree_obj = create_tree(...
 );
 
 %% add dropouts and noises
-
-% monoallelic/biallelic support
-if simul_options.biallelic
-    % 1: paternal, 2: maternal
-    alleles = 1:2;
-else
-    alleles = 1;
-end
 
 mutation_tables = cell(alleles);
 
@@ -224,7 +236,9 @@ for allele = 1:length(alleles)
 
     % add root cell if necessary
     if has_root
-        mutation_table(:, num_of_samples + 1) = om6_ms(1:num_of_ms_loci, 2);
+        % om6_ms_alleles{1} : initial repeat lengths for paternal
+        % om6_ms_alleles{2} : initial repeat lengths for maternal
+        mutation_table(:, num_of_samples + 1) = om6_ms_alleles{allele}(1:num_of_ms_loci, 2);
     end
 
     % get mutation table with column/row header
@@ -258,20 +272,20 @@ if simul_options.biallelic
         % 50:50 between paternal and maternal
         wga_bias_proportions = ones(num_of_ms_loci, num_of_samples) - 0.5;
     end
-   
+
     if has_root
         % add proportion for root cell
         % no biad, thus set to 0.5
         wga_bias_proportions(:, num_of_samples + 1) = ones(num_of_ms_loci, 1) * 0.5;
     end
-        
+
     % handle allelic dropout case
-    ado1 = isnan(mutation_tables{1,1}); % dropouts in paternal    
+    ado1 = isnan(mutation_tables{1,1}); % dropouts in paternal
     ado2 = isnan(mutation_tables{1,2}); % dropouts in maternal
     wga_bias_proportions(ado1) = 0.0; % only maternal seen
     wga_bias_proportions(ado2) = 1.0; % only paternal seen
     wga_bias_proportions(ado1 & ado2) = NaN; % both not seen
-    
+
     % append wga bias proportions
     mutation_tables(end + 1) = { wga_bias_proportions };
 end
