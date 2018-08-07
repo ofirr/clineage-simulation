@@ -24,7 +24,7 @@ function [ newMS ] = update_microsatellite( MS )
         
     end
     
-    % don't cause mutations if the option is turned off
+    % don't induce mutations if the option is turned off
     if ~simul_options.addMutations
         newMS = MS;
         return;
