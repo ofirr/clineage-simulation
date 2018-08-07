@@ -17,10 +17,11 @@ function [ newMS ] = update_microsatellite( MS )
     if sum( MS ~= -1 ) == 0   
         
         % access to om6 microsatellite ids and repeat numbers read
-        global om6_ms;
+        global om6_ms_alleles;
         
         % reinitialize using the ms repeat numbers
-        MS = repmat(om6_ms(1:length(MS), 2)', 1);        
+        % om6_ms_alleles{1} : initial repeat lengths for mono-allelic
+        MS = om6_ms_alleles{1}(:,2)';   
         
     end
     
