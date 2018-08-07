@@ -13,7 +13,7 @@ addpath('C:\Users\chun\projects\eSTGt\eSTGt');
 
 list = readtable('./all-examples.csv', 'Delimiter', ',');
 
-for row = 1:size(list, 1)
+for row = 17:size(list, 1)
     
     path_working = list.path_working{row};
     config_file = list.config_file{row};
