@@ -138,8 +138,8 @@ global om6_ms_alleles;
 om6_ms_alleles = cell(alleles);
 if simul_options.biallelic
     % for bi-allelic case, we shuffle both paternal, maternal
-    om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
-    om6_ms_alleles(2) = { om6_ms(randperm(num_of_ms_loci), :) };
+    om6_ms_alleles(1) = { om6_ms(randi(num_of_ms_loci, 1, num_of_ms_loci), :) };
+    om6_ms_alleles(2) = { om6_ms(randi(num_of_ms_loci, 1, num_of_ms_loci), :) };
 else
     % for mono-allelic case, no shuffling to maintain backward compatibility
     om6_ms_alleles(1) = { om6_ms };
