@@ -92,6 +92,7 @@ assert( isequal(size(ms_mutation_transition_prob), [28 28]) );
 rules = ParseeSTGProgram(simul_options.programFile);
 
 % ensure reproducibility by using the specific seed to initialize randomizer
+% the init as eSTGt
 random_stream = RandStream('mcg16807', 'Seed', rules.Seed);
 RandStream.setGlobalStream(random_stream);
 
