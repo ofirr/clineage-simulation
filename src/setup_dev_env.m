@@ -27,7 +27,7 @@ path_diff_metrics = fullfile(path_working, 'diff-score.json');
 
 %% Simulation
 
-path_working='../examples/example-biallelic/';
+path_working='../examples/example-biallelic-wga-bias/';
 
 addpath(path_working);
 
