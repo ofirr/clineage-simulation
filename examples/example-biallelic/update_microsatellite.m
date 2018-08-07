@@ -22,7 +22,7 @@ function [ newMS ] = update_microsatellite( MS, allele )
         % reinitialize using the ms repeat numbers with biallelic
         % om6_ms_alleles{1} : initial repeat lengths for paternal
         % om6_ms_alleles{2} : initial repeat lengths for maternal
-        MS = om6_ms_alleles{allele}(randperm(length(MS)), 2)';
+        MS = om6_ms_alleles{allele}(:,2)';
 
     end
 
