@@ -14,5 +14,7 @@ path_working,config_file
 ../examples/example-02c/,config.json
 ../examples/example-03/,config-04.json
 ../examples/example-03/,config-05.json
+../examples/early-stop-verification/,config-all-the-way.json
+../examples/early-stop-verification/,config-early-stop.json
 ../examples/example-biallelic/,config.json
 ../examples/example-biallelic-wga-bias/,config.json
