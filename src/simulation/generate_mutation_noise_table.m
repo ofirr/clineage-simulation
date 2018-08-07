@@ -1,4 +1,4 @@
-function [mutation_noise_table] = generate_mutatino_noise_table(num_of_samples, num_of_ms_loci, noise_threshold)
+function [mutation_noise_table] = generate_mutation_noise_table(num_of_samples, num_of_ms_loci, noise_threshold)
 
 % generate a n-by-m matrix with random numbers between 0 and 1
 % where n is the number of ms loci, m is the number of samples
