@@ -27,7 +27,7 @@ path_diff_metrics = fullfile(path_working, 'diff-score.json');
 
 %% Simulation
 
-path_working='../examples/example-early-stop-verification/';
+path_working='../examples/example-biallelic/';
 
 addpath(path_working);
 
