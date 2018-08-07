@@ -91,6 +91,10 @@ assert( isequal(size(ms_mutation_transition_prob), [28 28]) );
 % parse eSTGt rules from the program file
 rules = ParseeSTGProgram(simul_options.programFile);
 
+% ensure reproducibility by using the specific seed to initialize randomizer
+random_stream = RandStream('mcg16807', 'Seed', rules.Seed);
+RandStream.setGlobalStream(random_stream);
+
 % get the number of microsatellite loci from the file
 % or use `size(om6_ms, 1)`;
 if simul_options.biallelic
@@ -138,8 +142,8 @@ global om6_ms_alleles;
 om6_ms_alleles = cell(alleles);
 if simul_options.biallelic
     % for bi-allelic case, we shuffle both paternal, maternal
-    om6_ms_alleles(1) = { om6_ms(randi(num_of_ms_loci, 1, num_of_ms_loci), :) };
-    om6_ms_alleles(2) = { om6_ms(randi(num_of_ms_loci, 1, num_of_ms_loci), :) };
+    om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
+    om6_ms_alleles(2) = { om6_ms(randperm(num_of_ms_loci), :) };
 else
     % for mono-allelic case, no shuffling to maintain backward compatibility
     om6_ms_alleles(1) = { om6_ms };
