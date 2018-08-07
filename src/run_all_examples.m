@@ -4,7 +4,6 @@ clc;
 %% code path
 
 addpath('./reconstruction');
-addpath('./simulation');
 
 %% path to eSTGt (Windows)
 
@@ -19,6 +18,7 @@ for row = 1:size(list, 1)
     path_working = list.path_working{row};
     config_file = list.config_file{row};
     
+    fprintf('\n---------------------------------------------------------------\n');
     fprintf('%-50s %s\n', path_working, config_file);
   
     addpath(path_working);
