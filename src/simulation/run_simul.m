@@ -57,8 +57,8 @@ end
 
 % set allelic dropout threshold to NaN if not specified in the config
 % (for backward compatibility)
-if ~isfield(simul_options, 'adoFixedThreshold')
-    simul_options.adoFixedThreshold = NaN;
+if ~isfield(simul_options, 'adoFactor')
+    simul_options.adoFactor = NaN;
 end
 
 % set defai;t mutation noise threshold if not specified in the config
@@ -229,7 +229,7 @@ for allele = 1:length(alleles)
             num_of_samples, ...
             num_of_ms_loci, ...
             Dropout, ...
-            simul_options.adoFixedThreshold ...
+            simul_options.adoFactor ...
         );
 
         % apply allelic dropout to the mutation table
