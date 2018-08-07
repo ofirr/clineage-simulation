@@ -3,7 +3,7 @@ clc;
 
 %% code path
 
-addpath('./reconstruction');
+addpath('./simulation');
 
 %% path to eSTGt (Windows)
 
