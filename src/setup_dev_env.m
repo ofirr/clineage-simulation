@@ -27,8 +27,8 @@ path_diff_metrics = fullfile(path_working, 'diff-score.json');
 
 %% Simulation
 
-path_working='../examples/example-05/';
+path_working='../examples/example-early-stop-verification/';
 
 addpath(path_working);
 
-% rmpath('../examples/example-01')
+% rmpath(path_working)
