@@ -11,11 +11,14 @@ USAGE: `basename $0` [options]
 EOF
 }
 
-while getopts "p:c:h" OPTION
+simulate_tree_only='';
+
+while getopts "p:c:sh" OPTION
 do
     case $OPTION in
 		p) path_project=$OPTARG ;;
 		c) config_file=$OPTARG ;;
+		s) simulate_tree_only='--simulate-tree-only' ;;
 		h) usage; exit 1 ;;
 		*) usage; exit 1 ;;
 	esac
@@ -31,4 +34,4 @@ qsub \
 	-N simulation \
 	-q all2.q \
 	-cwd \
-	./sge-run-simul.sh ${path_project} ${config_file}
+	./sge-run-simul.sh ${path_project} ${config_file} ${simulate_tree_only}

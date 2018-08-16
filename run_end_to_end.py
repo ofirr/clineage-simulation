@@ -249,7 +249,7 @@ def report(path_scores_output_raw, path_scores_output_pretty, quiet=True):
         fout.write('\n')
 
 
-def run(path_matlab, path_project, config_filename, generate_tree_only, quiet):
+def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     "run function"
 
     # run stochastic lineage tree simulation
@@ -271,7 +271,7 @@ def run(path_matlab, path_project, config_filename, generate_tree_only, quiet):
     )
 
     # user wants to generate tree only
-    if generate_tree_only:
+    if simulate_tree_only:
         return
 
     # reconstruct based on mutation table generated from simulation
@@ -346,10 +346,10 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--generate-tree-only",
+        "--simulate-tree-only",
         action="store_true",
         default=False,
-        dest="generate_tree_only"
+        dest="simulate_tree_only"
     )
 
     # parse arguments
@@ -386,6 +386,6 @@ if __name__ == "__main__":
             envs[const.ENV_MATLAB_KEY],
             params.path_project,
             config_json,
-            params.generate_tree_only,
+            params.simulate_tree_only,
             params.quiet
         )
