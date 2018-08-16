@@ -21,8 +21,8 @@ def generate_tree_ascii_plot(path_newick):
         fout.write('\n')
 
 
-def simulate(path_matlab, path_project, config_filename):
-    "run simulation"
+def simulate_lineage_tree(path_matlab, path_project, config_filename):
+    "run stochastic lineage tree simulation"
 
     # run MATLAB simulation
     matlab_code = "addpath('{0}', '{1}', '{2}'); run_simul('{2}', '{3}'); exit;".format(
@@ -249,11 +249,11 @@ def report(path_scores_output_raw, path_scores_output_pretty, quiet=True):
         fout.write('\n')
 
 
-def run(path_matlab, path_project, config_filename, quiet):
+def run(path_matlab, path_project, config_filename, generate_tree_only, quiet):
     "run function"
 
-    # run simulation
-    simulate(
+    # run stochastic lineage tree simulation
+    simulate_lineage_tree(
         path_matlab, path_project, config_filename
     )
 
@@ -269,6 +269,10 @@ def run(path_matlab, path_project, config_filename, quiet):
     generate_tree_ascii_plot(
         os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK)
     )
+
+    # user wants to generate tree only
+    if generate_tree_only:
+        return
 
     # reconstruct based on mutation table generated from simulation
     reconstruct(
@@ -341,6 +345,13 @@ def parse_arguments():
         dest="quiet"
     )
 
+    parser.add_argument(
+        "--generate-tree-only",
+        action="store_true",
+        default=False,
+        dest="generate_tree_only"
+    )
+
     # parse arguments
     params = parser.parse_args()
 
@@ -371,5 +382,10 @@ if __name__ == "__main__":
         print("{} #############################################".format(config_json))
         print()
 
-        run(envs[const.ENV_MATLAB_KEY], params.path_project,
-            config_json, params.quiet)
+        run(
+            envs[const.ENV_MATLAB_KEY],
+            params.path_project,
+            config_json,
+            params.generate_tree_only,
+            params.quiet
+        )
