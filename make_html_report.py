@@ -125,7 +125,7 @@ def read_simulation_xml(path_xml):
 def get_sim_seed_time(xdoc):
 
     seed = int(xdoc.xpath('./ExecParams/Seed')[0].text.strip())
-    sim_time = int(xdoc.xpath('./ExecParams/SimTime')[0].text.strip())
+    sim_time = float(xdoc.xpath('./ExecParams/SimTime')[0].text.strip())
 
     return (seed, sim_time)
 
