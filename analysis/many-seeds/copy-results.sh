@@ -37,4 +37,7 @@ find template-${template_name}/ -name "*.json" | xargs -I {} \
 # copy results
 cp --recursive seed-* ${path_dest}
 
+# grant permission
+chmod g+rwx ${path_dest} --recursive
+
 echo "DONE."
