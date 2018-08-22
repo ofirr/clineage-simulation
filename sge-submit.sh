@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ ! -x "$(command -v qsub)" ]
+then
+    echo "qsub not found. Aborted."
+	exit 1
+fi
+
 usage()
 {
 cat << EOF
