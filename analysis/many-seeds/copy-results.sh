@@ -34,6 +34,10 @@ mkdir -p ${path_dest}
 find template-${template_name}/ -name "*.json" | xargs -I {} \
     grep "mutationSpeed" {} -H > ${path_dest}/speed-info.txt
 
+# generate number of cells for each seed
+find seed-* -name "mutation_table.txt" | xargs -I {} \
+    grep -H "names" {} | awk -F'\t' '{ print NF }' | uniq | sort > ${path_dest}/num-of-cells.txt
+
 # copy results
 cp --recursive seed-* ${path_dest}
 
