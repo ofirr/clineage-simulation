@@ -144,7 +144,59 @@ om6_ms_alleles = cell(alleles);
 if simul_options.biallelic
     % for bi-allelic case, we shuffle both paternal, maternal
     om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
-    om6_ms_alleles(2) = { om6_ms(randperm(num_of_ms_loci), :) };
+%     om6_ms_alleles(2) = { om6_ms(randperm(num_of_ms_loci), :) };
+    
+    probs = [
+        110000
+        78323
+        29491
+        11669
+        8077
+        6319
+        4285
+        2478
+        1742
+        1187
+        753
+        493
+        328
+        290
+        100
+        85
+        73
+        27
+        17
+        10
+        3
+        4
+        5
+    ];
+    
+    % difference between allele1 and allele2's repeat length
+    % (without direction)
+    diff_allel1_allele2 = datasample(...
+        1:length(probs), ...
+        num_of_ms_loci, ...
+        'Replace', true, ...
+        'Weights', probs ...
+    );
+
+    % -1 to make 0 means no change
+    diff_allel1_allele2 = diff_allel1_allele2 - 1;
+
+    % random direction (0 or 1)
+    direction = randi([0, 1], 1, num_of_ms_loci);
+    % change 0 to -1
+    direction( direction == 0 ) = -1;
+    
+    % difference between allele1 and allele2's repeat length
+    % (with direction)
+    diff_allel1_allele2 = diff_allel1_allele2 .* direction;
+    
+    % take allele1 and add difference, which gives us allele2
+    om6_ms_alleles(2) = om6_ms_alleles(1);
+    om6_ms_alleles{2}(:,2) = om6_ms_alleles{1}(:,2) + diff_allel1_allele2';
+    
 else
     % for mono-allelic case, no shuffling to maintain backward compatibility
     om6_ms_alleles(1) = { om6_ms };
