@@ -195,8 +195,13 @@ if simul_options.biallelic
     
     % take allele1 and add difference, which gives us allele2
     om6_ms_alleles(2) = om6_ms_alleles(1);
-    % can't go above repeat length 28
-    om6_ms_alleles{2}(:,2) = min(om6_ms_alleles{1}(:,2) + diff_allel1_allele2', 28);
+    allele2 = om6_ms_alleles{1}(:,2) + diff_allel1_allele2';    
+    % repeat length must be e.g. between 5 and 32
+    max_ms_rptlen = max(ms_idx_rptlen_mapping);
+    min_ms_rptlen = min(ms_idx_rptlen_mapping);
+    allele2(allele2 > max_ms_rptlen) = max_ms_rptlen;
+    allele2(allele2 < min_ms_rptlen) = min_ms_rptlen;
+    om6_ms_alleles{2}(:,2) = allele2;
     
 else
     % for mono-allelic case, no shuffling to maintain backward compatibility
