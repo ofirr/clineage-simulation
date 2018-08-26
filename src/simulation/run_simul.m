@@ -195,7 +195,8 @@ if simul_options.biallelic
     
     % take allele1 and add difference, which gives us allele2
     om6_ms_alleles(2) = om6_ms_alleles(1);
-    om6_ms_alleles{2}(:,2) = om6_ms_alleles{1}(:,2) + diff_allel1_allele2';
+    % can't go above repeat length 28
+    om6_ms_alleles{2}(:,2) = min(om6_ms_alleles{1}(:,2) + diff_allel1_allele2', 28);
     
 else
     % for mono-allelic case, no shuffling to maintain backward compatibility
