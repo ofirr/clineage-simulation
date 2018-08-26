@@ -37,6 +37,12 @@ if ~isfield(simul_options, 'biallelic')
     simul_options.biallelic = false;
 end
 
+% use biallelicInit=randperm if not specified in the config
+% (for backward compatibility)
+if ~isfield(simul_options, 'biallelicInit')
+    simul_options.biallelicInit = 'randperm';
+end
+
 % use mutation speed 1.0 if not specified in the config
 % (for backward compatibility)
 if ~isfield(simul_options, 'mutationSpeed')
@@ -81,12 +87,16 @@ global ms_mutation_transition_prob;
 global ms_idx_rptlen_mapping;
 load('ms_mutation_transition_prob');
 
+% min, max of ms repeat length in mutation transition table
+max_ms_rptlen = max(ms_idx_rptlen_mapping);
+min_ms_rptlen = min(ms_idx_rptlen_mapping);
+
 % adjust ms mutation transition probabilities
 ms_mutation_transition_prob = adjust_ms_mutation_transition_prob(...
     ms_mutation_transition_prob, ...
     simul_options.mutationSpeed ...
 );
-assert( isequal(size(ms_mutation_transition_prob), [28 28]) );
+assert( isequal(size(ms_mutation_transition_prob), [max_ms_rptlen - min_ms_rptlen + 1, max_ms_rptlen - min_ms_rptlen + 1]) );
 
 % parse eSTGt rules from the program file
 rules = ParseeSTGProgram(simul_options.programFile);
@@ -142,67 +152,76 @@ om6_ms = om6_ms_n_copied(1:num_of_ms_loci, :);
 global om6_ms_alleles;
 om6_ms_alleles = cell(alleles);
 if simul_options.biallelic
-    % for bi-allelic case, we shuffle both paternal, maternal
-    om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
-%     om6_ms_alleles(2) = { om6_ms(randperm(num_of_ms_loci), :) };
-    
-    probs = [
-        110000
-        78323
-        29491
-        11669
-        8077
-        6319
-        4285
-        2478
-        1742
-        1187
-        753
-        493
-        328
-        290
-        100
-        85
-        73
-        27
-        17
-        10
-        3
-        4
-        5
-    ];
-    
-    % difference between allele1 and allele2's repeat length
-    % (without direction)
-    diff_allel1_allele2 = datasample(...
-        1:length(probs), ...
-        num_of_ms_loci, ...
-        'Replace', true, ...
-        'Weights', probs ...
-    );
 
-    % -1 to make 0 means no change
-    diff_allel1_allele2 = diff_allel1_allele2 - 1;
+    switch simul_options.biallelicInit
 
-    % random direction (0 or 1)
-    direction = randi([0, 1], 1, num_of_ms_loci);
-    % change 0 to -1
-    direction( direction == 0 ) = -1;
-    
-    % difference between allele1 and allele2's repeat length
-    % (with direction)
-    diff_allel1_allele2 = diff_allel1_allele2 .* direction;
-    
-    % take allele1 and add difference, which gives us allele2
-    om6_ms_alleles(2) = om6_ms_alleles(1);
-    allele2 = om6_ms_alleles{1}(:,2) + diff_allel1_allele2';    
-    % repeat length must be e.g. between 5 and 32
-    max_ms_rptlen = max(ms_idx_rptlen_mapping);
-    min_ms_rptlen = min(ms_idx_rptlen_mapping);
-    allele2(allele2 > max_ms_rptlen) = max_ms_rptlen;
-    allele2(allele2 < min_ms_rptlen) = min_ms_rptlen;
-    om6_ms_alleles{2}(:,2) = allele2;
-    
+        case 'randperm'
+            % we shuffle both paternal, maternal
+            om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
+            om6_ms_alleles(2) = { om6_ms(randperm(num_of_ms_loci), :) };
+
+        case 'diffdist'
+            % for paternal, we shuffle
+            om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
+            % for maternal, we use repeat length difference distribution
+            probs = [
+                110000
+                78323
+                29491
+                11669
+                8077
+                6319
+                4285
+                2478
+                1742
+                1187
+                753
+                493
+                328
+                290
+                100
+                85
+                73
+                27
+                17
+                10
+                3
+                4
+                5
+            ];
+
+            % difference between allele1 and allele2's repeat length
+            % (without direction)
+            diff_allel1_allele2 = datasample(...
+                1:length(probs), ...
+                num_of_ms_loci, ...
+                'Replace', true, ...
+                'Weights', probs ...
+            );
+
+            % -1 to make 0 means no change
+            diff_allel1_allele2 = diff_allel1_allele2 - 1;
+
+            % random direction (0 or 1)
+            direction = randi([0, 1], 1, num_of_ms_loci);
+            % change 0 to -1
+            direction( direction == 0 ) = -1;
+
+            % difference between allele1 and allele2's repeat length
+            % (with direction)
+            diff_allel1_allele2 = diff_allel1_allele2 .* direction;
+
+            % take allele1 and add difference, which gives us allele2
+            om6_ms_alleles(2) = om6_ms_alleles(1);
+            allele2 = om6_ms_alleles{1}(:,2) + diff_allel1_allele2';
+            % repeat length must be e.g. between 5 and 32
+            allele2(allele2 > max_ms_rptlen) = max_ms_rptlen;
+            allele2(allele2 < min_ms_rptlen) = min_ms_rptlen;
+            om6_ms_alleles{2}(:,2) = allele2;
+
+        otherwise
+            error('Unknown biallelic init method used');
+    end
 else
     % for mono-allelic case, no shuffling to maintain backward compatibility
     om6_ms_alleles(1) = { om6_ms };
