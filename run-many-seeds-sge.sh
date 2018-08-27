@@ -23,7 +23,7 @@ while getopts "r:sh" OPTION
 do
     case $OPTION in
 		r) path_root=$OPTARG ;;
-        s) simulate_tree_only='--simulate-tree-only' ;;
+        s) simulate_tree_only='-s' ;;
 		h) usage; exit 1 ;;
 		*) usage; exit 1 ;;
 	esac
