@@ -32,7 +32,7 @@ mkdir -p ${path_dest}
 
 # generate mutation speed information
 find template-${template_name}/ -name "*.json" | xargs -I {} \
-    grep "mutationSpeed" {} -H > ${path_dest}/speed-info.txt
+    grep "mutationSpeed" {} -H | sort > ${path_dest}/speed-info.txt
 
 # generate number of cells for each seed
 find seed-* -name "mutation_table.txt" | xargs -I {} \
