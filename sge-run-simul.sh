@@ -9,6 +9,9 @@ ulimit -c 10
 # fixme: hardcoded chun
 source "/home/chun/miniconda3/bin/activate" cl
 
+# owner/group: rwx, others: none
+umask 007
+
 path_project=$1
 config_json_file=$2
 simulate_tree_only=$3
