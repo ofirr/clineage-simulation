@@ -13,6 +13,7 @@ USAGE: `basename $0` [options]
 
 	-p	path to project (e.g. ./examples/example-02)
 	-c	config file (e.g. config.json)
+	-s  simulate tree only (no reconstruction)
 
 EOF
 }
