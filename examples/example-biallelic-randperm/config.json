@@ -6,5 +6,6 @@
     "addNoises": false,
     "earlyStopPopulation": 0,
     "mutationSpeed": 0.1,
-    "biallelic": true    
+    "biallelic": true,
+    "biallelicInit": "randperm"    
 }
