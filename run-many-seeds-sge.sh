@@ -6,17 +6,48 @@ then
 	exit 1
 fi
 
-path_root='/home/chun/projects/clineage-simulation/analysis/many-seeds/'
+usage()
+{
+cat << EOF
+USAGE: `basename $0` [options]
+
+	-r	path to simulation root where seed-* are placed
+	-s  simulate tree only (no reconstruction)
+
+EOF
+}
+
+simulate_tree_only='';
+
+while getopts "r:sh" OPTION
+do
+    case $OPTION in
+		r) path_root=$OPTARG ;;
+        s) simulate_tree_only='--simulate-tree-only' ;;
+		h) usage; exit 1 ;;
+		*) usage; exit 1 ;;
+	esac
+done
+
+if [ -z "$path_root" ]
+then
+    usage
+    exit 1
+fi
 
 seeds=`find ${path_root} -maxdepth 1 -name "seed-*" -type d`
 
 for path_project in $seeds
 do
 
-    echo ${path_project}
+    cases=`cat ${path_project}/config.list`
 
-    ./sge-submit.sh \
-        -p ${path_project} \
-        -c config.list
+    for case in $cases
+    do
+       echo "${path_project}/${case}"
+       ./sge-submit.sh \
+            -p ${path_project} \
+            -c ${case} ${simulate_tree_only}
+    done
 
 done
