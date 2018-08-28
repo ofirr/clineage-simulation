@@ -18,7 +18,7 @@ addpath('~/projects/clineage-simulation/eSTGt/eSTGt');
 %% Reconstruction
 
 path_working='../analysis/tmc-004/case-01/';
-%path_working='../examples/example-02/outputs';
+%path_working='../examples/example-01/';
 
 path_simulation_tree = fullfile(path_working, 'simulation.newick');
 path_reconstructed_tree = fullfile(path_working, 'reconstructed.newick');
@@ -27,7 +27,7 @@ path_diff_metrics = fullfile(path_working, 'diff-score.json');
 
 %% Simulation
 
-path_working='../examples/example-biallelic-wga-bias/';
+path_working='../examples/example-biallelic-randperm/';
 
 addpath(path_working);
 
