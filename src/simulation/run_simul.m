@@ -164,6 +164,7 @@ if simul_options.biallelic
             % for paternal, we shuffle
             om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
             % for maternal, we use repeat length difference distribution
+            % fixme: read from a file
             probs = [
                 110000
                 78323
