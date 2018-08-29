@@ -291,7 +291,7 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     # output mutation table
     if config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'):
 
-        from biallelic import run_genotyping_simulation
+        from genotyping import run_genotyping_simulation
 
         run_genotyping_simulation(
             path_project,
