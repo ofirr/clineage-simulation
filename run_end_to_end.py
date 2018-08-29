@@ -2,6 +2,7 @@ import os
 import json
 import argparse
 import re
+import yaml
 import pandas as pd
 
 from src import const
@@ -32,13 +33,13 @@ def simulate_lineage_tree(path_matlab, path_project, config_filename):
     utils.run_matlab_code(path_matlab, matlab_code)
 
 
-def reconstruct(path_simulation_output, root_cell_notation, scoring_method, choosing_method, quiet=True):
+def handle_monoallelic(path_simulation_output):
 
     import sys
     sys.path.append("/home/chun/clineage/")
     import clineage.wsgi
 
-    from sequencing.phylo.triplets_wrapper import parse_mutations_table, calculate_triplets_tree, run_sagis_triplets_binary, convert_names_in_sagis_newick
+    from sequencing.phylo.triplets_wrapper import parse_mutations_table
 
     # construct path for input mutation table
     path_mutation_table = os.path.join(
@@ -47,6 +48,50 @@ def reconstruct(path_simulation_output, root_cell_notation, scoring_method, choo
 
     # parse mutation table
     calling = parse_mutations_table(path_mutation_table, inverse=True)
+
+    return (path_simulation_output, calling)
+
+
+def handle_biallelic(path_project, path_simulation_output):
+
+    from biallelic import method_A
+
+    methods = []
+
+    path_genotyping_config = os.path.join(
+        path_project, const.FILE_CONFIG_GENOTYPING
+    )
+
+    if not os.path.exists(path_genotyping_config):
+        return methods
+
+    with open(path_genotyping_config, 'rt') as stream:
+        params_list = yaml.load(stream)
+
+    for case, params in enumerate(params_list["genotyping"]):
+
+        path_genotype_simulation_output = os.path.join(
+            path_simulation_output,
+            "n-{0:06d}".format(params.get('n'))
+        )
+
+        calling = method_A(
+            os.path.join(path_genotype_simulation_output,
+                         const.FILE_MUTATION_TABLE)
+        )
+
+        methods.append((path_genotype_simulation_output, calling))
+
+    return methods
+
+
+def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring_method, choosing_method, quiet=True):
+
+    import sys
+    sys.path.append("/home/chun/clineage/")
+    import clineage.wsgi
+
+    from sequencing.phylo.triplets_wrapper import calculate_triplets_tree, run_sagis_triplets_binary, convert_names_in_sagis_newick
 
     # construct path for final reconstructed newick
     # this one will have the actual cell name
@@ -303,44 +348,70 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     if simulate_tree_only:
         return
 
-    # reconstruct based on mutation table generated from simulation
-    reconstruct(
-        path_simulation_output,
-        'root',
-        config.get(const.CONFIG_RECONSTRUCT_SCORING_METHOD, 'uri10'),
-        config.get(const.CONFIG_RECONSTRUCT_CHOOSING_METHOD, 'mms'),
-        quiet
-    )
+    methods = []
 
-    # take reconstructed tree and make ascii plot
-    generate_tree_ascii_plot(
-        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK)
-    )
+    # if biallelic=true
+    if config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'):
+        methods = handle_biallelic(path_project, path_simulation_output)
+    else:
+        methods[0] = handle_monoallelic(path_simulation_output)
 
-    # highlight tree differences and save to png
-    highlight_tree_differences_to_png(
-        envs[const.ENV_MATLAB_KEY],
-        os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK),
-        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK),
-        os.path.join(path_simulation_output, const.FILE_SISTERS_COUNT),
-        os.path.join(path_simulation_output, const.FILE_DIFF_METRICS)
-    )
+    for path_reconstruction_output, calling in methods:
 
-    # compare simulation tree and reconstructed tree
-    compare(
-        os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK),
-        os.path.join(path_simulation_output, const.FILE_RECONSTRUCTED_NEWICK),
-        os.path.join(path_simulation_output, const.FILE_COMPARISON_METRICS_RAW)
-    )
+        # reconstruct using TMC based on mutation table generated from simulation
+        reconstruct_TMC(
+            calling,
+            path_reconstruction_output,
+            'root',
+            config.get(const.CONFIG_RECONSTRUCT_SCORING_METHOD, 'uri10'),
+            config.get(const.CONFIG_RECONSTRUCT_CHOOSING_METHOD, 'mms'),
+            quiet
+        )
 
-    # report the final comparison metrics in a pretty format
-    report(
-        os.path.join(path_simulation_output,
-                     const.FILE_COMPARISON_METRICS_RAW),
-        os.path.join(path_simulation_output,
-                     const.FILE_COMPARISON_METRICS_PRETTY),
-        quiet
-    )
+        # take reconstructed tree and make ascii plot
+        generate_tree_ascii_plot(
+            os.path.join(path_reconstruction_output,
+                         const.FILE_RECONSTRUCTED_NEWICK)
+        )
+
+        # highlight tree differences and save to png
+        highlight_tree_differences_to_png(
+            envs[const.ENV_MATLAB_KEY],
+            os.path.join(path_simulation_output,
+                         const.FILE_SIMULATION_NEWICK),
+            os.path.join(path_reconstruction_output,
+                         const.FILE_RECONSTRUCTED_NEWICK),
+            os.path.join(path_reconstruction_output, const.FILE_SISTERS_COUNT),
+            os.path.join(path_reconstruction_output, const.FILE_DIFF_METRICS)
+        )
+
+        # compare simulation tree and reconstructed tree
+        compare(
+            os.path.join(
+                path_simulation_output, const.FILE_SIMULATION_NEWICK
+            ),
+            os.path.join(
+                path_reconstruction_output,
+                const.FILE_RECONSTRUCTED_NEWICK
+            ),
+            os.path.join(
+                path_reconstruction_output,
+                const.FILE_COMPARISON_METRICS_RAW
+            )
+        )
+
+        # report the final comparison metrics in a pretty format
+        report(
+            os.path.join(
+                path_reconstruction_output,
+                const.FILE_COMPARISON_METRICS_RAW
+            ),
+            os.path.join(
+                path_reconstruction_output,
+                const.FILE_COMPARISON_METRICS_PRETTY
+            ),
+            quiet
+        )
 
 
 def parse_arguments():
