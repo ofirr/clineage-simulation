@@ -1,5 +1,7 @@
 ~*
 *.asv
+*.job-info
+*.job-info.results
 TreeCmp
 eSTGt
 __pycache__
