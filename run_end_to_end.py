@@ -249,8 +249,24 @@ def report(path_scores_output_raw, path_scores_output_pretty, quiet=True):
         fout.write('\n')
 
 
+def get_seed_from_simulation_xml(path_xml):
+
+    from lxml import etree
+
+    parser = etree.XMLParser(remove_blank_text=True)
+    xdoc = etree.parse(path_xml, parser=parser)
+    seed = int(xdoc.xpath('./ExecParams/Seed')[0].text.strip())
+
+    return seed
+
+
 def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     "run function"
+
+    # get seed from simulation.xml
+    seed = get_seed_from_simulation_xml(
+        os.path.join(path_project, const.FILE_SIMULATION_XML)
+    )
 
     # run stochastic lineage tree simulation
     simulate_lineage_tree(
@@ -269,6 +285,19 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     generate_tree_ascii_plot(
         os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK)
     )
+
+    # if biallelic=true
+    # run genotyping simulation (wga proportion, dropout, coverage)
+    # output mutation table
+    if config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'):
+
+        from biallelic import run_genotyping_simulation
+
+        run_genotyping_simulation(
+            path_project,
+            path_simulation_output,
+            seed
+        )
 
     # user wants to generate tree only
     if simulate_tree_only:
