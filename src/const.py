@@ -3,6 +3,7 @@ CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
 
 CONFIG_RECONSTRUCT_SCORING_METHOD = 'scoringMethod'
 CONFIG_RECONSTRUCT_CHOOSING_METHOD = 'choosingMethod'
+CONFIG_SIMULATION_BIALLELIC = 'biallelic'
 
 FILE_SIMULATION_XML = 'simulation.xml'
 FILE_SIMULATION_NEWICK = 'simulation.newick'
@@ -18,6 +19,8 @@ FILE_COMPARISON_METRICS_PRETTY = 'scores.pretty.out'
 FILE_DIFF_METRICS = 'diff-score.json'
 FILE_REPORT_HTML = 'report.html'
 FILE_SISTERS_COUNT = 'sisters.csv'
+
+FILE_CONFIG_GENOTYPING = 'config.genotyping.yml'
 
 PATH_ESTGT = './eSTGt/eSTGt'
 PATH_SIMULATION_LIB = './src/simulation'
