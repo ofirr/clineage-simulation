@@ -69,7 +69,6 @@ def handle_biallelic(path_project, path_simulation_output):
         params_list = yaml.load(stream)
 
     for case, params in enumerate(params_list["genotyping"]):
-
         path_genotype_simulation_output = os.path.join(
             path_simulation_output,
             "n-{0:06d}".format(params.get('n'))

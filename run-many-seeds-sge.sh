@@ -56,3 +56,5 @@ do
     done
 
 done
+
+echo "<<< Project Name: ${project_name}"
