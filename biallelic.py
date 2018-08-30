@@ -153,8 +153,15 @@ def invert_calling_assignments(calling_assignments, average=False):
 def convert(data):
     'convert a string e.g. 15/16 to a frozentset of 15, 16'
 
+    # in case of allelic dropout
     if pd.isnull(data):
         return None
+
+    # in mono case, pandas read it as float (e.g. 15.0)
+    # convert to int and frozenset
+    if type(data) == float:
+        return frozenset({int(data)})
+
     alleles = list(map(int, data.split('/')))
     if len(alleles) == 2:
         return frozenset({alleles[0], alleles[1]})
