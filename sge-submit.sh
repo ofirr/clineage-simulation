@@ -57,5 +57,8 @@ job_id=`echo ${out} | awk -F' ' '{print $3}'`
 
 echo ${job_id}
 
-# record
-echo "${job_id},${path_project},${config_file}" >> ${project_name}.job-info
+
+# record job info to a file
+# fixme: hardcoded path
+path_job_info="${HOME}/cluster_output/${project_name}.job-info"
+echo "${job_id},${path_project},${config_file}" | tee -a ${path_job_info}
