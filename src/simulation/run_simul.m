@@ -164,40 +164,19 @@ if simul_options.biallelic
             % for paternal, we shuffle
             om6_ms_alleles(1) = { om6_ms(randperm(num_of_ms_loci), :) };
             % for maternal, we use repeat length difference distribution
-            % fixme: read from a file
-            probs = [
-                110000
-                78323
-                29491
-                11669
-                8077
-                6319
-                4285
-                2478
-                1742
-                1187
-                753
-                493
-                328
-                290
-                100
-                85
-                73
-                27
-                17
-                10
-                3
-                4
-                5
-            ];
+            
+            % read probability distrubition from a file
+            pm_allele_diff_prob = csvread('pm_allele_diff_prob.csv', 1, 0);
+            % fixme: always use the second column for now
+            pm_allele_diff_prob = pm_allele_diff_prob(:, 2);
 
             % difference between allele1 and allele2's repeat length
             % (without direction)
             diff_allel1_allele2 = datasample(...
-                1:length(probs), ...
+                1:length(pm_allele_diff_prob), ...
                 num_of_ms_loci, ...
                 'Replace', true, ...
-                'Weights', probs ...
+                'Weights', pm_allele_diff_prob ...
             );
 
             % -1 to make 0 means no change
