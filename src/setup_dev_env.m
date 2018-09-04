@@ -27,7 +27,7 @@ path_diff_metrics = fullfile(path_working, 'diff-score.json');
 
 %% Simulation
 
-path_working='../examples/example-biallelic-randperm/';
+path_working='../examples/example-biallelic-diffdist/';
 
 addpath(path_working);
 

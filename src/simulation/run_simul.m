@@ -166,9 +166,8 @@ if simul_options.biallelic
             % for maternal, we use repeat length difference distribution
             
             % read probability distrubition from a file
-            pm_allele_diff_prob = csvread('pm_allele_diff_prob.csv', 1, 0);
-            % fixme: always use the second column for now
-            pm_allele_diff_prob = pm_allele_diff_prob(:, 2);
+            % use only the first column
+            pm_allele_diff_prob = csvread('pm_allele_diff_prob.csv', 1, 1);
 
             % difference between allele1 and allele2's repeat length
             % (without direction)
