@@ -112,6 +112,8 @@ def signal_simulation(resd, a1, a2, a1_proportion, coverage, genotyping_confiden
 
     fk = ('AC', 30, min(a1, a2), abs(a2 - a1), proportions, coverage)
     # todo: no simulation value available
+    if max([a1, a2]) >= 30:
+        return None
     if fk not in resd:
         return None
 
@@ -171,7 +173,7 @@ def get_simulation_by_cycles(ms_repeat_type):
 
 
 def run_genotyping_simulation(path_project, path_simulation_output, seed):
-    
+
     # set random seed
     random.seed(seed)
     np.random.seed(seed)
@@ -240,12 +242,12 @@ def run_genotyping_simulation(path_project, path_simulation_output, seed):
         )
 
 
-with open('/home/dcsoft/s/Ofir/calling_trials_ac_bi_prf.pickle', 'rb') as f:
+with open('/home/dcsoft/s/Ofir/calling_trials_ac_bi_prf_including_mono.pickle', 'rb') as f:
     resd = pickle.load(f)
 
 df_resd = pd.DataFrame(
     list(resd.keys()),
-    columns=['ms_type', 'amp_cycle', 'a1', 'a2', 'proportion', 'coverage']
+    columns=['ms_type', 'amp_cycle', 'a1', 'delta', 'proportion', 'coverage']
 )
 
 max_resd_coverage = max(df_resd.coverage)
