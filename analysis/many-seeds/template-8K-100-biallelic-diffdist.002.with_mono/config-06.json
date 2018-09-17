@@ -1,0 +1,12 @@
+{
+    "title": "8K loci with approx. 100 leaves",
+    "pathRelativeOutput": "case-06",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 0,
+    "mutationSpeed": 0.05,
+    "biallelic": true,
+    "biallelicInit": "diffdist"
+}
+
