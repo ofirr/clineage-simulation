@@ -1,0 +1,12 @@
+{
+    "title": "64 loci with exactly 100 leaves",
+    "programFile": "simulation-64.xml",
+    "pathRelativeOutput": "output",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 100,
+    "mutationSpeed": 0.1,
+    "biallelic": true,
+    "biallelicInit": "diffdist"    
+}
