@@ -149,29 +149,6 @@ def simulate_genotyping(df, confidence_threshold):
     return df_out
 
 
-def get_simulation_by_cycles(ms_repeat_type):
-
-    from sequencing.calling.models import SimulationsByCycles
-
-    if ms_repeat_type == 'A':
-        sbc = SimulationsByCycles.objects.get(
-            name='A markov simulations',
-        )
-    elif ms_repeat_type == 'G':
-        sbc = SimulationsByCycles.objects.get(
-            name='G markov simulations',
-        )
-    elif ms_repeat_type == 'AC':
-        sbc = SimulationsByCycles.objects.get(
-            name='AC markov simulations',
-        )
-    else:
-        raise Exception(
-            "Unable to load simulation by cycles for " + ms_repeat_type)
-
-    return sbc.get_simulations_dict()
-
-
 def run_genotyping_simulation(path_project, path_simulation_output, seed):
 
     # set random seed
