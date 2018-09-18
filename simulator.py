@@ -357,7 +357,7 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     seed = get_seed_from_simulation_xml(
         os.path.join(
             path_project,
-            config.get('programFile', const.FILE_SIMULATION_XML)
+            config.get(const.CONFIG_PROGRAM_FILE, const.FILE_SIMULATION_XML)
         )
     )
 
