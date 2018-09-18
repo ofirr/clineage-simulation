@@ -309,9 +309,14 @@ def get_seed_from_simulation_xml(path_xml):
 def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     "run function"
 
+    # read simulation configuration
+    config = utils.read_json_config(
+        os.path.join(path_project, config_filename)
+    )
+
     # get seed from simulation.xml
     seed = get_seed_from_simulation_xml(
-        os.path.join(path_project, const.FILE_SIMULATION_XML)
+        os.path.join(path_project, config.get('programFile', const.FILE_SIMULATION_XML))
     )
 
     # run stochastic lineage tree simulation
@@ -320,8 +325,8 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     )
 
     # read simulation configuration
-    config = utils.read_json_config(
-        os.path.join(path_project, config_filename))
+#    config = utils.read_json_config(
+#        os.path.join(path_project, config_filename))
 
     path_simulation_output = os.path.join(
         path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
