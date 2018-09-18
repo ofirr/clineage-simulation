@@ -2,7 +2,7 @@
 
 path_project='./examples/example-03'
 
-python run_end_to_end.py \
+python simulator.py \
   --env config.math102-lx.env \
   --project ${path_project} \
   --config config.list
