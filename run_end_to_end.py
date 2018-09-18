@@ -35,7 +35,7 @@ def simulate_lineage_tree(path_matlab, path_project, config_filename):
     utils.run_matlab_code(path_matlab, matlab_code)
 
 
-def handle_monoallelic(path_simulation_output):
+def handle_monoallelic(path_project, path_simulation_output):
 
     import sys
     sys.path.append("/home/chun/clineage/")
@@ -43,15 +43,49 @@ def handle_monoallelic(path_simulation_output):
 
     from sequencing.phylo.triplets_wrapper import parse_mutations_table
 
-    # construct path for input mutation table
-    path_mutation_table = os.path.join(
-        path_simulation_output, const.FILE_MUTATION_TABLE
+    methods = []
+
+    path_genotyping_config = os.path.join(
+        path_project, const.FILE_CONFIG_GENOTYPING
     )
 
-    # parse mutation table
-    calling = parse_mutations_table(path_mutation_table, inverse=True)
+    # if config doesn't exist, mutation_table.txt that came out of eSTGt
+    # as the final calling
+    if not os.path.exists(path_genotyping_config):
 
-    return (path_simulation_output, calling)
+        # construct path for input mutation table
+        path_mutation_table = os.path.join(
+            path_simulation_output, const.FILE_MUTATION_TABLE
+        )
+
+        # parse mutation table
+        calling = parse_mutations_table(
+            path_mutation_table,
+            inverse=True
+        )
+
+        methods.append((path_simulation_output, calling))
+
+    else:
+
+        with open(path_genotyping_config, 'rt') as stream:
+            params_list = yaml.load(stream)
+
+        for case, params in enumerate(params_list["genotyping"]):
+
+            path_genotype_simulation_output = os.path.join(
+                path_simulation_output,
+                "n-{0:06d}".format(params.get('n'))
+            )
+
+            calling = parse_mutations_table(
+                path_genotype_simulation_output,
+                inverse=True
+            )
+
+            methods.append((path_genotype_simulation_output, calling))
+
+    return methods
 
 
 def handle_biallelic(path_project, path_simulation_output):
@@ -316,7 +350,10 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
 
     # get seed from simulation.xml
     seed = get_seed_from_simulation_xml(
-        os.path.join(path_project, config.get('programFile', const.FILE_SIMULATION_XML))
+        os.path.join(
+            path_project,
+            config.get('programFile', const.FILE_SIMULATION_XML)
+        )
     )
 
     # run stochastic lineage tree simulation
@@ -356,7 +393,7 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     if config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'):
         methods = handle_biallelic(path_project, path_simulation_output)
     else:
-        methods[0] = handle_monoallelic(path_simulation_output)
+        methods = handle_monoallelic(path_simulation_output)
 
     for path_reconstruction_output, calling in methods:
 
