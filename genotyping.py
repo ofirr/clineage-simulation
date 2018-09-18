@@ -233,7 +233,7 @@ def run_genotyping_simulation(biallelic, path_project, path_simulation_output, s
 
             # generate coverage
             df_coverage = generate_coverage(
-                df2,
+                df,
                 params['targetNumReadsPerSample'],
                 params['noiseConstant'],
                 p, q
