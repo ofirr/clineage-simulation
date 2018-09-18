@@ -8,6 +8,8 @@ import pandas as pd
 from src import const
 from src import utils
 
+from genotyping import run_genotyping_simulation
+
 
 def generate_tree_ascii_plot(path_newick):
 
@@ -330,18 +332,14 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
         os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK)
     )
 
-    # if biallelic=true
     # run genotyping simulation (wga proportion, dropout, coverage)
     # output mutation table
-    if config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'):
-
-        from genotyping import run_genotyping_simulation
-
-        run_genotyping_simulation(
-            path_project,
-            path_simulation_output,
-            seed
-        )
+    run_genotyping_simulation(
+        config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'),
+        path_project,
+        path_simulation_output,
+        seed
+    )
 
     # user wants to generate tree only
     if simulate_tree_only:
