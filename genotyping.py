@@ -97,7 +97,36 @@ def generate_coverage(df, target_reads_per_sample, noise_constant, p, q):
     return df_coverage
 
 
-def signal_simulation(resd, a1, a2, a1_proportion, coverage, genotyping_confidence_threshold):
+def signal_monoallelic_simulation(resd, max_resd_coverage, allele, coverage, genotyping_confidence_threshold):
+
+    coverage = min(
+        int(5 * round(float(coverage) / 5)), max_resd_coverage
+    )  # e.g. 95 is currect max reads coverage in simulated genotyping dict (resd)
+
+    # return None if coverage is zero
+    if not coverage:
+        return None
+
+    fk = ('AC', 30, allele, coverage)
+    # todo: no simulation value available
+    if allele >= 30:
+        return None
+    if fk not in resd:
+        return None
+
+    res = random.choice(resd[fk])
+
+    if res['calling_score'] < genotyping_confidence_threshold:
+        # convert frozenset to list
+        # take each number in the list, convert to str
+        # join them with '/'
+        # e.g. 14/15
+        return '/'.join([x for x in map(str, list(res['called_alleles']))])
+
+    return None
+
+
+def signal_biallelic_simulation(resd, max_resd_coverage, a1, a2, a1_proportion, coverage, genotyping_confidence_threshold):
 
     coverage = min(
         int(5 * round(float(coverage) / 5)), max_resd_coverage
@@ -129,27 +158,31 @@ def signal_simulation(resd, a1, a2, a1_proportion, coverage, genotyping_confiden
     return None
 
 
-def genotyping_simulation(data, confidence_threshold):
+def genotyping_monoallelic_simulation(data, confidence_threshold):
+
+    allele1, _, _, coverage = data.split('/')
+
+    return signal_monoallelic_simulation(
+        resd[KEY_MONOALLELIC],
+        max_resd_coverage[KEY_MONOALLELIC],
+        int(allele1), coverage,
+        confidence_threshold
+    )
+
+
+def genotyping_biallelic_simulation(data, confidence_threshold):
 
     allele1, allele2, proportion, coverage = data.split('/')
 
-    return signal_simulation(
-        resd,
+    return signal_biallelic_simulation(
+        resd[KEY_BIALLELIC],
+        max_resd_coverage[KEY_BIALLELIC],
         int(allele1), int(allele2), proportion, coverage,
         confidence_threshold
     )
 
 
-def simulate_genotyping(df, confidence_threshold):
-    "e.g. 17/15/0.5/529"
-
-    df_out = df.applymap(
-        lambda data: genotyping_simulation(data, confidence_threshold))
-
-    return df_out
-
-
-def run_genotyping_simulation(path_project, path_simulation_output, seed):
+def run_genotyping_simulation(biallelic, path_project, path_simulation_output, seed):
 
     # set random seed
     random.seed(seed)
@@ -177,29 +210,55 @@ def run_genotyping_simulation(path_project, path_simulation_output, seed):
 
         print(case, params)
 
-        # generate wga proportion (e.g. 0.5)
-        df_wga_proportion = generate_wga_proportion(df)
+        if biallelic:
 
-        # ignore the previous wga proportion and add new proportion
-        df2 = add_wga_proportion(df, df_wga_proportion)
+            # generate wga proportion (e.g. 0.3)
+            df_wga_proportion = generate_wga_proportion(df)
 
-        # generate coverage
-        df_coverage = generate_coverage(
-            df2,
-            params['targetNumReadsPerSample'],
-            params['noiseConstant'],
-            p, q
-        )
+            # ignore the previous wga proportion and add new proportion
+            df2 = add_wga_proportion(df, df_wga_proportion)
 
-        # add coverage
-        df_all = df2 + '/' + df_coverage.astype(str)
+            # generate coverage
+            df_coverage = generate_coverage(
+                df2,
+                params['targetNumReadsPerSample'],
+                params['noiseConstant'],
+                p, q
+            )
 
-        df_final = simulate_genotyping(
-            df_all,
-            params.get('genotypingConfidenceThreshold')
-        )
+            # add coverage
+            df_all = df2 + '/' + df_coverage.astype(str)
 
-        # print(df_final.head())
+        else:
+
+            # generate coverage
+            df_coverage = generate_coverage(
+                df2,
+                params['targetNumReadsPerSample'],
+                params['noiseConstant'],
+                p, q
+            )
+
+            # add coverage
+            # set allele2 to `-`
+            # set proportion to `1.0`
+            df_all = df.astype(str) + '/-/1.0/' + df_coverage.astype(str)
+
+        # run genotyping simulation
+        if biallelic:
+            # e.g. 17/15/0.5/529
+            df_final = df_all.applymap(
+                lambda data: genotyping_biallelic_simulation(
+                    data, params.get('genotypingConfidenceThreshold')
+                )
+            )
+        else:
+            # e.g. 17/-/1.0/529
+            df_final = df_all.applymap(
+                lambda data: genotyping_monoallelic_simulation(
+                    data, params.get('genotypingConfidenceThreshold')
+                )
+            )
 
         # create output directory
         path_genotype_simulation_output = os.path.join(
@@ -208,7 +267,17 @@ def run_genotyping_simulation(path_project, path_simulation_output, seed):
         )
         os.makedirs(path_genotype_simulation_output, exist_ok=True)
 
-        # write to file
+        # write to file (pre-genotyped)
+        df_all.to_csv(
+            os.path.join(
+                path_genotype_simulation_output,
+                'mutation_table.pre.txt'
+            ),
+            sep='\t',
+            na_rep='NaN'
+        )
+
+        # write to file (post-genotyped)
         df_final.to_csv(
             os.path.join(
                 path_genotype_simulation_output,
@@ -219,12 +288,36 @@ def run_genotyping_simulation(path_project, path_simulation_output, seed):
         )
 
 
-with open('/home/dcsoft/s/Ofir/calling_trials_ac_bi_prf_including_mono.pickle', 'rb') as f:
-    resd = pickle.load(f)
+# keys for set
+KEY_MONOALLELIC = 'monoallelic'
+KEY_BIALLELIC = 'biallelic'
 
-df_resd = pd.DataFrame(
-    list(resd.keys()),
+resd = dict()
+
+# load pickle for monoallelic
+with open('/home/dcsoft/s/Ofir/calling_trials_ac_mono.pickle', 'rb') as f:
+    resd[KEY_MONOALLELIC] = pickle.load(f)
+
+# load pickle for biallelic
+with open('/home/dcsoft/s/Ofir/calling_trials_ac_bi_prf_including_mono.pickle', 'rb') as f:
+    resd[KEY_BIALLELIC] = pickle.load(f)
+
+df_resd = dict()
+
+# convert monoallelic dict to dataframe
+df_resd[KEY_MONOALLELIC] = pd.DataFrame(
+    list(resd[KEY_MONOALLELIC].keys()),
+    columns=['ms_type', 'amp_cycle', 'allele', 'coverage']
+)
+
+# convert biallelic dict to dataframe
+df_resd[KEY_BIALLELIC] = pd.DataFrame(
+    list(resd[KEY_BIALLELIC].keys()),
     columns=['ms_type', 'amp_cycle', 'a1', 'delta', 'proportion', 'coverage']
 )
 
-max_resd_coverage = max(df_resd.coverage)
+max_resd_coverage = dict()
+
+# compute max coverage for mono- and bi-allelic
+max_resd_coverage[KEY_MONOALLELIC] = max(df_resd[KEY_MONOALLELIC].coverage)
+max_resd_coverage[KEY_BIALLELIC] = max(df_resd[KEY_BIALLELIC].coverage)
