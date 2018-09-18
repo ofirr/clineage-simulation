@@ -79,7 +79,10 @@ def handle_monoallelic(path_project, path_simulation_output):
             )
 
             calling = parse_mutations_table(
-                path_genotype_simulation_output,
+                os.path.join(
+                    path_genotype_simulation_output,
+                    const.FILE_MUTATION_TABLE
+                ),
                 inverse=True
             )
 
@@ -111,8 +114,10 @@ def handle_biallelic(path_project, path_simulation_output):
         )
 
         calling = method_A(
-            os.path.join(path_genotype_simulation_output,
-                         const.FILE_MUTATION_TABLE)
+            os.path.join(
+                path_genotype_simulation_output,
+                const.FILE_MUTATION_TABLE
+            )
         )
 
         methods.append((path_genotype_simulation_output, calling))
@@ -393,7 +398,7 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     if config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'):
         methods = handle_biallelic(path_project, path_simulation_output)
     else:
-        methods = handle_monoallelic(path_simulation_output)
+        methods = handle_monoallelic(path_project, path_simulation_output)
 
     for path_reconstruction_output, calling in methods:
 
