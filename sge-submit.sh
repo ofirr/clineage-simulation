@@ -8,6 +8,7 @@ fi
 
 # default project name
 project_name='simulation'
+queue_name='all2.q'
 
 usage()
 {
@@ -18,18 +19,20 @@ USAGE: `basename $0` [options]
     -c	config file (e.g. config.json)
     -s	simulate tree only (no reconstruction)
     -n	project name (default: "${project_name}")
+    -q  queue name (default: "${queue_name}")
 
 EOF
 }
 
 simulate_tree_only='';
 
-while getopts "n:p:c:sh" OPTION
+while getopts "n:p:c:q:sh" OPTION
 do
     case $OPTION in
         n) project_name=$OPTARG ;;
         p) path_project=$OPTARG ;;
         c) config_file=$OPTARG ;;
+        q) queue_name=$OPTARG ;;
         s) simulate_tree_only='--simulate-tree-only' ;;
         h) usage; exit 1 ;;
         *) usage; exit 1 ;;
@@ -47,7 +50,7 @@ job_name="job-`uuidgen`"
 
 out=`qsub \
     -N ${job_name} \
-    -q all2.q \
+    -q ${queue_name} \
     -cwd \
     ./sge-run-simul.sh ${path_project} ${config_file} ${simulate_tree_only}`
 
