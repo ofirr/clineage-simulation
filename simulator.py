@@ -125,13 +125,45 @@ def handle_biallelic(path_project, path_simulation_output):
     return methods
 
 
+def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
+
+    class EmptyTripletsFile(Exception):
+        pass
+
+    if os.stat(path_triplets_file).st_size == 0:
+        raise EmptyTripletsFile('Empty file: '.format(path_triplets_file))
+
+    import tempfile
+    import subprocess
+
+    cmd = [
+        '/home/dcsoft/s/Noa/Tree_Analysis_2016/TMC/treeFromTriplets',
+        '-fid',
+        path_triplets_file,
+        '-frtN',
+        path_output_newick,
+        '-w', '1',
+        '-index', '2'
+    ]
+
+    # create a temporary working directory for TMC
+    with tempfile.TemporaryDirectory() as path_tmc_work:
+
+        print('TMC log: {}'.format(path_tmc_work))
+
+        # TMC creates a treeReconstructio.log in the current working directory
+        process = subprocess.Popen(cmd, cwd=path_tmc_work)
+
+        return process.wait()
+
+
 def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring_method, choosing_method, quiet=True):
 
     import sys
     sys.path.append("/home/chun/clineage/")
     import clineage.wsgi
 
-    from sequencing.phylo.triplets_wrapper import calculate_triplets_tree, run_sagis_triplets_binary, convert_names_in_sagis_newick
+    from sequencing.phylo.triplets_wrapper import calculate_triplets_tree, convert_names_in_sagis_newick
 
     # construct path for final reconstructed newick
     # this one will have the actual cell name
@@ -182,13 +214,6 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
         cell_id_map_for_sagi
     )
 
-    # fixme: would be nice if we can do this when calling `run_sagis_triplets_binary`
-    # fixme: problematic when running multiple simultaneously using SGE
-    # os.rename(
-    #     "treeReconstruction.log",
-    #     os.path.join(path_simulation_output, const.FILE_TMC_LOG)
-    # )
-
     import dendropy
 
     # load reconstructed tree
@@ -208,49 +233,6 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
     tree_reconstructed.write_to_path(
         path_reconstructed_newick, schema='newick', unquoted_underscores=True
     )
-
-    # construct easy triplet lookup table
-    df_mapping = pd.DataFrame.from_dict(cell_id_map_for_sagi, orient='index')
-    df_mapping = df_mapping.reset_index() \
-        .set_index(0) \
-        .rename(columns={'index': 'cellname'})
-    df_mapping.index.name = 'index'
-
-    # iterate through triplets list
-    # parse so that we can construct a nice pandas dataframe out of it
-    tmp = []
-    with open(path_triplets_list_raw, 'rt') as fin:
-        data = fin.read()
-        # e.g.
-        # 8,0|3:0.5774 18,8|11:1.4142 15,0|9:0.3416 6,0|3:1.2041
-        triplets = data.split(' ')
-        for triplet in triplets:
-            try:
-                # e.g.
-                # 1,12|11:0.8165
-                match = re.search(r'(\d+),(\d+)\|(\d+):(.*)', triplet)
-                if match:
-                    sa, sb, sc, dist = match.groups()
-                    sa = int(sa)
-                    sb = int(sb)
-                    sc = int(sc)
-                    dist = float(dist)
-
-                    # lookup the actuall cell that corresponds to the id
-                    # from the mapping dataframe
-                    cellnames = list(df_mapping.loc[[sa, sb, sc]].cellname)
-
-                    tmp.append(
-                        [sa, sb, sc] + cellnames + [dist]
-                    )
-            except:
-                raise Exception(triplet)
-
-    # create a dataframe and save to csv
-    df_triplets = pd.DataFrame(
-        tmp, columns=['sai', 'sbi', 'sci', 'sa', 'sb', 'sc', 'dist']
-    )
-    df_triplets.to_csv(path_triplets_list_csv, index=False)
 
     # get the number of sisters for each node
     from ete3 import Tree
