@@ -143,7 +143,7 @@ om6_ms = csvread('om6_ms_only_ac_28x28.csv', 1, 0);
 num_copies = round( num_of_ms_loci / size(om6_ms, 1) ) + 1;
 
 % concatenate om6_ms + om6_ms + ... (`num_copies` times)
-om6_ms_n_copied = repmat(om6_ms, 2, 1);
+om6_ms_n_copied = repmat(om6_ms, num_copies, 1);
 
 % update oms6_ms
 om6_ms = om6_ms_n_copied(1:num_of_ms_loci, :);
