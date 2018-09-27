@@ -131,7 +131,7 @@ def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
         pass
 
     if os.stat(path_triplets_file).st_size == 0:
-        raise EmptyTripletsFile('Empty file: '.format(path_triplets_file))
+        raise EmptyTripletsFile('Empty file: {}'.format(path_triplets_file))
 
     import tempfile
     import subprocess
@@ -181,8 +181,8 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
     path_triplets_list_raw = os.path.join(
         path_simulation_output, const.FILE_TRIPLETS_LIST_RAW
     )
-    path_triplets_list_csv = os.path.join(
-        path_simulation_output, const.FILE_TRIPLETS_LIST_CSV
+    path_triplets_list_id_name_csv = os.path.join(
+        path_simulation_output, const.FILE_TRIPLETS_LIST_ID_NAME_CSV
     )
 
     # create triplets list using given parameters
@@ -199,6 +199,14 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
         sabc=0,
         tripletsnumber=5000000  # basically, max num of triplets
     )
+
+    # construct easy triplet lookup table (id to cellname)
+    df_mapping = pd.DataFrame.from_dict(cell_id_map_for_sagi, orient='index')
+    df_mapping = df_mapping.reset_index() \
+        .set_index(0) \
+        .rename(columns={'index': 'cellname'})
+    df_mapping.index.name = 'index'
+    df_mapping.to_csv(path_triplets_list_id_name_csv)
 
     # run sagis triplets binary
     # the output newick will have the numeric ids which correspond to the actual cell names
@@ -347,10 +355,6 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     simulate_lineage_tree(
         path_matlab, path_project, config_filename
     )
-
-    # read simulation configuration
-#    config = utils.read_json_config(
-#        os.path.join(path_project, config_filename))
 
     path_simulation_output = os.path.join(
         path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
