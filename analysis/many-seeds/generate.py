@@ -33,7 +33,7 @@ def read_yaml_config(path_yaml):
         return yaml.load(stream)
 
 
-def run(path_template):
+def run(path_output_base, path_template):
 
     # read config.yml
     yaml_cfg = read_yaml_config(
@@ -67,7 +67,7 @@ def run(path_template):
         print(seed)
 
         # create a seed directory
-        path_work = "seed-{0}".format(seed)
+        path_work = os.path.join(path_output_base, "seed-{0}".format(seed))
         os.makedirs(path_work, exist_ok=True)
 
         # copy the template to new dir
@@ -116,6 +116,13 @@ def parse_arguments():
         required=False
     )
 
+    parser.add_argument(
+        "--outbase",
+        action="store",
+        dest="path_output_base",
+        required=True
+    )
+
     # parse arguments
     params = parser.parse_args()
 
@@ -126,4 +133,4 @@ if __name__ == "__main__":
 
     params = parse_arguments()
 
-    run(params.path_template)
+    run(params.path_output_base, params.path_template)
