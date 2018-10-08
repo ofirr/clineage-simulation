@@ -1,3 +1,3 @@
 # README
 
-- reconstructoin test for monoallelic / biallelic genotyping
+- reconstruction test for monoallelic / biallelic genotyping
