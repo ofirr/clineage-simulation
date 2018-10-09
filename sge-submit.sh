@@ -15,7 +15,7 @@ usage()
 cat << EOF
 USAGE: `basename $0` [options]
 
-    -p	path to project (e.g. ./examples/example-02)
+    -p	absolute path to project (e.g. ~/examples/example-02)
     -c	config file (e.g. config.json)
     -s	simulate tree only (no reconstruction)
     -n	project name (default: "${project_name}")

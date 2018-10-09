@@ -11,7 +11,7 @@ usage()
 cat << EOF
 USAGE: `basename $0` [options]
 
-    -r  path to simulation root where seed-* are placed
+    -r  absolute path to simulation root where seed-* are placed
     -s  simulate tree only (no reconstruction)
 
 EOF
