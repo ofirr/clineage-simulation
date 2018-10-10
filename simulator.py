@@ -94,7 +94,8 @@ def handle_monoallelic(path_project, path_simulation_output):
 
 def handle_biallelic(path_project, path_simulation_output):
 
-    from biallelic import method_A
+    from biallelic import get_method
+    method = get_method(const.PARSING_METHOD)
 
     methods = []
 
@@ -114,7 +115,7 @@ def handle_biallelic(path_project, path_simulation_output):
             "n-{0:06d}".format(params.get('n'))
         )
 
-        calling = method_A(
+        calling = method(
             os.path.join(
                 path_genotype_simulation_output,
                 const.FILE_MUTATION_TABLE

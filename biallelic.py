@@ -198,3 +198,49 @@ def method_A(path_mutation_table):
     calling = transpose_dict(copy.deepcopy(d))
 
     return calling
+
+import sys
+sys.path.append('/home/{}/s/Ofir/triplets/triplets/'.format(const.WIS_USER))
+from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_triplet
+from triplets_input_generators.paired_triplets import parse_simulation_mut_table
+from decimal import Decimal
+
+
+def get_root_genotype(path_mutation_table):
+    full_df = pd.read_table(path_mutation_table, index_col='names')
+    full_df = full_df.applymap(lambda x:frozenset(x.split('/')[:2]))
+    full_d = full_df.to_dict()
+    return full_d['root']
+
+
+def make_d(path_mutation_table, full_root_genotype):
+    d = parse_simulation_mut_table(path_mutation_table)
+    for loc in d:
+        if len(full_root_genotype[loc]) == 1:
+            prop = Decimal('1.0')
+        elif len(full_root_genotype[loc]) == 2:
+            prop = Decimal('0.5')
+        else:
+            raise ValueError(len(full_root_genotype[loc]))
+        d[loc]['root'] = frozenset({(int(v), prop) for v in full_root_genotype[loc]})
+    return d
+
+
+def method_B(path_mutation_table):
+    full_root_genotype = get_root_genotype(
+        os.path.join(os.path.dirname(path_mutation_table), '..', path_mutation_table.split('/')[-1])  # TODO: fix path
+    )
+    d = make_d(path_mutation_table, full_root_genotype)
+    return d
+
+
+class NoSuchMethod(Exception):
+    pass
+
+
+def get_method(name='A'):
+    if name == 'A':
+        return method_A
+    elif name == 'B':
+        return method_B
+    raise NoSuchMethod(name)
