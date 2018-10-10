@@ -4,8 +4,9 @@ import copy
 import os
 import pandas as pd
 
+from src import const
 import sys
-sys.path.append("/home/chun/clineage/")
+sys.path.append("/home/{}/clineage/".format(const.WIS_USER))
 import clineage.wsgi
 
 from sequencing.calling.hist import Histogram as dHistogram
@@ -14,8 +15,6 @@ from sequencing.calling.simcor.hist_analysis import get_far_apart_highest_peaks,
 from sequencing.calling.simcor.calling import get_peaks_ranges
 from sequencing.calling.queries.order_this import binned_genotypes_bi
 from sequencing.calling.queries.mutation_maps import transpose_dict
-
-from src import const
 
 
 def special_get_population_kernels(

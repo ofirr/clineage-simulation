@@ -1,5 +1,6 @@
+from src import const
 import sys
-sys.path.append("/home/chun/clineage/")
+sys.path.append("/home/{}/clineage/".format(const.WIS_USER))
 import clineage.wsgi
 
 import os
@@ -12,11 +13,9 @@ from decimal import Decimal
 import scipy.stats
 import pickle
 
-from src import const
-
 
 def read_ado_consts_adam_795_ampli1_xL_coverage(
-        path='/home/dcsoft/s/Ofir/matlab_795_ampli1_xL_coverage_abs_opt.mat'):
+        path='/home/{}/s/Ofir/matlab_795_ampli1_xL_coverage_abs_opt.mat'.format(const.WIS_USER)):
     # fixme: save .mat file differently - expose P and Q directly.
     x = loadmat(path)
     assert len(x['xL'][0]) == 290  #
@@ -295,11 +294,11 @@ KEY_BIALLELIC = 'biallelic'
 resd = dict()
 
 # load pickle for monoallelic
-with open('/home/dcsoft/s/Ofir/calling_trials_ac_mono.pickle', 'rb') as f:
+with open('/home/{}/s/Ofir/calling_trials_ac_mono.pickle'.format(const.WIS_USER), 'rb') as f:
     resd[KEY_MONOALLELIC] = pickle.load(f)
 
 # load pickle for biallelic
-with open('/home/dcsoft/s/Ofir/calling_trials_ac_bi_prf_including_mono.pickle', 'rb') as f:
+with open('/home/{}/s/Ofir/calling_trials_ac_bi_prf_including_mono.pickle'.format(const.WIS_USER), 'rb') as f:
     resd[KEY_BIALLELIC] = pickle.load(f)
 
 df_resd = dict()
