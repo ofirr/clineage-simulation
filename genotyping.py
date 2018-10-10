@@ -184,10 +184,6 @@ def genotyping_biallelic_simulation(data, confidence_threshold):
 
 def run_genotyping_simulation(biallelic, path_project, path_simulation_output, seed):
 
-    # set random seed
-    random.seed(seed)
-    np.random.seed(seed)
-
     path_genotyping_config = os.path.join(
         path_project, const.FILE_CONFIG_GENOTYPING
     )
@@ -208,7 +204,11 @@ def run_genotyping_simulation(biallelic, path_project, path_simulation_output, s
 
     for case, params in enumerate(params_list["genotyping"]):
 
-        print(case, params)
+        # set random seed
+        random.seed(seed)
+        np.random.seed(seed)
+
+        print(seed, case, params)
 
         if biallelic:
 
