@@ -1,0 +1,12 @@
+{
+    "title": "2K loci with variable num of cells",
+    "pathRelativeOutput": "case-06",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 200,
+    "mutationSpeed": 0.025,
+    "biallelic": true,
+    "biallelicInit": "diffdist"
+}
+
