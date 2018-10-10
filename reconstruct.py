@@ -6,8 +6,9 @@ from sklearn import preprocessing
 from shutil import copyfile
 import tempfile
 
+from src import const
 import sys
-sys.path.append("/home/chun/clineage/")
+sys.path.append("/home/{}/clineage/".format(const.WIS_USER))
 import clineage.wsgi
 
 # --> extracted from production
@@ -15,7 +16,7 @@ import csv
 import networkx as nx
 
 import sys
-sys.path.append('/home/dcsoft/s/Ofir/triplets/triplets/')
+sys.path.append('/home/{}/s/Ofir/triplets/triplets/'.format(const.WIS_USER))
 from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_triplet
 
 
