@@ -9,6 +9,11 @@ from src import const
 from src import utils
 
 from genotyping import run_genotyping_simulation
+from reconstruct import normalize_triplet_dist, calculate_triplets_tree
+
+import sys
+sys.path.append("/home/chun/clineage/")
+import clineage.wsgi
 
 
 def generate_tree_ascii_plot(path_newick):
@@ -36,10 +41,6 @@ def simulate_lineage_tree(path_matlab, path_project, config_filename):
 
 
 def handle_monoallelic(path_project, path_simulation_output):
-
-    import sys
-    sys.path.append("/home/chun/clineage/")
-    import clineage.wsgi
 
     from sequencing.phylo.triplets_wrapper import parse_mutations_table
 
@@ -159,11 +160,7 @@ def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
 
 def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring_method, choosing_method, quiet=True):
 
-    import sys
-    sys.path.append("/home/chun/clineage/")
-    import clineage.wsgi
-
-    from sequencing.phylo.triplets_wrapper import calculate_triplets_tree, convert_names_in_sagis_newick
+    from sequencing.phylo.triplets_wrapper import convert_names_in_sagis_newick
 
     # construct path for final reconstructed newick
     # this one will have the actual cell name
@@ -207,6 +204,10 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
         .rename(columns={'index': 'cellname'})
     df_mapping.index.name = 'index'
     df_mapping.to_csv(path_triplets_list_id_name_csv)
+
+    # normalize triplet distance if uri10
+    # if scoring_method == 'uri10':
+    #     normalize_triplet_dist(path_triplets_list_raw)
 
     # run sagis triplets binary
     # the output newick will have the numeric ids which correspond to the actual cell names
