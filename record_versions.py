@@ -84,7 +84,7 @@ def write_conda_packages_info(path_out):
         stream.write('\n')
 
 
-def record_versions():
+def record_versions(path_out_base):
 
     versions = {}
 
@@ -98,14 +98,18 @@ def record_versions():
         'versions': versions
     }
 
-    with open('versions.core.yml', 'wt') as stream:
+    # write
+    path_out_core = os.path.join(path_out_base, 'versions.core.yml')
+
+    with open(path_out_core, 'wt') as stream:
         yaml.dump(root, stream, default_flow_style=False)
 
-    write_python_packages_info('versions.deps.pip')
+    # write output of pip freeze
+    path_out_pip_freeze = os.path.join(path_out_base, 'versions.deps.pip')
 
-    write_conda_packages_info('versions.deps.conda')
+    write_python_packages_info(path_out_pip_freeze)
 
+    # write output of conda freeze
+    path_out_conda_list = os.path.join(path_out_base, 'versions.deps.conda')
 
-if __name__ == '__main__':
-
-    record_versions()
+    write_conda_packages_info(path_out_conda_list)
