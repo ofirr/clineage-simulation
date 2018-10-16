@@ -1,4 +1,5 @@
 import os
+import yaml
 
 from src import utils
 from src import const
@@ -14,7 +15,7 @@ def get_git_hash(path_git_repository):
         '--format=%H'
     ]
 
-    stdout, stderr, errcode = utils.run_command(
+    stdout, _, _ = utils.run_command(
         cmds,
         get_output=True
     )
@@ -48,7 +49,7 @@ def get_version_treecmp():
         '-jar', const.PATH_TREECMP_BIN
     ]
 
-    stdout, stderr, errcode = utils.run_command(
+    stdout, _, _ = utils.run_command(
         cmds,
         get_output=True
     )
@@ -59,6 +60,52 @@ def get_version_treecmp():
     return version
 
 
+def write_python_packages_info(path_out):
+
+    stdout, _, _ = utils.run_command(
+        ['pip', 'freeze'],
+        get_output=True
+    )
+
+    with open(path_out, 'wt') as stream:
+        stream.write(stdout)
+        stream.write('\n')
+
+
+def write_conda_packages_info(path_out):
+
+    stdout, _, _ = utils.run_command(
+        ['conda', 'list'],
+        get_output=True
+    )
+
+    with open(path_out, 'wt') as stream:
+        stream.write(stdout)
+        stream.write('\n')
+
+
 def record_versions():
 
-    get_version_hclsim()
+    versions = {}
+
+    versions['HCLSIM'] = get_version_hclsim()
+    versions['CLineage'] = get_version_clineage()
+    versions['eSTGt'] = get_version_estgt()
+    versions['treeCmp'] = get_version_treecmp()
+    versions['TMC'] = '?'
+
+    root = {
+        'versions': versions
+    }
+
+    with open('versions.core.yml', 'wt') as stream:
+        yaml.dump(root, stream, default_flow_style=False)
+
+    write_python_packages_info('versions.deps.pip')
+
+    write_conda_packages_info('versions.deps.conda')
+
+
+if __name__ == '__main__':
+
+    record_versions()
