@@ -38,7 +38,7 @@ def get_version_clineage():
 def get_version_estgt():
 
     return get_git_hash(
-        "./bin/eSTGt"
+        const.PATH_ESTGT_GIT
     )
 
 
