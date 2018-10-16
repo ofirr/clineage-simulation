@@ -12,7 +12,7 @@ from genotyping import run_genotyping_simulation
 from reconstruct import normalize_triplet_dist, calculate_triplets_tree
 
 import sys
-sys.path.append("/home/{}/clineage/".format(const.WIS_USER))
+sys.path.append("/home/{}/clineage/".format(os.environ['USER']))
 import clineage.wsgi
 
 
@@ -140,7 +140,7 @@ def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
 
     cmd = [
         '/home/{}/s/Noa/Tree_Analysis_2016/TMC/treeFromTriplets'.format(
-            const.WIS_USER
+            os.environ['USER']
         ),
         '-fid',
         path_triplets_file,
