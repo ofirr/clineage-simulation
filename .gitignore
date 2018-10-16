@@ -1,11 +1,8 @@
 ~*
 *.asv
-*.job-info
-*.job-info.results
-TreeCmp
-eSTGt
+bin/TreeCmp
+bin/eSTGt
 __pycache__
-treeReconstruction.log
 analysis/tmc/seed-*
 analysis/tmc-nj-scipylnk
 analysis/many-seeds/seed-*
