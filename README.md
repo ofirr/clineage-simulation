@@ -27,12 +27,13 @@ Use a proper config file for your environment:
 
 or you can create a new `.env` file for your own environment.
 
-## Run End-to-End
-
-Using mcluster03/SGE:
+## Run Simulator
 
 ```bash
-$ ./run-tmc-all-sge.sh
+$ python simulator.py \
+    --env config.math102-lx.env \
+    --project ~/clineage-simulation/example/example-01 \
+    --config config.json
 ```
 
 ## For Developers
