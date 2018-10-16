@@ -92,10 +92,10 @@ def handle_monoallelic(path_project, path_simulation_output):
     return methods
 
 
-def handle_biallelic(path_project, path_simulation_output):
+def handle_biallelic(parsingMethod, path_project, path_simulation_output):
 
     from biallelic import get_method
-    method = get_method(const.PARSING_METHOD)
+    method = get_method(parsingMethod)
 
     methods = []
 
@@ -139,7 +139,9 @@ def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
     import subprocess
 
     cmd = [
-        '/home/{}/s/Noa/Tree_Analysis_2016/TMC/treeFromTriplets'.format(const.WIS_USER),
+        '/home/{}/s/Noa/Tree_Analysis_2016/TMC/treeFromTriplets'.format(
+            const.WIS_USER
+        ),
         '-fid',
         path_triplets_file,
         '-frtN',
@@ -370,7 +372,7 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     # run genotyping simulation (wga proportion, dropout, coverage)
     # output mutation table
     run_genotyping_simulation(
-        config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'),
+        config.get(const.CONFIG_SIMULATION_BIALLELIC, False),
         path_project,
         path_simulation_output,
         seed
@@ -383,10 +385,18 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
     methods = []
 
     # if biallelic=true
-    if config.get(const.CONFIG_SIMULATION_BIALLELIC, 'False'):
-        methods = handle_biallelic(path_project, path_simulation_output)
+    if config.get(const.CONFIG_SIMULATION_BIALLELIC, False):
+        methods = handle_biallelic(
+            # use 'A' by default for backward compatibility
+            config.get(const.CONFIG_PARSING_METHOD, 'A'),
+            path_project,
+            path_simulation_output
+        )
     else:
-        methods = handle_monoallelic(path_project, path_simulation_output)
+        methods = handle_monoallelic(
+            path_project,
+            path_simulation_output
+        )
 
     for path_reconstruction_output, calling in methods:
 
@@ -395,7 +405,9 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
             calling,
             path_reconstruction_output,
             'root',
+            # use 'uri10' by default for backward compatibility
             config.get(const.CONFIG_RECONSTRUCT_SCORING_METHOD, 'uri10'),
+            # use 'mms' by default for backward compatibility
             config.get(const.CONFIG_RECONSTRUCT_CHOOSING_METHOD, 'mms'),
             quiet
         )
