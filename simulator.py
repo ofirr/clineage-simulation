@@ -7,6 +7,7 @@ import pandas as pd
 
 from src import const
 from src import utils
+from record_versions import record_versions
 
 from genotyping import run_genotyping_simulation
 from reconstruct import normalize_triplet_dist, calculate_triplets_tree
@@ -519,6 +520,9 @@ def parse_arguments():
 if __name__ == "__main__":
 
     params, envs, config_jsons = parse_arguments()
+
+    # write versions of all dependencies
+    record_versions(params.path_project)
 
     for config_json in config_jsons:
 
