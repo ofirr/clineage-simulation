@@ -346,7 +346,7 @@ def get_seed_from_simulation_xml(path_xml):
     return seed
 
 
-def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
+def run(path_matlab, path_project, config_filename, run_flag, quiet):
     "run function"
 
     # read simulation configuration
@@ -362,31 +362,36 @@ def run(path_matlab, path_project, config_filename, simulate_tree_only, quiet):
         )
     )
 
-    # run stochastic lineage tree simulation
-    simulate_lineage_tree(
-        path_matlab, path_project, config_filename
-    )
-
     path_simulation_output = os.path.join(
         path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
     )
 
-    # take simulation tree and make ascii plot
-    generate_tree_ascii_plot(
-        os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK)
-    )
+    if run_flag[const.FLAG_TREE_SIMULATION] == const.FLAG_RUN_TREE_SIMULATION or run_flag[const.FLAG_TREE_SIMULATION] == const.FLAG_ONLY_TREE_SIMULATION:
+        # run stochastic lineage tree simulation
+        simulate_lineage_tree(
+            path_matlab, path_project, config_filename
+        )
 
-    # run genotyping simulation (wga proportion, dropout, coverage)
-    # output mutation table
-    run_genotyping_simulation(
-        config.get(const.CONFIG_SIMULATION_BIALLELIC, False),
-        path_project,
-        path_simulation_output,
-        seed
-    )
+        # take simulation tree and make ascii plot
+        generate_tree_ascii_plot(
+            os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK)
+        )
 
     # user wants to generate tree only
-    if simulate_tree_only:
+    if run_flag[const.FLAG_TREE_SIMULATION] == const.FLAG_ONLY_TREE_SIMULATION:
+        return
+
+    if run_flag[const.FLAG_GENOTYPING] == const.FLAG_RUN_GENOTYPING:
+        # run genotyping simulation (wga proportion, dropout, coverage)
+        # output mutation table
+        run_genotyping_simulation(
+            config.get(const.CONFIG_SIMULATION_BIALLELIC, False),
+            path_project,
+            path_simulation_output,
+            seed
+        )
+
+    if run_flag[const.FLAG_RECONSTRUCTION] == const.FLAG_SKIP_RECONSTRUCTION:
         return
 
     methods = []
@@ -497,10 +502,11 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--simulate-tree-only",
-        action="store_true",
-        default=False,
-        dest="simulate_tree_only"
+        "--run-flag",
+        nargs=3,
+        default=[const.FLAG_RUN_TREE_SIMULATION,
+                 const.FLAG_RUN_GENOTYPING, const.FLAG_RUN_RECONSTRUCTION],
+        dest="run_flag"
     )
 
     # parse arguments
@@ -521,6 +527,8 @@ if __name__ == "__main__":
 
     params, envs, config_jsons = parse_arguments()
 
+    print("Run Flag:", params.run_flag)
+
     # write versions of all dependencies
     record_versions(params.path_project)
 
@@ -540,6 +548,6 @@ if __name__ == "__main__":
             envs[const.ENV_MATLAB_KEY],
             params.path_project,
             config_json,
-            params.simulate_tree_only,
+            params.run_flag,
             params.quiet
         )
