@@ -127,7 +127,7 @@ def handle_biallelic(parsingMethod, path_project, path_simulation_output):
     return methods
 
 
-def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
+def run_triplet_maxcut(path_triplets_file, path_output_newick, path_tmc_log):
 
     class EmptyTripletsFile(Exception):
         pass
@@ -139,13 +139,13 @@ def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
     import subprocess
 
     cmd = [
-        '/home/{}/s/Noa/Tree_Analysis_2016/TMC/treeFromTriplets'.format(
-            os.environ['USER']
-        ),
+        os.path.abspath(const.PATH_TMC_BIN),
         '-fid',
         path_triplets_file,
         '-frtN',
         path_output_newick,
+        '-flg',
+        path_tmc_log,
         '-w', '1',
         '-index', '2'
     ]
@@ -153,7 +153,7 @@ def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
     # create a temporary working directory for TMC
     with tempfile.TemporaryDirectory() as path_tmc_work:
 
-        print('TMC log: {}'.format(path_tmc_work))
+        print('TMC work directory: {}'.format(path_tmc_work))
 
         # TMC creates a treeReconstructio.log in the current working directory
         process = subprocess.Popen(cmd, cwd=path_tmc_work)
@@ -212,11 +212,17 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
     # if scoring_method == 'uri10':
     #     normalize_triplet_dist(path_triplets_list_raw)
 
+    # construct path for tmc log
+    path_tmc_log = os.path.join(
+        path_simulation_output, const.FILE_TMC_LOG
+    )
+
     # run sagis triplets binary
     # the output newick will have the numeric ids which correspond to the actual cell names
-    ret_code = run_sagis_triplets_binary(
+    ret_code = run_triplet_maxcut(
         path_triplets_list_raw,
-        path_reconstructed_tmp_newick
+        path_reconstructed_tmp_newick,
+        path_tmc_log
     )
 
     # convert the numeric ids in newick to the actual cell names
