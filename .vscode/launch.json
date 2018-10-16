@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: run_end_to_end (generate tree only)",
+            "name": "Python: simulator.py (only tree simulation)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/simulator.py",
@@ -13,8 +13,9 @@
                 "--env", "config.windows.env",
                 "--project", "./examples/example-01",
                 "--config", "config.json",
-                "--generate-tree-only"
-            ]
+                "--run-flag 2"
+            ],
+            "console": "none"
         },        
         {
             "name": "Python: make_html_report (tmc-875887/tmc-013)",
@@ -39,7 +40,7 @@
             ]
         },
         {
-            "name": "Python: run_end_to_end (config enumerated)",
+            "name": "Python: simulator.py (config enumerated)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/simulator.py",
@@ -50,7 +51,7 @@
             ]
         },
         {
-            "name": "Python: run_end_to_end (config.list)",
+            "name": "Python: simulator.py (config.list)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/simulator.py",
@@ -81,7 +82,15 @@
                 "--case", "5",
                 "--outdir", "C:\\Users\\chun\\projects\\tmp\\simul-outputs\\many-seeds\\tmc-nj-scipylnk"
             ]
-        },        
+        },
+        {
+            "name": "Python: test",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tests/test_arguments.py",
+            "args": [ ],
+            "console": "none"
+        },                
         {
             "name": "Attach (Remote Debug)",
             "type": "python",
