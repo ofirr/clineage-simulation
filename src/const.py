@@ -29,5 +29,3 @@ PATH_ESTGT = './eSTGt/eSTGt'
 PATH_SIMULATION_LIB = './src/simulation'
 PATH_RECONSTRUCT_LIB = './src/reconstruction'
 PATH_TREECMP_BIN = './TreeCmp/bin/treeCmp.jar'
-
-WIS_USER = 'ofirr'

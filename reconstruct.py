@@ -8,15 +8,16 @@ import tempfile
 
 from src import const
 import sys
-sys.path.append("/home/{}/clineage/".format(const.WIS_USER))
+sys.path.append("/home/{}/clineage/".format(os.environ['USER']))
 import clineage.wsgi
 
 # --> extracted from production
 import csv
 import networkx as nx
 
-import sys
-sys.path.append('/home/{}/s/Ofir/triplets/triplets/'.format(const.WIS_USER))
+sys.path.append(
+    '/home/{}/s/Ofir/triplets/triplets/'.format(os.environ['USER'])
+)
 from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_triplet
 from triplets_input_generators.splittable_bi import solved_splittable_bi_generator
 from triplets_input_generators.full_biallelic import solved_biallelic_generator
