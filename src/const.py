@@ -25,7 +25,8 @@ FILE_SISTERS_COUNT = 'sisters.csv'
 
 FILE_CONFIG_GENOTYPING = 'config.genotyping.yml'
 
-PATH_ESTGT = './eSTGt/eSTGt'
 PATH_SIMULATION_LIB = './src/simulation'
 PATH_RECONSTRUCT_LIB = './src/reconstruction'
-PATH_TREECMP_BIN = './TreeCmp/bin/treeCmp.jar'
+PATH_ESTGT = './bin/eSTGt/eSTGt'
+PATH_TREECMP_BIN = './bin/TreeCmp/bin/treeCmp.jar'
+PATH_TMC_BIN = './bin/TMC/treeFromTriplets'
