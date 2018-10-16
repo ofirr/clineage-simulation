@@ -8,5 +8,7 @@ analysis/tmc-nj-scipylnk
 analysis/many-seeds/seed-*
 analysis/many-seeds/template
 analysis/many-seeds/tmc-nj-scipylnk
-
+*.stderr
+*.stdout
+sge-job-info.txt
 /.project
