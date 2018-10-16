@@ -14,7 +14,7 @@ umask 007
 
 path_project=$1
 config_json_file=$2
-simulate_tree_only=$3
+run_flag=$3
 
 # write SGE job info to a file
 cat << EOF >> ${path_project}/sge-job-info.txt
@@ -26,7 +26,7 @@ python ./simulator.py \
   --env ./config.math102-lx.env \
   --project ${path_project} \
   --config ${config_json_file} \
-  ${simulate_tree_only}
+  --run-flag ${run_flag}
 
 # copy stdout and stderr to project directory
 cp $HOME/s/$USER/cluster-output/$JOB_ID.stdout ${path_project}

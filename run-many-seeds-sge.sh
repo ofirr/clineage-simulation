@@ -6,24 +6,25 @@ then
     exit 1
 fi
 
+# run everything (tree simulation, genotyping, reconstruction)
+run_flag='0 0 0';
+
 usage()
 {
 cat << EOF
 USAGE: `basename $0` [options]
 
     -r  absolute path to simulation root where seed-* are placed
-    -s  simulate tree only (no reconstruction)
+    -f  run flag (default: "${run_flag}")
 
 EOF
 }
 
-simulate_tree_only='';
-
-while getopts "r:sh" OPTION
+while getopts "r:f:h" OPTION
 do
     case $OPTION in
         r) path_root=$OPTARG ;;
-        s) simulate_tree_only='-s' ;;
+        f) run_flag=$OPTARG ;;
         h) usage; exit 1 ;;
         *) usage; exit 1 ;;
     esac
@@ -52,7 +53,8 @@ do
         ./sge-submit.sh \
             -n ${project_name} \
             -p ${path_project} \
-            -c ${case} ${simulate_tree_only}
+            -c ${case} \
+            -f "${run_flag}"
     done
 
 done
