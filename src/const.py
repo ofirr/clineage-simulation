@@ -1,8 +1,10 @@
 ENV_MATLAB_KEY = 'matlab'
+
 CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
 CONFIG_PROGRAM_FILE = 'programFile'
 CONFIG_RECONSTRUCT_SCORING_METHOD = 'scoringMethod'
 CONFIG_RECONSTRUCT_CHOOSING_METHOD = 'choosingMethod'
+CONFIG_PARSING_METHOD = 'parsingMethod'
 CONFIG_SIMULATION_BIALLELIC = 'biallelic'
 
 FILE_SIMULATION_XML = 'simulation.xml'
@@ -27,5 +29,5 @@ PATH_ESTGT = './eSTGt/eSTGt'
 PATH_SIMULATION_LIB = './src/simulation'
 PATH_RECONSTRUCT_LIB = './src/reconstruction'
 PATH_TREECMP_BIN = './TreeCmp/bin/treeCmp.jar'
+
 WIS_USER = 'ofirr'
-PARSING_METHOD = 'A'
