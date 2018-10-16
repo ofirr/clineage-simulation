@@ -21,7 +21,7 @@ def get_simulation_output_path(path_project, config_filename):
 def highlight_tree_differences_to_png(path_matlab, path_simulation_newick, path_reconstructed_newick, path_sisters_csv, path_diff_metrics):
 
     matlab_code = "addpath('{0}', '{1}'); highlight_differences2('{2}', '{3}', '{4}', '{5}'); exit;".format(
-        const.PATH_ESTGT, const.PATH_RECONSTRUCT_LIB,
+        const.PATH_ESTGT_BIN, const.PATH_RECONSTRUCT_LIB,
         path_simulation_newick, path_reconstructed_newick, path_sisters_csv, path_diff_metrics
     )
 

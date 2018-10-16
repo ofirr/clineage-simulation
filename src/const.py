@@ -1,3 +1,5 @@
+import os
+
 ENV_MATLAB_KEY = 'matlab'
 
 CONFIG_PATH_RELATIVE_OUTPUT = 'pathRelativeOutput'
@@ -27,6 +29,7 @@ FILE_CONFIG_GENOTYPING = 'config.genotyping.yml'
 
 PATH_SIMULATION_LIB = './src/simulation'
 PATH_RECONSTRUCT_LIB = './src/reconstruction'
-PATH_ESTGT = './bin/eSTGt/eSTGt'
+PATH_ESTGT_GIT = './bin/eSTGt'
+PATH_ESTGT_BIN = os.path.join(PATH_ESTGT_GIT, 'eSTGt')
 PATH_TREECMP_BIN = './bin/TreeCmp/bin/treeCmp.jar'
 PATH_TMC_BIN = './bin/TMC/treeFromTriplets'
