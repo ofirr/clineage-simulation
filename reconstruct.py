@@ -48,13 +48,17 @@ def add_root_to_dict(
 ):
     new_d = dict()
     if cells_to_be_used_as_root == ['Ave']:
-        cells_to_be_used_as_root = set(c for loc in textual_mutation_dict for c in textual_mutation_dict[loc])
+        cells_to_be_used_as_root = set(
+            c for loc in textual_mutation_dict for c in textual_mutation_dict[loc]
+        )
     else:
         cells_to_be_used_as_root = set(cells_to_be_used_as_root)
     root_collection = dict()
     for loc in textual_mutation_dict:
         for c in textual_mutation_dict[loc].keys() & cells_to_be_used_as_root:
-            root_collection.setdefault(loc, []).append(textual_mutation_dict[loc][c])
+            root_collection.setdefault(loc, []).append(
+                textual_mutation_dict[loc][c]
+            )
     for loc in root_collection:
         val = int(np.median(root_collection[loc]))
         new_d.setdefault(loc, dict())['root'] = val
@@ -63,7 +67,9 @@ def add_root_to_dict(
 
 
 def get_cells_and_root(mutation_table_path_for_triplets):
-    calling = parse_mutations_table(mutation_table_path_for_triplets, inverse=True)
+    calling = parse_mutations_table(
+        mutation_table_path_for_triplets, inverse=True
+    )
     # Verify the presence of a root cell in the input data.
     possible_roots = [cell for cell in calling if 'root' in cell]
     assert len(possible_roots) == 1
@@ -89,7 +95,9 @@ def print_mutation_dict_to_file(textual_mutation_dict, output_path):
             row_dict = {'names': sr}
             row_dict.update(textual_mutation_dict[sr])
             row_dict.update(
-                {loc: 'NaN' for loc in loci_columns - textual_mutation_dict[sr].keys()})
+                {loc: 'NaN' for loc in loci_columns -
+                    textual_mutation_dict[sr].keys()}
+            )
             writer.writerow(row_dict)
 
 
