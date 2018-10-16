@@ -12,7 +12,7 @@ from genotyping import run_genotyping_simulation
 from reconstruct import normalize_triplet_dist, calculate_triplets_tree
 
 import sys
-sys.path.append("/home/chun/clineage/")
+sys.path.append("/home/{}/clineage/".format(const.WIS_USER))
 import clineage.wsgi
 
 
@@ -94,7 +94,8 @@ def handle_monoallelic(path_project, path_simulation_output):
 
 def handle_biallelic(path_project, path_simulation_output):
 
-    from biallelic import method_A
+    from biallelic import get_method
+    method = get_method(const.PARSING_METHOD)
 
     methods = []
 
@@ -114,7 +115,7 @@ def handle_biallelic(path_project, path_simulation_output):
             "n-{0:06d}".format(params.get('n'))
         )
 
-        calling = method_A(
+        calling = method(
             os.path.join(
                 path_genotype_simulation_output,
                 const.FILE_MUTATION_TABLE
@@ -138,7 +139,7 @@ def run_sagis_triplets_binary(path_triplets_file, path_output_newick):
     import subprocess
 
     cmd = [
-        '/home/dcsoft/s/Noa/Tree_Analysis_2016/TMC/treeFromTriplets',
+        '/home/{}/s/Noa/Tree_Analysis_2016/TMC/treeFromTriplets'.format(const.WIS_USER),
         '-fid',
         path_triplets_file,
         '-frtN',
