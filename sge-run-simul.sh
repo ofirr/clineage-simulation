@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #$ -S /bin/bash
-#$ -o $HOME/cluster_output/$JOB_ID.stdout
-#$ -e $HOME/cluster_output/$JOB_ID.stderr
+#$ -o $HOME/s/$USER/cluster-output/$JOB_ID.stdout
+#$ -e $HOME/s/$USER/cluster-output/$JOB_ID.stderr
 
 ulimit -c 10
 
@@ -29,7 +29,7 @@ python ./simulator.py \
   ${simulate_tree_only}
 
 # copy stdout and stderr to project directory
-cp $HOME/cluster_output/$JOB_ID.stdout ${path_project}
-cp $HOME/cluster_output/$JOB_ID.stderr ${path_project}
+cp $HOME/s/$USER/cluster-output/$JOB_ID.stdout ${path_project}
+cp $HOME/s/$USER/cluster-output/$JOB_ID.stderr ${path_project}
 
 echo "DONE."
