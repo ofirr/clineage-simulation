@@ -45,6 +45,9 @@ then
     exit 1
 fi
 
+# make a directory where SGE will place .stdout and .stderr
+mkdir -p ${HOME}/s/${USER}/cluster-output
+
 # set unique job name
 job_name="job-`uuidgen`"
 
