@@ -25,7 +25,7 @@ then
     exit 1
 fi
 
-path_dest="/home/chun/s/Jaeyoung/simul-outputs/${template_name}"
+path_dest="/home/chun/s/Jaeyoung/simul/${template_name}"
 
 # create a destination directory
 mkdir -p ${path_dest}
