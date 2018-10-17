@@ -6,8 +6,8 @@
 
 ulimit -c 10
 
-# fixme: hardcoded chun
-source "/home/chun/miniconda3/bin/activate" cl
+# activate conda cl environment
+source "${HOME}/miniconda3/bin/activate" cl
 
 # owner/group: rwx, others: none
 umask 007
