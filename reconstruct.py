@@ -138,11 +138,8 @@ def simplified_triplets_calculation(
                 loci_filter=loci_filter,
                 scoring_method=scoring_method,
                 choosing_method=choosing_method,
-                threshold=score_threshold,
-                triplets_num=tripletsnumber,
-                sabc=sabc):
-            f.write(format_triplet(triplet, pair,
-                                   score, print_scores=printscores))
+                threshold=score_threshold):
+            f.write(format_triplet(triplet, pair, score, print_scores=printscores, with_data=False))
     return cell_id_map_for_sagi
 
 
@@ -186,7 +183,7 @@ def calculate_triplets_tree(
                                                               triplets_num=tripletsnumber,
                                                               sabc=sabc):
             f.write(format_triplet(triplet, pair,
-                                   score, print_scores=printscores))
+                                   score, print_scores=printscores, with_data=True))
 
     return cell_id_map_for_sagi
 # <--
