@@ -9,5 +9,6 @@
     "mutationSpeed": 0.1,
     "biallelic": true,
     "biallelicInit": "diffdist",
-    "tripletsGeneration": "splitable"
+    "tripletsGeneration": "splitable",
+    "parsingMethod": "B"
 }
