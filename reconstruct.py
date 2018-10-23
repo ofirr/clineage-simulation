@@ -21,6 +21,7 @@ sys.path.append(
 from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_triplet
 from triplets_input_generators.splittable_bi import solved_splittable_bi_generator
 from triplets_input_generators.full_biallelic import solved_biallelic_generator
+from triplets_input_generators.mono import solved_mono_generator
 
 
 class NoSuchTripletsGenerator(Exception):
@@ -28,6 +29,8 @@ class NoSuchTripletsGenerator(Exception):
 
 
 def get_triplets_generator(triplets_generator_name):
+    if triplets_generator_name == 'mono':
+        return solved_mono_generator
     if triplets_generator_name == 'splitable':
         return solved_splittable_bi_generator
     if triplets_generator_name == 'full_bi':
