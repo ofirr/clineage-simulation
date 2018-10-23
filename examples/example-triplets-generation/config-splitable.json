@@ -1,0 +1,13 @@
+{
+    "title": "biallelic genotyping",
+    "programFile": "simulation-biallelic.xml",
+    "pathRelativeOutput": "output-biallelic-splitable",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 100,
+    "mutationSpeed": 0.1,
+    "biallelic": true,
+    "biallelicInit": "diffdist",
+    "tripletsGeneration": "splitable"
+}
