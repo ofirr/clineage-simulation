@@ -191,7 +191,7 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
     cell_id_map_for_sagi = simplified_triplets_calculation(
         textual_mutation_dict=calling,
         triplets_file=path_triplets_list_raw,
-        triplets_generator_name='splitable', # splitable/full_bi
+        triplets_generator_name='splitable', # mono_cases: mono  bi_cases: splitable/full_bi
         score_threshold=0,
         choosing_method=choosing_method,
         scoring_method=scoring_method,
