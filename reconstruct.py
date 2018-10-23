@@ -133,7 +133,9 @@ def simplified_triplets_calculation(
     rtd = transpose_dict(textual_mutation_dict)
     rtd_for_sagi, cell_id_map_for_sagi = map_cell_ids_for_sagi(rtd)
     d = transpose_dict(rtd_for_sagi)
+
     print("Generating triplets...")
+
     with open(triplets_file, 'w') as f:
         for triplet, pair, score in triplets_generator(
                 d,
@@ -142,53 +144,63 @@ def simplified_triplets_calculation(
                 scoring_method=scoring_method,
                 choosing_method=choosing_method,
                 threshold=score_threshold):
-            f.write(format_triplet(triplet, pair, score, print_scores=printscores, with_data=False))
-    return cell_id_map_for_sagi
-
-
-def calculate_triplets_tree(
-        textual_mutation_dict,
-        triplets_file,
-        cells_to_be_used_as_root=['Ave'],
-        score_threshold=0,  # print scores
-        choosing_method='mms',
-        scoring_method='uri10',
-        printscores=True,
-        loci_filter='ncnr',
-        sabc=0,
-        tripletsnumber=5000
-):
-    rtd = transpose_dict(textual_mutation_dict)
-
-    if 'root' not in rtd:
-        rtd = add_root_to_dict(
-            textual_mutation_dict=textual_mutation_dict,
-            cells_to_be_used_as_root=cells_to_be_used_as_root)
-        rtd = transpose_dict(rtd)
-
-    rtd_for_sagi, cell_id_map_for_sagi = map_cell_ids_for_sagi(rtd)
-
-    with tempfile.NamedTemporaryFile() as temp_file:
-        print_mutation_dict_to_file(rtd_for_sagi, temp_file.name)
-        root, cells = get_cells_and_root(temp_file.name)
-
-    G = nx.Graph()
-    G.add_nodes_from(cells)
-
-    print("Generating triplets...")
-    with open(triplets_file, 'w') as f:
-        for triplet, pair, score in paired_triplets_generator(root,
-                                                              G,
-                                                              loci_filter=loci_filter,
-                                                              scoring_method=scoring_method,
-                                                              choosing_method=choosing_method,
-                                                              threshold=score_threshold,
-                                                              triplets_num=tripletsnumber,
-                                                              sabc=sabc):
-            f.write(format_triplet(triplet, pair,
-                                   score, print_scores=printscores, with_data=True))
+            f.write(
+                format_triplet(
+                    triplet,
+                    pair,
+                    score,
+                    print_scores=printscores,
+                    with_data=False
+                )
+            )
 
     return cell_id_map_for_sagi
+
+
+# deprecated
+# def calculate_triplets_tree(
+#         textual_mutation_dict,
+#         triplets_file,
+#         cells_to_be_used_as_root=['Ave'],
+#         score_threshold=0,  # print scores
+#         choosing_method='mms',
+#         scoring_method='uri10',
+#         printscores=True,
+#         loci_filter='ncnr',
+#         sabc=0,
+#         tripletsnumber=5000
+# ):
+#     rtd = transpose_dict(textual_mutation_dict)
+
+#     if 'root' not in rtd:
+#         rtd = add_root_to_dict(
+#             textual_mutation_dict=textual_mutation_dict,
+#             cells_to_be_used_as_root=cells_to_be_used_as_root)
+#         rtd = transpose_dict(rtd)
+
+#     rtd_for_sagi, cell_id_map_for_sagi = map_cell_ids_for_sagi(rtd)
+
+#     with tempfile.NamedTemporaryFile() as temp_file:
+#         print_mutation_dict_to_file(rtd_for_sagi, temp_file.name)
+#         root, cells = get_cells_and_root(temp_file.name)
+
+#     G = nx.Graph()
+#     G.add_nodes_from(cells)
+
+#     print("Generating triplets...")
+#     with open(triplets_file, 'w') as f:
+#         for triplet, pair, score in paired_triplets_generator(root,
+#                                                               G,
+#                                                               loci_filter=loci_filter,
+#                                                               scoring_method=scoring_method,
+#                                                               choosing_method=choosing_method,
+#                                                               threshold=score_threshold,
+#                                                               triplets_num=tripletsnumber,
+#                                                               sabc=sabc):
+#             f.write(format_triplet(triplet, pair,
+#                                    score, print_scores=printscores, with_data=True))
+
+#     return cell_id_map_for_sagi
 # <--
 
 

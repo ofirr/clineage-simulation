@@ -162,7 +162,7 @@ def run_triplet_maxcut(path_triplets_file, path_output_newick, path_tmc_log):
         return process.wait()
 
 
-def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring_method, choosing_method, quiet=True):
+def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring_method, choosing_method, triplets_generator_name, quiet=True):
 
     from sequencing.phylo.triplets_wrapper import convert_names_in_sagis_newick
 
@@ -191,7 +191,7 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
     cell_id_map_for_sagi = simplified_triplets_calculation(
         textual_mutation_dict=calling,
         triplets_file=path_triplets_list_raw,
-        triplets_generator_name='splitable', # mono_cases: mono  bi_cases: splitable/full_bi
+        triplets_generator_name=triplets_generator_name,
         score_threshold=0,
         choosing_method=choosing_method,
         scoring_method=scoring_method,
@@ -421,6 +421,8 @@ def run(path_matlab, path_project, config_filename, run_flag, quiet):
             config.get(const.CONFIG_RECONSTRUCT_SCORING_METHOD, 'uri10'),
             # use 'mms' by default for backward compatibility
             config.get(const.CONFIG_RECONSTRUCT_CHOOSING_METHOD, 'mms'),
+            # use 'mono' by default for backward compatibility
+            config.get(const.CONFIG_TRIPLETS_GENERATION, 'mono'),
             quiet
         )
 
