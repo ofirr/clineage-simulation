@@ -10,7 +10,7 @@ from src import utils
 from record_versions import record_versions
 
 from genotyping import run_genotyping_simulation
-from reconstruct import normalize_triplet_dist, calculate_triplets_tree, simplified_triplets_calculation
+from reconstruct import normalize_triplet_dist, simplified_triplets_calculation
 
 import sys
 sys.path.append("/home/{}/clineage/".format(os.environ['USER']))
@@ -432,16 +432,17 @@ def run(path_matlab, path_project, config_filename, run_flag, quiet):
                          const.FILE_RECONSTRUCTED_NEWICK)
         )
 
+        # fixme: revisit. this part doesn't work anymore with multiple genotyping simulation
         # highlight tree differences and save to png
-        highlight_tree_differences_to_png(
-            envs[const.ENV_MATLAB_KEY],
-            os.path.join(path_simulation_output,
-                         const.FILE_SIMULATION_NEWICK),
-            os.path.join(path_reconstruction_output,
-                         const.FILE_RECONSTRUCTED_NEWICK),
-            os.path.join(path_reconstruction_output, const.FILE_SISTERS_COUNT),
-            os.path.join(path_reconstruction_output, const.FILE_DIFF_METRICS)
-        )
+        # highlight_tree_differences_to_png(
+        #     envs[const.ENV_MATLAB_KEY],
+        #     os.path.join(path_simulation_output,
+        #                  const.FILE_SIMULATION_NEWICK),
+        #     os.path.join(path_reconstruction_output,
+        #                  const.FILE_RECONSTRUCTED_NEWICK),
+        #     os.path.join(path_reconstruction_output, const.FILE_SISTERS_COUNT),
+        #     os.path.join(path_reconstruction_output, const.FILE_DIFF_METRICS)
+        # )
 
         # compare simulation tree and reconstructed tree
         compare(
