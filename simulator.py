@@ -10,7 +10,7 @@ from src import utils
 from record_versions import record_versions
 
 from genotyping import run_genotyping_simulation
-from reconstruct import normalize_triplet_dist, calculate_triplets_tree
+from reconstruct import normalize_triplet_dist, calculate_triplets_tree, simplified_triplets_calculation
 
 import sys
 sys.path.append("/home/{}/clineage/".format(os.environ['USER']))
@@ -188,10 +188,10 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
 
     # create triplets list using given parameters
     rldr = [root_cell_notation]  # cf. 'Ave'
-    cell_id_map_for_sagi = calculate_triplets_tree(
+    cell_id_map_for_sagi = simplified_triplets_calculation(
         textual_mutation_dict=calling,
         triplets_file=path_triplets_list_raw,
-        cells_to_be_used_as_root=rldr,
+        triplets_generator_name='splitable', # mono_cases: mono  bi_cases: splitable/full_bi
         score_threshold=0,
         choosing_method=choosing_method,
         scoring_method=scoring_method,

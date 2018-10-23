@@ -21,6 +21,7 @@ sys.path.append(
 from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_triplet
 from triplets_input_generators.splittable_bi import solved_splittable_bi_generator
 from triplets_input_generators.full_biallelic import solved_biallelic_generator
+from triplets_input_generators.mono import solved_mono_generator
 
 
 class NoSuchTripletsGenerator(Exception):
@@ -28,6 +29,8 @@ class NoSuchTripletsGenerator(Exception):
 
 
 def get_triplets_generator(triplets_generator_name):
+    if triplets_generator_name == 'mono':
+        return solved_mono_generator
     if triplets_generator_name == 'splitable':
         return solved_splittable_bi_generator
     if triplets_generator_name == 'full_bi':
@@ -138,11 +141,8 @@ def simplified_triplets_calculation(
                 loci_filter=loci_filter,
                 scoring_method=scoring_method,
                 choosing_method=choosing_method,
-                threshold=score_threshold,
-                triplets_num=tripletsnumber,
-                sabc=sabc):
-            f.write(format_triplet(triplet, pair,
-                                   score, print_scores=printscores))
+                threshold=score_threshold):
+            f.write(format_triplet(triplet, pair, score, print_scores=printscores, with_data=False))
     return cell_id_map_for_sagi
 
 
@@ -186,7 +186,7 @@ def calculate_triplets_tree(
                                                               triplets_num=tripletsnumber,
                                                               sabc=sabc):
             f.write(format_triplet(triplet, pair,
-                                   score, print_scores=printscores))
+                                   score, print_scores=printscores, with_data=True))
 
     return cell_id_map_for_sagi
 # <--
