@@ -1,0 +1,298 @@
+# packages in environment at /home/chun/miniconda3/envs/cl:
+#
+# Name                    Version                   Build  Channel
+arrow-cpp                 0.8.0                    py35_2    conda-forge
+asn1crypto                0.22.0                   py35_0    anaconda
+astunparse                1.5.0                     <pip>
+attrs                     17.4.0                     py_0    conda-forge
+automat                   0.6.0                    py35_0    conda-forge
+backports                 1.0                      py35_1    conda-forge
+backports.functools_lru_cache 1.4                      py35_1    conda-forge
+bamtools                  2.4.1                         1    bioconda
+bcftools                  1.6                           0    bioconda
+bcrypt                    3.1.4            py35h14c3975_0    anaconda
+biopython                 1.70                     py35_2    conda-forge
+blas                      1.0                         mkl    anaconda
+bleach                    1.4.2                    py35_0    bioconda
+bleach                    2.1.2                     <pip>
+bokeh                     0.12.13                  py35_0    conda-forge
+boost_lib                 1.54.0                        1    dranew
+bowtie2                   2.3.4            py35pl5.22.0_0    bioconda
+bwa                       0.7.17               pl5.22.0_2    bioconda
+bzip2                     1.0.6                         1    conda-forge
+ca-certificates           2018.03.07                    0    anaconda
+cachecontrol              0.12.4                   py35_0    anaconda
+cairo                     1.14.12              h77bcde2_0    anaconda
+certifi                   2018.8.24                py35_1    anaconda
+cffi                      1.11.2                   py35_0    conda-forge
+chardet                   3.0.4            py35hb6e9ddf_1    anaconda
+click                     6.7                      py35_0    anaconda
+cloudpickle               0.5.2                      py_0    conda-forge
+cmake                     3.9.1                hd1fb129_0    anaconda
+colour                    0.1.5                     <pip>
+constantly                15.1.0                     py_0    conda-forge
+cryptography              2.1.4                    py35_0    conda-forge
+curl                      7.54.1                        0    conda-forge
+cutadapt                  1.16                     py35_1    bioconda
+cycler                    0.10.0                   py35_0    anaconda
+cython                    0.23.5                   py35_0    anaconda
+dask                      0.16.0                     py_0    conda-forge
+dask                      0.15.1                    <pip>
+dask-core                 0.16.0                     py_0    conda-forge
+dbus                      1.13.2               hc3f9b76_0    anaconda
+decorator                 4.2.1                     <pip>
+decorator                 4.1.2                    py35_0    anaconda
+DendroPy                  4.3.0                     <pip>
+distributed               1.20.2                   py35_0    anaconda
+distributed               1.19.3                    <pip>
+django                    2.0.5            py35hd476221_0    anaconda
+Django                    1.9.8                     <pip>
+django-extensions         1.6.7                    py35_0    conda-forge
+django-js-asset           0.1.1                     <pip>
+django-model-utils        3.0.0                     <pip>
+django-mptt               0.9.0                     <pip>
+dojango                   0.5.8                     <pip>
+dojango-datable           0.9.3.ofir1               <pip>
+easyprocess               0.2.3                    py35_0    conda-forge
+entrypoints               0.2.3                    py35_1    conda-forge
+ete3                      3.1.1              pyhf5214e1_0    etetoolkit
+expat                     2.2.5                         0    conda-forge
+fastcluster               1.1.24                   py35_0    conda-forge
+fontconfig                2.12.6               h49f89f6_0    anaconda
+freetype                  2.8                  h52ed37b_0    anaconda
+freexl                    1.0.4                         0    conda-forge
+fribidi                   1.0.4                h14c3975_0    anaconda
+frogress                  0.9.1                     <pip>
+gdal                      2.0.0                    py35_1    anaconda
+geojson                   2.4.0                     <pip>
+geos                      3.6.2                hfc679d8_3    conda-forge
+gettext                   0.19.7                        1    conda-forge
+giflib                    5.1.4                         0    conda-forge
+glib                      2.53.6               hc861d11_1    anaconda
+gmp                       6.1.2                         0    conda-forge
+graphite2                 1.3.10                        0    conda-forge
+graphviz                  2.40.1               h25d223c_0    anaconda
+gst-plugins-base          1.12.4               h33fb286_0    anaconda
+gstreamer                 1.12.4               hb53b477_0    anaconda
+harfbuzz                  1.7.6                hc5b324e_0    anaconda
+hdf4                      4.2.12                        0    conda-forge
+hdf5                      1.8.17                       11    conda-forge
+hdmedians                 0.13             py35h035aef0_0    anaconda
+heapdict                  1.0.0                    py35_0    anaconda
+html5lib                  1.0.1                      py_0    conda-forge
+htslib                    1.3                           1    bioconda
+hyperlink                 17.3.1                     py_0    conda-forge
+icu                       58.2                          0    conda-forge
+idna                      2.6                      py35_1    conda-forge
+incremental               17.5.0                     py_0    conda-forge
+intel-openmp              2018.0.0             hc7b2577_8    anaconda
+ipykernel                 4.8.0                     <pip>
+ipykernel                 4.7.0                    py35_0    conda-forge
+ipython                   6.2.1                    py35_1    conda-forge
+ipython_genutils          0.2.0                    py35_0    anaconda
+ipywidgets                7.1.0                    py35_0    anaconda
+iso8601                   0.1.12                    <pip>
+jbig                      2.1                  hdba287a_0    anaconda
+jedi                      0.10.2                   py35_0    anaconda
+jedi                      0.11.1                    <pip>
+jinja2                    2.10                     py35_0    conda-forge
+jpeg                      9b                            2    conda-forge
+json-c                    0.12.1                        0    conda-forge
+jsoncpp                   1.8.4                h2d50403_0    conda-forge
+jsonschema                2.6.0                    py35_0    anaconda
+jupyter                   1.0.0                    py35_0    anaconda
+jupyter-client            5.2.2                     <pip>
+jupyter_client            5.2.0                    py35_0    conda-forge
+jupyter_console           5.2.0                    py35_0    anaconda
+jupyter_contrib_core      0.3.3                    py35_1    conda-forge
+jupyter_contrib_nbextensions 0.4.0                    py35_0    conda-forge
+jupyter_core              4.4.0                      py_0    conda-forge
+jupyter_highlight_selected_word 0.1.0                    py35_0    conda-forge
+jupyter_latex_envs        1.4.4                    py35_0    conda-forge
+jupyter_nbextensions_configurator 0.4.0                    py35_0    conda-forge
+kealib                    1.4.6                         0    anaconda
+kiwisolver                1.0.1            py35hf484d3e_0    anaconda
+krb5                      1.14.2                        0    conda-forge
+libdap4                   3.18.3                        2    conda-forge
+libedit                   3.1                  heed3624_0    anaconda
+libffi                    3.2.1                h4deb6c0_3    anaconda
+libgcc                    7.2.0                h69d50b8_2    anaconda
+libgcc-ng                 8.2.0                hdf63c60_1    anaconda
+libgdal                   2.0.0                         1    anaconda
+libgfortran               3.0.0                         1    anaconda
+libgfortran-ng            7.2.0                h9f7466a_2    anaconda
+libiconv                  1.15                          0    conda-forge
+libnetcdf                 4.4.1                         0    conda-forge
+libpng                    1.6.34               hb9fc6fc_0    anaconda
+libsodium                 1.0.15                        1    conda-forge
+libspatialite             4.3.0a              h72746d6_18  
+libssh2                   1.8.0                         1    conda-forge
+libstdcxx-ng              8.2.0                hdf63c60_1    anaconda
+libtiff                   4.0.9                he85c1e1_1    anaconda
+libtool                   2.4.6                         0    conda-forge
+libuuid                   1.0.3                         1    conda-forge
+libuv                     1.19.2               h14c3975_0    anaconda
+libxcb                    1.12                          1    anaconda
+libxml2                   2.9.8                hf84eae3_0    anaconda
+libxslt                   1.1.28                        0    anaconda
+locket                    0.2.0                    py35_1    anaconda
+lockfile                  0.12.2                   py35_0    anaconda
+ludibrio                  3.1.0                     <pip>
+lxml                      3.6.0                    py35_0    anaconda
+Markdown                  2.6.11                    <pip>
+markupsafe                1.0                      py35_0    anaconda
+matlabengineforpython     R2016b                    <pip>
+matplotlib                2.2.2            py35h0e671d2_1    anaconda
+matplotlib-venn           0.11.5                    <pip>
+mistune                   0.8.3                      py_0    conda-forge
+mkl                       2019.0                      118    anaconda
+mkl_fft                   1.0.4            py35h4414c95_1    anaconda
+mkl_random                1.0.1            py35h4414c95_1    anaconda
+mpld3                     0.3                       <pip>
+msgpack-python            0.4.8                    py35_0    anaconda
+mysql-connector-c         6.1.6                         2    bioconda
+mysqlclient               1.3.7                    py35_1    bioconda
+natsort                   5.2.0                    py35_0    anaconda
+nbconvert                 5.3.1                      py_1    conda-forge
+nbformat                  4.4.0                    py35_0    anaconda
+ncurses                   6.0                  h06874d7_1    anaconda
+networkx                  2.0                      py35_1    conda-forge
+nose                      1.3.7                    py35_2    conda-forge
+notebook                  5.2.2                    py35_1    conda-forge
+notebook                  5.4.0                     <pip>
+numpy                     1.15.1           py35h1d66e8a_0    anaconda
+numpy-base                1.15.1           py35h81de0dd_0    anaconda
+openjpeg                  2.3.0                h05c96fa_1    anaconda
+openssl                   1.0.2p               h14c3975_0    anaconda
+pandas                    0.22.0                   py35_0    conda-forge
+pandoc                    2.0.0.1                       0    conda-forge
+pandocfilters             1.4.1                    py35_0    anaconda
+pandocfilters             1.4.2                     <pip>
+pango                     1.42.0               h377f3fa_0    anaconda
+paramiko                  2.3.1                      py_0    conda-forge
+parquet-cpp               1.4.0.pre                     0    conda-forge
+parso                     0.1.1                     <pip>
+partd                     0.3.8                    py35_0    anaconda
+pastedeploy               1.5.2                    py35_1    anaconda
+path.py                   10.5             py35h39c98c1_0    anaconda
+patsy                     0.4.1                    py35_0    anaconda
+pcre                      8.39                          0    conda-forge
+peakutils                 1.1.0                    py35_0    conda-forge
+pear                      0.9.6                         2    bioconda
+perl                      5.22.0.1                      0    conda-forge
+pexpect                   4.3.1                    py35_0    anaconda
+pickleshare               0.7.4                    py35_0    anaconda
+pigz                      2.3                           0    anaconda
+pip                       9.0.1            py35h7e7da9d_4    anaconda
+pip                       18.0                      <pip>
+pixiedust                 1.1.11                    <pip>
+pixman                    0.34.0                        1    conda-forge
+plumbum                   1.6.4                    py35_0    conda-forge
+postgresql                9.6.3                         2    conda-forge
+primer3-py                0.5.1                    py35_0    bioconda
+proj4                     4.9.3                         5    conda-forge
+prompt_toolkit            1.0.15                   py35_0    anaconda
+psutil                    5.4.0                    py35_0    conda-forge
+psutil                    5.4.3                     <pip>
+ptyprocess                0.5.2                    py35_0    anaconda
+pyarrow                   0.8.0                    py35_0    conda-forge
+pyasn1                    0.3.7                      py_0    conda-forge
+pycparser                 2.18                     py35_0    anaconda
+pydot                     1.2.3                      py_0    conda-forge
+pydotplus                 2.0.2                    py35_0    anaconda
+pygments                  2.2.0                    py35_0    anaconda
+pygraphviz                1.3.1                    py35_0    bioconda
+pynacl                    1.1.2                    py35_0    conda-forge
+pyopenssl                 17.5.0           py35h4f8b8c8_0    anaconda
+pyparsing                 2.2.0                    py35_0    anaconda
+pyqt                      5.9.2            py35h751905a_0    anaconda
+pyramid                   1.5.7                    py35_0    anaconda
+pysam                     0.9.0                    py35_1    bioconda
+pysocks                   1.6.8                    py35_0    anaconda
+python                    3.5.5                hc3d631a_3    anaconda
+python-dateutil           2.6.1                     <pip>
+python-dateutil           2.3                      py35_0    bioconda
+pytz                      2017.3                     py_2    conda-forge
+pyvcf                     0.6.8                    py35_0    bioconda
+pyvirtualdisplay          0.2.1                    py35_0    conda-forge
+pyyaml                    3.12                     py35_1    conda-forge
+pyzmq                     16.0.2           py35h4be1f71_2    anaconda
+pyzmq                     16.0.4                    <pip>
+qt                        5.9.4                h4e5bff0_0    anaconda
+qtconsole                 4.3.1                    py35_0    anaconda
+readline                  7.0                  hac23ff0_3    anaconda
+reportlab                 3.2.0                    py35_0    anaconda
+repoze.lru                0.6                      py35_0    anaconda
+requests                  2.18.4           py35hb9e6ad1_1    anaconda
+rhash                     1.3.5                hbf7ad62_1    anaconda
+samtools                  1.7                           1    bioconda
+scikit-bio                0.5.4            py35hdd07704_0    anaconda
+scikit-learn              0.20.0           py35h4989274_0    anaconda
+scipy                     1.1.0            py35hfa4b5c9_1    anaconda
+seaborn                   0.9.0                    py35_0    anaconda
+Send2Trash                1.4.2                     <pip>
+setuptools                38.5.0                    <pip>
+setuptools                36.5.0           py35ha8c1747_0    anaconda
+simplegeneric             0.8.1                    py35_0    anaconda
+simplejson                3.8.1                    py35_0    anaconda
+sip                       4.19.8           py35hf484d3e_0    anaconda
+six                       1.11.0                   py35_1    conda-forge
+slugify                   0.0.1                    py35_1    conda-forge
+sortedcontainers          1.5.7                    py35_0    anaconda
+spyne                     2.12.11                  py35_0    conda-forge
+sqlalchemy                1.1.13                   py35_0    anaconda
+sqlite                    3.23.1               he433501_0    anaconda
+sqlparse                  0.2.4                     <pip>
+statsmodels               0.8.0                    py35_0    conda-forge
+svglib                    0.8.1                    py35_0    conda-forge
+system                    5.8                           2    anaconda
+tbb                       4.4_20150728                  0    bioconda
+tblib                     1.3.2                    py35_0    anaconda
+terminado                 0.8.1                    py35_0    anaconda
+testpath                  0.3.1                    py35_0    anaconda
+testpath                  0.3.1                     <pip>
+tk                        8.6.8                hbc83047_0    anaconda
+toolz                     0.8.2                      py_2    conda-forge
+tornado                   4.5.1                     <pip>
+tornado                   4.5.2                    py35_0    anaconda
+traitlets                 4.3.2                    py35_0    anaconda
+translationstring         1.3                      py35_0    anaconda
+twisted                   17.5.0                   py35_0    anaconda
+urllib3                   1.22             py35h2ab6e29_0    anaconda
+util-linux                2.21                          0    anaconda
+vcftools                  0.1.15                        1    bioconda
+venusian                  1.0                      py35_0    anaconda
+wcwidth                   0.1.7                    py35_0    anaconda
+webencodings              0.5.1                     <pip>
+webencodings              0.5                      py35_0    conda-forge
+webob                     1.4.1                    py35_0    anaconda
+werkzeug                  0.12.2                     py_1    conda-forge
+wheel                     0.30.0           py35hd3883cf_1    anaconda
+widgetsnbextension        3.1.0                    py35_0    anaconda
+xerces-c                  3.2.0                         0    conda-forge
+xlrd                      1.1.0                     <pip>
+xlsxwriter                0.9.3                    py35_0    anaconda
+xlwt                      1.3.0                     <pip>
+xopen                     0.3.2                    py35_0    bioconda
+xorg-kbproto              1.0.7                         1    conda-forge
+xorg-libice               1.0.9                         2    conda-forge
+xorg-libsm                1.2.2                         2    conda-forge
+xorg-libx11               1.6.4                         6    conda-forge
+xorg-libxau               1.0.8                         3    conda-forge
+xorg-libxdmcp             1.1.2                         3    conda-forge
+xorg-libxext              1.3.3                         2    conda-forge
+xorg-libxpm               3.5.12                        0    conda-forge
+xorg-libxrender           0.9.10                        0    conda-forge
+xorg-libxt                1.1.5                         0    conda-forge
+xorg-renderproto          0.11.1                        1    conda-forge
+xorg-xextproto            7.3.0                         1    conda-forge
+xorg-xproto               7.0.31                        6    conda-forge
+xz                        5.2.4                h14c3975_4    anaconda
+yaml                      0.1.6                         0    anaconda
+yapf                      0.22.0                    <pip>
+zeromq                    4.2.1                         1    conda-forge
+zict                      0.1.3                      py_0    conda-forge
+zlib                      1.2.11               hfbfcf68_1    anaconda
+zope                      1.0                      py35_0    anaconda
+zope.deprecation          4.1.2                    py35_1    anaconda
+zope.interface            4.1.2                    py35_1    anaconda
