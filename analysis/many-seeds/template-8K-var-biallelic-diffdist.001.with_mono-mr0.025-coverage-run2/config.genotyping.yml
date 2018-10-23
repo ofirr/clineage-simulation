@@ -1,0 +1,41 @@
+genotyping:
+  - n: 1
+    targetNumReadsPerSample: 62500
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 2
+    targetNumReadsPerSample: 125000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 3
+    targetNumReadsPerSample: 250000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 4
+    targetNumReadsPerSample: 500000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 5
+    targetNumReadsPerSample: 1000000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 6
+    targetNumReadsPerSample: 2000000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 7
+    targetNumReadsPerSample: 3000000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 8
+    targetNumReadsPerSample: 4000000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 9
+    targetNumReadsPerSample: 5000000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
+  - n: 10
+    targetNumReadsPerSample: 10000000
+    noiseConstant: 0.01
+    genotypingConfidenceThreshold: 0.05
