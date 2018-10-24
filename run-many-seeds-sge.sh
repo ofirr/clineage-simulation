@@ -6,8 +6,19 @@ then
     exit 1
 fi
 
-# run everything (tree simulation, genotyping, reconstruction)
+# by default, run everything (tree simulation, genotyping, reconstruction)
 run_flag='0 0 0';
+
+# choose a default SGE queue based on hostname
+hostname=`hostname -s`
+if [ "$hostname" == "mcluster01" ]
+then
+    queue_name='all.q'
+fi
+if [ "$hostname" == "mcluster03" ]
+then
+    queue_name='all2.q'
+fi
 
 usage()
 {
@@ -16,14 +27,16 @@ USAGE: `basename $0` [options]
 
     -r  absolute path to simulation root where seed-* are placed
     -f  run flag (default: "${run_flag}")
+    -q  queue name (default: "${queue_name}")
 
 EOF
 }
 
-while getopts "r:f:h" OPTION
+while getopts "r:q:f:h" OPTION
 do
     case $OPTION in
         r) path_root=$OPTARG ;;
+        q) queue_name=$OPTARG ;;
         f) run_flag=$OPTARG ;;
         h) usage; exit 1 ;;
         *) usage; exit 1 ;;
@@ -54,6 +67,7 @@ do
             -n ${project_name} \
             -p ${path_project} \
             -c ${case} \
+            -q ${queue_name} \
             -f "${run_flag}"
     done
 
