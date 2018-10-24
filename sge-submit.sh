@@ -8,9 +8,19 @@ fi
 
 # default project name
 project_name='simulation'
-queue_name='all2.q'
 
-# run everything (tree simulation, genotyping, reconstruction)
+# choose a default SGE queue based on hostname
+hostname=`hostname -s`
+if [ "$hostname" == "mcluster01" ]
+then
+    queue_name='all.q'
+fi
+if [ "$hostname" == "mcluster03" ]
+then
+    queue_name='all2.q'
+fi
+
+# by default, run everything (tree simulation, genotyping, reconstruction)
 run_flag='0 0 0';
 
 usage()
