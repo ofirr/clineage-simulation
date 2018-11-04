@@ -22,7 +22,7 @@ from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_tri
 from triplets_input_generators.splittable_bi import solved_splittable_bi_generator
 from triplets_input_generators.full_biallelic import solved_biallelic_generator
 from triplets_input_generators.mono import solved_mono_generator
-from triplets_input_generators.best_shot import splitable_than_full
+from triplets_input_generators.best_shot import splitable_then_full
 
 
 class NoSuchTripletsGenerator(Exception):
@@ -36,8 +36,8 @@ def get_triplets_generator(triplets_generator_name):
         return solved_splittable_bi_generator
     if triplets_generator_name == 'full_bi':
         return solved_biallelic_generator
-    if triplets_generator_name == 'splitable_than_full':
-        return splitable_than_full
+    if triplets_generator_name == 'splitable_then_full':
+        return splitable_then_full
     raise NoSuchTripletsGenerator(triplets_generator_name)
 
 
