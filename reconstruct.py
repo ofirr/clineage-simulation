@@ -14,6 +14,7 @@ import clineage.wsgi
 # --> extracted from production
 import csv
 import networkx as nx
+import functools
 
 sys.path.append(
     '/home/{}/s/Ofir/triplets/triplets/'.format(os.environ['USER'])
@@ -38,6 +39,8 @@ def get_triplets_generator(triplets_generator_name):
         return solved_biallelic_generator
     if triplets_generator_name == 'splitable_then_full':
         return splitable_then_full
+    if triplets_generator_name == 'full_then_splittable':
+        return functools.partial(splitable_then_full, reversed=True)
     raise NoSuchTripletsGenerator(triplets_generator_name)
 
 
