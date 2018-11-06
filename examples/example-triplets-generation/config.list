@@ -2,3 +2,5 @@ config-monoallelic.json
 config-permissive.json
 config-splitable.json
 config-full-biallelic.json
+config-splitable-then-full.json
+config-full-then-splitable.json
