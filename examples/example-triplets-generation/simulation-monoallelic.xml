@@ -16,7 +16,7 @@
 		<Name> MS </Name>
 		<InitVal> -1 </InitVal>
 		<FuncHandleName> update_microsatellite_1 </FuncHandleName>
-		<DuplicateNum> 512 </DuplicateNum>
+		<DuplicateNum> 128 </DuplicateNum>
 	</InternalState>
 	<InternalState>
 		<Name> Gen </Name>

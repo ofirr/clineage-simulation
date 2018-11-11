@@ -17,14 +17,14 @@
 		<Name> MS1 </Name>
 		<InitVal> -1 </InitVal>
 		<FuncHandleName> update_microsatellite_1 </FuncHandleName>
-		<DuplicateNum> 512 </DuplicateNum>
+		<DuplicateNum> 128 </DuplicateNum>
 	</InternalState>
 	<InternalState>
 		<!-- maternal -->
 		<Name> MS2 </Name>
 		<InitVal> -1 </InitVal>
 		<FuncHandleName> update_microsatellite_2 </FuncHandleName>
-		<DuplicateNum> 512 </DuplicateNum>
+		<DuplicateNum> 128 </DuplicateNum>
 	</InternalState>
 	<InternalState>
 		<Name> Gen </Name>
