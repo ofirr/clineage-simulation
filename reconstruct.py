@@ -24,6 +24,7 @@ from triplets_input_generators.splittable_bi import solved_splittable_bi_generat
 from triplets_input_generators.full_biallelic import solved_biallelic_generator
 from triplets_input_generators.mono import solved_mono_generator
 from triplets_input_generators.best_shot import splitable_then_full
+from triplets_input_generators.combined_likelihood import combined_liklihood_generator
 
 
 class NoSuchTripletsGenerator(Exception):
@@ -37,6 +38,8 @@ def get_triplets_generator(triplets_generator_name):
         return solved_splittable_bi_generator
     if triplets_generator_name == 'full_bi':
         return solved_biallelic_generator
+    if triplets_generator_name == 'combined_likelihood':
+        return combined_liklihood_generator
     if triplets_generator_name == 'splitable_then_full':
         return splitable_then_full
     if triplets_generator_name == 'full_then_splittable':
