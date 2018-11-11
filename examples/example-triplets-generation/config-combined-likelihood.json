@@ -1,0 +1,14 @@
+{
+    "title": "biallelic genotyping",
+    "programFile": "simulation-biallelic.xml",
+    "pathRelativeOutput": "output-combined-likelihood",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 100,
+    "mutationSpeed": 0.1,
+    "biallelic": true,
+    "biallelicInit": "diffdist",
+    "tripletsGeneration": "combined_likelihood",
+    "parsingMethod": "B"
+}
