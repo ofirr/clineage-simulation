@@ -143,25 +143,49 @@ def simplified_triplets_calculation(
     rtd_for_sagi, cell_id_map_for_sagi = map_cell_ids_for_sagi(rtd)
     d = transpose_dict(rtd_for_sagi)
 
-    print("Generating triplets...")
+    print("Generating triplets ({})...".format(triplets_generator_name))
 
     with open(triplets_file, 'w') as f:
-        for triplet, pair, score in triplets_generator(
-                d,
-                n=tripletsnumber,
-                loci_filter=loci_filter,
-                scoring_method=scoring_method,
-                choosing_method=choosing_method,
-                threshold=score_threshold):
-            f.write(
-                format_triplet(
-                    triplet,
-                    pair,
-                    score,
-                    print_scores=printscores,
-                    with_data=False
+
+        if triplets_generator_name == 'splitable_then_full' or triplets_generator_name == 'full_then_splittable':
+
+            for loc in d:
+                d_loc = {loc: d[loc]}
+                for triplet, pair, score in triplets_generator(
+                        d_loc,
+                        n=tripletsnumber,
+                        loci_filter=loci_filter,
+                        scoring_method=scoring_method,
+                        choosing_method=choosing_method,
+                        threshold=score_threshold):
+                    f.write(
+                        format_triplet(
+                            triplet,
+                            pair,
+                            score,
+                            print_scores=printscores,
+                            with_data=False
+                        )
+                    )
+
+        else:
+
+            for triplet, pair, score in triplets_generator(
+                    d,
+                    n=tripletsnumber,
+                    loci_filter=loci_filter,
+                    scoring_method=scoring_method,
+                    choosing_method=choosing_method,
+                    threshold=score_threshold):
+                f.write(
+                    format_triplet(
+                        triplet,
+                        pair,
+                        score,
+                        print_scores=printscores,
+                        with_data=False
+                    )
                 )
-            )
 
     return cell_id_map_for_sagi
 
