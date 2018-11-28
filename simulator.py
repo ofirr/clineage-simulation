@@ -485,14 +485,14 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--project",
+        "--project", "-p",
         action="store",
         dest="path_project",
         required=True
     )
 
     parser.add_argument(
-        "--config",
+        "--config", "-c",
         nargs='+',
         dest="configs",
         required=True
@@ -505,7 +505,7 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--run-flag",
+        "--run-flag", "-f",
         nargs=3,
         default=[const.FLAG_RUN_TREE_SIMULATION,
                  const.FLAG_RUN_GENOTYPING, const.FLAG_RUN_RECONSTRUCTION],
