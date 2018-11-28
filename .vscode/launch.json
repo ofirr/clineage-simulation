@@ -5,6 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: simulator.py (only reconstruction)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/simulator.py",
+            "args": [
+                "--env", "config.windows.env",
+                "--project", "./examples/example-triplets-generation",
+                "--config", "config-monoallelic.json",
+                "--run-flag 1 1 0"
+            ],
+            "console": "none"
+        },         
+        {
             "name": "Python: simulator.py (only tree simulation)",
             "type": "python",
             "request": "launch",
