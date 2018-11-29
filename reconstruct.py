@@ -137,7 +137,7 @@ def simplified_triplets_calculation(
         loci_filter='ncnr',
         sabc=0,
         tripletsnumber=5000000,
-        homozygosity
+        homozygosity=False
 ):
     triplets_generator = get_triplets_generator(triplets_generator_name)
     rtd = transpose_dict(textual_mutation_dict)
