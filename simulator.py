@@ -162,7 +162,7 @@ def run_triplet_maxcut(path_triplets_file, path_output_newick, path_tmc_log):
         return process.wait()
 
 
-def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring_method, choosing_method, triplets_generator_name, quiet=True):
+def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring_method, choosing_method, triplets_generator_name, homozygosity):
 
     from sequencing.phylo.triplets_wrapper import convert_names_in_sagis_newick
 
@@ -198,7 +198,8 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
         printscores=True,
         loci_filter="ncnr",
         sabc=0,
-        tripletsnumber=5000000  # basically, max num of triplets
+        tripletsnumber=5000000,  # basically, max num of triplets
+        homozygosity=homozygosity
     )
 
     # construct easy triplet lookup table (id to cellname)
@@ -418,12 +419,16 @@ def run(path_matlab, path_project, config_filename, run_flag, quiet):
             path_reconstruction_output,
             'root',
             # use 'uri10' by default for backward compatibility
-            config.get(const.CONFIG_RECONSTRUCT_SCORING_METHOD, 'uri10'),
+            scoring_method=config.get(
+                const.CONFIG_RECONSTRUCT_SCORING_METHOD, 'uri10'),
             # use 'mms' by default for backward compatibility
-            config.get(const.CONFIG_RECONSTRUCT_CHOOSING_METHOD, 'mms'),
+            choosing_method=config.get(
+                const.CONFIG_RECONSTRUCT_CHOOSING_METHOD, 'mms'),
             # use 'mono' by default for backward compatibility
-            config.get(const.CONFIG_TRIPLETS_GENERATION, 'mono'),
-            quiet
+            triplets_generator_name=config.get(
+                const.CONFIG_TRIPLETS_GENERATION, 'mono'),
+            # use False by default for backward compatibility
+            homozygosity=config.get(const.CONFIG_HOMOZYGOSITY, False)
         )
 
         # take reconstructed tree and make ascii plot

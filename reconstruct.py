@@ -137,7 +137,7 @@ def simplified_triplets_calculation(
         loci_filter='ncnr',
         sabc=0,
         tripletsnumber=5000000,
-        homo=False,
+        homozygosity
 ):
     triplets_generator = get_triplets_generator(triplets_generator_name)
     rtd = transpose_dict(textual_mutation_dict)
@@ -170,41 +170,24 @@ def simplified_triplets_calculation(
                     )
 
         else:
-            if homo==True:
-                for triplet, pair, score in triplets_generator(
-                        d,
-                        n=tripletsnumber,
-                        loci_filter=loci_filter,
-                        scoring_method=scoring_method,
-                        choosing_method=choosing_method,
-                        threshold=score_threshold,
-                        homo=True):
-                    f.write(
-                        format_triplet(
-                            triplet,
-                            pair,
-                            score,
-                            print_scores=printscores,
-                            with_data=False
-                        )
+
+            for triplet, pair, score in triplets_generator(
+                    d,
+                    n=tripletsnumber,
+                    loci_filter=loci_filter,
+                    scoring_method=scoring_method,
+                    choosing_method=choosing_method,
+                    threshold=score_threshold,
+                    homo=homozygosity):
+                f.write(
+                    format_triplet(
+                        triplet,
+                        pair,
+                        score,
+                        print_scores=printscores,
+                        with_data=False
                     )
-            else:
-                for triplet, pair, score in triplets_generator(
-                        d,
-                        n=tripletsnumber,
-                        loci_filter=loci_filter,
-                        scoring_method=scoring_method,
-                        choosing_method=choosing_method,
-                        threshold=score_threshold):
-                    f.write(
-                        format_triplet(
-                            triplet,
-                            pair,
-                            score,
-                            print_scores=printscores,
-                            with_data=False
-                        )
-                    )
+                )
 
     return cell_id_map_for_sagi
 
