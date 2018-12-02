@@ -169,6 +169,26 @@ def simplified_triplets_calculation(
                         )
                     )
 
+        elif triplets_generator_name == 'combined_likelihood':
+
+            for triplet, pair, score in triplets_generator(
+                    d,
+                    n=tripletsnumber,
+                    loci_filter=loci_filter,
+                    scoring_method=scoring_method,
+                    choosing_method=choosing_method,
+                    threshold=score_threshold,
+                    homo=homozygosity):
+                f.write(
+                    format_triplet(
+                        triplet,
+                        pair,
+                        score,
+                        print_scores=printscores,
+                        with_data=False
+                    )
+                )
+
         else:
 
             for triplet, pair, score in triplets_generator(
