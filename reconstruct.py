@@ -197,8 +197,7 @@ def simplified_triplets_calculation(
                     loci_filter=loci_filter,
                     scoring_method=scoring_method,
                     choosing_method=choosing_method,
-                    threshold=score_threshold,
-                    homo=homozygosity):
+                    threshold=score_threshold):
                 f.write(
                     format_triplet(
                         triplet,
