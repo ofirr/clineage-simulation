@@ -5,4 +5,5 @@ config-full-biallelic.json
 config-splitable-then-full.json
 config-full-then-splitable.json
 config-combined-likelihood.json
-
+config-combined-likelihood-homoz.json
+config-combined-likelihood-homoz-off.json
