@@ -1,0 +1,12 @@
+{
+    "title": "16K loci with approx. 100 leaves",
+    "programFile": "simulation.xml",
+    "pathRelativeOutput": "case-08",
+    "numOfMicrosatelliteLoci": 16384,
+    "interestCellGroups": "all-leaves",
+    "mutationSpeed": 0.01,
+    "biallelic": true,
+    "biallelicInit": "diffdist",
+    "tripletsGeneration": "mono",
+    "parsingMethod": "A"
+}

@@ -1,0 +1,14 @@
+{
+    "title": "4K loci with approx. 100 leaves",
+    "pathRelativeOutput": "case-20",
+    "addMutations": true,
+    "addAllelicDropOuts": false,
+    "addNoises": false,
+    "earlyStopPopulation": 0,
+    "mutationSpeed": 0.000125,
+    "biallelic": true,
+    "biallelicInit": "diffdist",
+    "tripletsGeneration": "combined_likelihood",
+    "parsingMethod": "B",
+    "homozygosity": true
+}
