@@ -42,6 +42,20 @@ def get_version_estgt():
     )
 
 
+def get_version_triplets():
+
+    return get_git_hash(
+        "/home/{}/s/Ofir/triplets/triplets/".format(os.environ['USER'])
+    )
+
+
+def get_version_matlab_plot():
+
+    return get_git_hash(
+        "/home/{}/s/Ofir/noa_matlab/Code/".format(os.environ['USER'])
+    )
+
+
 def get_version_treecmp():
 
     cmds = [
@@ -90,6 +104,8 @@ def record_versions(path_out_base):
 
     versions['HCLSIM'] = get_version_hclsim()
     versions['CLineage'] = get_version_clineage()
+    versions['triplets'] = get_version_triplets()
+    versions['matlabplot'] = get_version_matlab_plot()
     versions['eSTGt'] = get_version_estgt()
     versions['treeCmp'] = get_version_treecmp()
     versions['TMC'] = '?'
