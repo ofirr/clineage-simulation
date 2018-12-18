@@ -117,7 +117,7 @@ def print_mutation_dict_to_file(textual_mutation_dict, output_path):
 def map_cell_ids_for_sagi(rtd):
     rtd_for_sagi = dict()
     cell_id_map_for_sagi = dict()
-    for i, cell_id in enumerate(rtd.keys()):
+    for i, cell_id in enumerate(sorted(rtd.keys())):
         cell_id_map_for_sagi[cell_id] = i
         if 'root' in cell_id:
             rtd_for_sagi[cell_id] = rtd[cell_id]
