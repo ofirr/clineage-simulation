@@ -137,7 +137,9 @@ def simplified_triplets_calculation(
         loci_filter='ncnr',
         sabc=0,
         tripletsnumber=5000000,
-        homozygosity=False
+        homozygosity=False,
+        min_val=0.0001,
+        dropout_p=0.9,
 ):
     triplets_generator = get_triplets_generator(triplets_generator_name)
     rtd = transpose_dict(textual_mutation_dict)
@@ -158,7 +160,8 @@ def simplified_triplets_calculation(
                         loci_filter=loci_filter,
                         scoring_method=scoring_method,
                         choosing_method=choosing_method,
-                        threshold=score_threshold):
+                        threshold=score_threshold,
+                        min_val=min_val):
                     f.write(
                         format_triplet(
                             triplet,
@@ -178,7 +181,8 @@ def simplified_triplets_calculation(
                     scoring_method=scoring_method,
                     choosing_method=choosing_method,
                     threshold=score_threshold,
-                    homo=homozygosity):
+                    homo=homozygosity,
+                    dropout_p=dropout_p):
                 f.write(
                     format_triplet(
                         triplet,
