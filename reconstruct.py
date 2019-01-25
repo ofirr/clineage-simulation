@@ -17,7 +17,7 @@ import networkx as nx
 import functools
 
 sys.path.append(
-    '/home/{}/s/Ofir/triplets/triplets/'.format(os.environ['USER'])
+    '/home/{}/projects/triplets/'.format(os.environ['USER'])
 )
 from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_triplet
 from triplets_input_generators.splittable_bi import solved_splittable_bi_generator

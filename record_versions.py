@@ -45,7 +45,7 @@ def get_version_estgt():
 def get_version_triplets():
 
     return get_git_hash(
-        "/home/{}/s/Ofir/triplets/triplets/".format(os.environ['USER'])
+        "/home/{}/projects/triplets/".format(os.environ['USER'])
     )
 
 
