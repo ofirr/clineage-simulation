@@ -40,8 +40,8 @@ dask                      0.15.1                    <pip>
 dask                      0.16.0                     py_0    conda-forge
 dask-core                 0.16.0                     py_0    conda-forge
 dbus                      1.13.2               hc3f9b76_0    anaconda
-decorator                 4.1.2                    py35_0    anaconda
 decorator                 4.2.1                     <pip>
+decorator                 4.1.2                    py35_0    anaconda
 DendroPy                  4.3.0                     <pip>
 distributed               1.20.2                   py35_0    anaconda
 distributed               1.19.3                    <pip>
@@ -93,8 +93,8 @@ ipython_genutils          0.2.0                    py35_0    anaconda
 ipywidgets                7.1.0                    py35_0    anaconda
 iso8601                   0.1.12                    <pip>
 jbig                      2.1                  hdba287a_0    anaconda
-jedi                      0.10.2                   py35_0    anaconda
 jedi                      0.11.1                    <pip>
+jedi                      0.10.2                   py35_0    anaconda
 jinja2                    2.10                     py35_0    conda-forge
 jpeg                      9b                            2    conda-forge
 json-c                    0.12.1                        0    conda-forge
@@ -183,8 +183,8 @@ perl                      5.22.0.1                      0    conda-forge
 pexpect                   4.3.1                    py35_0    anaconda
 pickleshare               0.7.4                    py35_0    anaconda
 pigz                      2.3                           0    anaconda
-pip                       18.0                      <pip>
 pip                       9.0.1            py35h7e7da9d_4    anaconda
+pip                       18.0                      <pip>
 pixiedust                 1.1.11                    <pip>
 pixman                    0.34.0                        1    conda-forge
 plumbum                   1.6.4                    py35_0    conda-forge
@@ -192,8 +192,8 @@ postgresql                9.6.3                         2    conda-forge
 primer3-py                0.5.1                    py35_0    bioconda
 proj4                     4.9.3                         5    conda-forge
 prompt_toolkit            1.0.15                   py35_0    anaconda
-psutil                    5.4.3                     <pip>
 psutil                    5.4.0                    py35_0    conda-forge
+psutil                    5.4.3                     <pip>
 ptyprocess                0.5.2                    py35_0    anaconda
 pyarrow                   0.8.0                    py35_0    conda-forge
 pyasn1                    0.3.7                      py_0    conda-forge
@@ -253,8 +253,8 @@ testpath                  0.3.1                    py35_0    anaconda
 testpath                  0.3.1                     <pip>
 tk                        8.6.8                hbc83047_0    anaconda
 toolz                     0.8.2                      py_2    conda-forge
-tornado                   4.5.2                    py35_0    anaconda
 tornado                   4.5.1                     <pip>
+tornado                   4.5.2                    py35_0    anaconda
 traitlets                 4.3.2                    py35_0    anaconda
 translationstring         1.3                      py35_0    anaconda
 twisted                   17.5.0                   py35_0    anaconda
@@ -263,8 +263,8 @@ util-linux                2.21                          0    anaconda
 vcftools                  0.1.15                        1    bioconda
 venusian                  1.0                      py35_0    anaconda
 wcwidth                   0.1.7                    py35_0    anaconda
-webencodings              0.5                      py35_0    conda-forge
 webencodings              0.5.1                     <pip>
+webencodings              0.5                      py35_0    conda-forge
 webob                     1.4.1                    py35_0    anaconda
 werkzeug                  0.12.2                     py_1    conda-forge
 wheel                     0.30.0           py35hd3883cf_1    anaconda
