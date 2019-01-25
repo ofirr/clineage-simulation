@@ -201,7 +201,7 @@ def method_A(path_mutation_table):
 
 
 sys.path.append(
-    '/home/{}/s/Ofir/triplets/triplets/'.format(os.environ['USER'])
+    '/home/{}/projects/triplets/'.format(os.environ['USER'])
 )
 from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_triplet
 from triplets_input_generators.paired_triplets import parse_simulation_mut_table
