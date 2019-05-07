@@ -255,13 +255,13 @@ def reconstruct_TMC(calling, path_simulation_output, root_cell_notation, scoring
     )
 
     # get the number of sisters for each node
-    from ete3 import Tree
+    import dendropy
     with open(path_reconstructed_newick, 'rt') as fin:
         newick = fin.read()
-        ete_tree = Tree(newick)
+        tree = dendropy.Tree.get_from_string(newick, schema='newick')
         sisters = []
-        for n in ete_tree.get_leaves():
-            sisters.append([n.name, len(n.get_sisters())])
+        for n in tree.leaf_nodes():
+            sisters.append([n.taxon.label, len(n.sister_nodes())])
         df = pd.DataFrame(sisters, columns=['cell_name', 'num_sisters'])
         df.to_csv(
             os.path.join(path_simulation_output, const.FILE_SISTERS_COUNT),

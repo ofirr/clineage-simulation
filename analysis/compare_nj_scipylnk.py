@@ -113,12 +113,12 @@ def plot_ascii_dendropy(path_newick):
 
 def plot_ascii_ete(path_newick):
 
-    from ete3 import Tree
+    import dendropy
 
     with open(path_newick, 'rt') as fin:
         newick = fin.read()
-        tree = Tree(newick)
-        ascii = tree.get_ascii()
+        tree = dendropy.Tree.get_from_string(newick, schema='newick')
+        ascii = tree.as_ascii_plot()
         return ascii
 
 
