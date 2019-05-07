@@ -4,7 +4,7 @@ import json
 import pandas as pd
 import argparse
 from lxml import etree
-from ete3 import Tree
+import dendropy
 
 from src import const
 from src import utils
@@ -139,9 +139,9 @@ def get_ascii_plot(path_newick):
 
     with open(path_newick, 'rt') as fin:
         newick = fin.read()
-        tree = Tree(newick)
+        tree = dendropy.Tree.get_from_string(newick, schema='newick')
         tree.ladderize()
-        return tree.get_ascii()
+        return tree.as_ascii_plot()
 
 
 def make_html(report_title, path_project, config_jsons, exclude_mutation_table):
