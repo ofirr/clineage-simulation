@@ -268,67 +268,87 @@ def make_html(report_title, path_project, config_jsons, exclude_mutation_table):
         config = utils.read_json_config(
             os.path.join(path_project, config_json))
 
-        path_output = os.path.join(
+        path_simulation_output = os.path.join(
             path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT])
 
-        # path_diff_metrics = os.path.join(path_output, const.FILE_DIFF_METRICS)
 
-        # diff_metrics = get_diff_metrics(path_diff_metrics)
-        # overall_score = '{0:2.1f}%'.format((diff_metrics['total'] - (
-        #     diff_metrics['diff'] + diff_metrics['missing'])) / diff_metrics['total'] * 100.0)
+        from simulator import handle_biallelic, handle_monoallelic
+        methods = []
 
-        if exclude_mutation_table:
-            mutation_table = "excluded"
+        # if biallelic=true
+        if config.get(const.CONFIG_SIMULATION_BIALLELIC, False):
+            methods = handle_biallelic(
+                # use 'A' by default for backward compatibility
+                config.get(const.CONFIG_PARSING_METHOD, 'A'),
+                path_project,
+                path_simulation_output
+            )
         else:
-            mutation_table = convert_mutation_table_to_html(
-                path_output, const.FILE_MUTATION_TABLE)
+            methods = handle_monoallelic(
+                path_project,
+                path_simulation_output
+            )
 
-        df_metrics, metrics_html = convert_metrics_to_html(
-            path_output, const.FILE_COMPARISON_METRICS_RAW)
+        for path_output, calling in methods:
 
-        sim_xdoc = read_simulation_xml(
-            os.path.join(path_project, const.FILE_SIMULATION_XML)
-        )
+            # path_diff_metrics = os.path.join(path_output, const.FILE_DIFF_METRICS)
 
-        sim_seed, sim_time = get_sim_seed_time(sim_xdoc)
-        num_of_ms_loci = get_num_of_ms_loci(sim_xdoc)
+            # diff_metrics = get_diff_metrics(path_diff_metrics)
+            # overall_score = '{0:2.1f}%'.format((diff_metrics['total'] - (
+            #     diff_metrics['diff'] + diff_metrics['missing'])) / diff_metrics['total'] * 100.0)
 
-        item = {
-            "config": {
-                "filename": config_json,
-                "contents": config
-            },
-            "simulation": {
-                "time": sim_time,
-                "seed": sim_seed,
-                "numOfLoci": num_of_ms_loci,
-                "mutationTable": mutation_table,
-                "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_SIMULATION_NEWICK)
-            },
-            "reconstructed": {
-                "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_RECONSTRUCTED_NEWICK)
-            },
-            "metrics": {
-                "compare1": metrics_html,
-                "compare2": df_metrics.loc['Triples_toYuleAvg'][0]
+            if exclude_mutation_table:
+                mutation_table = "excluded"
+            else:
+                mutation_table = convert_mutation_table_to_html(
+                    path_output, const.FILE_MUTATION_TABLE)
+
+            df_metrics, metrics_html = convert_metrics_to_html(
+                path_output, const.FILE_COMPARISON_METRICS_RAW)
+
+            sim_xdoc = read_simulation_xml(
+                os.path.join(path_project, const.FILE_SIMULATION_XML)
+            )
+
+            sim_seed, sim_time = get_sim_seed_time(sim_xdoc)
+            num_of_ms_loci = get_num_of_ms_loci(sim_xdoc)
+
+            item = {
+                "config": {
+                    "filename": config_json,
+                    "contents": config
+                },
+                "simulation": {
+                    "time": sim_time,
+                    "seed": sim_seed,
+                    "numOfLoci": num_of_ms_loci,
+                    "mutationTable": mutation_table,
+                    "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_SIMULATION_NEWICK)
+                },
+                "reconstructed": {
+                    "img": "{}/{}.png".format(config[const.CONFIG_PATH_RELATIVE_OUTPUT], const.FILE_RECONSTRUCTED_NEWICK)
+                },
+                "metrics": {
+                    "compare1": metrics_html,
+                    "compare2": df_metrics.loc['Triples_toYuleAvg'][0]
+                }
             }
-        }
 
-        item["simulation"]["ascii"] = get_ascii_plot(
-            os.path.join(
-                path_output,
-                const.FILE_SIMULATION_NEWICK
+            item["simulation"]["ascii"] = get_ascii_plot(
+                os.path.join(
+                    path_output,
+                    const.FILE_SIMULATION_NEWICK
+                )
             )
-        )
 
-        item["reconstructed"]["ascii"] = get_ascii_plot(
-            os.path.join(
-                path_output,
-                const.FILE_RECONSTRUCTED_NEWICK
+            item["reconstructed"]["ascii"] = get_ascii_plot(
+                os.path.join(
+                    path_output,
+                    const.FILE_RECONSTRUCTED_NEWICK
+                )
             )
-        )
 
-        items.append(item)
+            items.append(item)
 
     template = Template(templ)
     html = template.render(reportTitle=report_title, items=items)
