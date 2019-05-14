@@ -136,6 +136,15 @@ def run_triplet_maxcut(path_triplets_file, path_output_newick, path_tmc_log):
     if os.stat(path_triplets_file).st_size == 0:
         raise EmptyTripletsFile('Empty file: {}'.format(path_triplets_file))
 
+    if not os.path.isabs(path_triplets_file):
+        path_triplets_file = os.path.join(os.path.abspath('.'), path_triplets_file)
+
+    if not os.path.isabs(path_output_newick):
+        path_output_newick = os.path.join(os.path.abspath('.'), path_output_newick)
+
+    if not os.path.isabs(path_tmc_log):
+        path_tmc_log = os.path.join(os.path.abspath('.'), path_tmc_log)
+
     import tempfile
     import subprocess
 
