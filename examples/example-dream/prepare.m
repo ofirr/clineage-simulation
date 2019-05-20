@@ -6,7 +6,7 @@
 
 % 28X28
 % e.g. probability of mutation causing 0 to become 1
-%      ms_mutation_transition_prob(0, 1) --> 0.10 (10.0%)
+%      ms_mutation_transition_prob(1, 2) --> 0.10 (10.0%)
 ms_mutation_transition_prob = [
     0.90	0.10
     0.00	1.00
