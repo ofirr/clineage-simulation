@@ -23,8 +23,6 @@ from TMC_CLI import parse_mutations_table, paired_triplets_generator, format_tri
 from triplets_input_generators.splittable_bi import solved_splittable_bi_generator
 from triplets_input_generators.full_biallelic import solved_biallelic_generator
 from triplets_input_generators.mono import solved_mono_generator
-from triplets_input_generators.best_shot import splitable_then_full
-from triplets_input_generators.combined_likelihood import combined_liklihood_generator
 
 
 class NoSuchTripletsGenerator(Exception):
@@ -38,12 +36,6 @@ def get_triplets_generator(triplets_generator_name):
         return solved_splittable_bi_generator
     if triplets_generator_name == 'full_bi':
         return solved_biallelic_generator
-    if triplets_generator_name == 'combined_likelihood':
-        return combined_liklihood_generator
-    if triplets_generator_name == 'splitable_then_full':
-        return splitable_then_full
-    if triplets_generator_name == 'full_then_splittable':
-        return functools.partial(splitable_then_full, reversed=True)
     raise NoSuchTripletsGenerator(triplets_generator_name)
 
 
@@ -127,7 +119,7 @@ def map_cell_ids_for_sagi(rtd):
 
 
 def simplified_triplets_calculation(
-        textual_mutation_dict,
+        textual_mutation_dict,  # by loc by cell
         triplets_file,
         triplets_generator_name,
         score_threshold=0,  # print scores
@@ -142,75 +134,29 @@ def simplified_triplets_calculation(
         dropout_p=0.9,
 ):
     triplets_generator = get_triplets_generator(triplets_generator_name)
-    rtd = transpose_dict(textual_mutation_dict)
+    rtd = transpose_dict(textual_mutation_dict) # by cell by loc
     rtd_for_sagi, cell_id_map_for_sagi = map_cell_ids_for_sagi(rtd)
-    d = transpose_dict(rtd_for_sagi)
+    d = transpose_dict(rtd_for_sagi) # by loc by cell
 
     print("Generating triplets ({})...".format(triplets_generator_name))
 
     with open(triplets_file, 'w') as f:
-
-        if triplets_generator_name == 'splitable_then_full' or triplets_generator_name == 'full_then_splittable':
-
-            for loc in d:
-                d_loc = {loc: d[loc]}
-                for triplet, pair, score in triplets_generator(
-                        d_loc,
-                        n=tripletsnumber,
-                        loci_filter=loci_filter,
-                        scoring_method=scoring_method,
-                        choosing_method=choosing_method,
-                        threshold=score_threshold,
-                        min_val=min_val):
-                    f.write(
-                        format_triplet(
-                            triplet,
-                            pair,
-                            score,
-                            print_scores=printscores,
-                            with_data=False
-                        )
-                    )
-
-        elif triplets_generator_name == 'combined_likelihood':
-
-            for triplet, pair, score in triplets_generator(
-                    d,
-                    n=tripletsnumber,
-                    loci_filter=loci_filter,
-                    scoring_method=scoring_method,
-                    choosing_method=choosing_method,
-                    threshold=score_threshold,
-                    homo=homozygosity,
-                    dropout_p=dropout_p):
-                f.write(
-                    format_triplet(
-                        triplet,
-                        pair,
-                        score,
-                        print_scores=printscores,
-                        with_data=False
-                    )
+        for triplet, pair, score in triplets_generator(
+                d,
+                n=tripletsnumber,
+                loci_filter=loci_filter,
+                scoring_method=scoring_method,
+                choosing_method=choosing_method,
+                threshold=score_threshold):
+            f.write(
+                format_triplet(
+                    triplet,
+                    pair,
+                    score,
+                    print_scores=printscores,
+                    with_data=False
                 )
-
-        else:
-
-            for triplet, pair, score in triplets_generator(
-                    d,
-                    n=tripletsnumber,
-                    loci_filter=loci_filter,
-                    scoring_method=scoring_method,
-                    choosing_method=choosing_method,
-                    threshold=score_threshold):
-                f.write(
-                    format_triplet(
-                        triplet,
-                        pair,
-                        score,
-                        print_scores=printscores,
-                        with_data=False
-                    )
-                )
+            )
 
     return cell_id_map_for_sagi
 

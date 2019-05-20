@@ -1,9 +1,0 @@
-{
-    "title": "Example 02 / Speed 1.0",
-    "pathRelativeOutput": "case-01",
-    "addMutations": true,
-    "addAllelicDropOuts": false,
-    "addNoises": false,
-    "earlyStopPopulation": 0,
-    "mutationSpeed": 1.0
-}

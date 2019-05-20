@@ -1,9 +1,0 @@
-{
-    "title": "Example 04 (Early Stop)",
-    "programFile": "simulation-early-stop.xml",
-    "pathRelativeOutput": "outputs-early-stop",
-    "addMutations": true,
-    "addAllelicDropOuts": true,
-    "addNoises": true,
-    "earlyStopPopulation": 54
-}

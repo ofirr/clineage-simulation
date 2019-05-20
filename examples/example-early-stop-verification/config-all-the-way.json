@@ -1,9 +1,0 @@
-{
-    "title": "Example 04 (All the Way)",
-    "programFile": "simulation-all-the-way.xml",
-    "pathRelativeOutput": "outputs-all-the-way",
-    "addMutations": true,
-    "addAllelicDropOuts": true,
-    "addNoises": true,
-    "earlyStopPopulation": 0
-}
