@@ -13,7 +13,7 @@
 		C -> 1 {C,C}_1
 	</Prod>
 	<InternalState>
-		<Name> SCR </Name>
+		<Name> MS </Name>
 		<InitVal> -1 </InitVal>
 		<FuncHandleName> update_microsatellite_1 </FuncHandleName>
 		<DuplicateNum> 10 </DuplicateNum>

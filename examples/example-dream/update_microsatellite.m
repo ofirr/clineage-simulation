@@ -1,4 +1,4 @@
-function [ newMS ] = update_scar( MS, allele )
+function [ newMS ] = update_microsatellite( MS, allele )
     % updates the microsatellite repeat number
     
         rand_seed = RandStream('mlfg6331_64');
