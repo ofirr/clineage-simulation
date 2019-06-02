@@ -1,7 +1,7 @@
 <Program>
 <ExecParams>
 	<SimTime>
-		4
+		10	
 	</SimTime>
 	<Seed>
 		875887
@@ -15,7 +15,7 @@
 	<InternalState>
 		<Name> MS </Name>
 		<InitVal> -1 </InitVal>
-		<FuncHandleName> update_microsatellite_1 </FuncHandleName>
+		<FuncHandleName> update_microsatellite </FuncHandleName>
 		<DuplicateNum> 10 </DuplicateNum>
 	</InternalState>
 	<InternalState>
