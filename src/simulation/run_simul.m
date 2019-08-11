@@ -236,10 +236,12 @@ phytree_obj = create_tree(...
     path_tree_png_without_distance, ...
     path_tree_png_with_distance ...
 );
-
+fprintf("After create_tree\n");
 %% add dropouts and noises
 
 mutation_tables = cell(alleles);
+
+fprintf("After mutation_tables\n");
 
 % fixme: make configurable in config.json
 has_root = true;
@@ -321,6 +323,8 @@ for allele = 1:length(alleles)
 
 end
 
+fprintf("After alleles for loop\n");
+
 %% add WGA bias proportions
 if simul_options.biallelic
     if simul_options.wgaBias
@@ -351,9 +355,12 @@ if simul_options.biallelic
     mutation_tables(end + 1) = { wga_bias_proportions };
 end
 
+fprintf("After WGA bias\n");
+
 %% merge
 mutation_table = merge_mutation_tables(mutation_tables);
 
+fprintf("After merge\n");
 %% save
 
 % get mutation table with column/row header
@@ -375,3 +382,5 @@ save_mutation_table(path_mutation_table, mutation_table_final);
 
 % write workspace to a file
 save(fullfile(path_output, 'workspace.mat'));
+
+fprintf("matlab done\n");
