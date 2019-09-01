@@ -1,7 +1,7 @@
 <Program>
 <ExecParams>
 	<SimTime>
-		1000	
+		86400	
 	</SimTime>
 	<Seed>
 		875887
@@ -10,7 +10,7 @@
 <FunHandleName> update_rules </FunHandleName>
 <Rule>
 	<Prod>
-		C -> 1 {C,C}_1
+		C -> 0.01 {C,C}_1
 	</Prod>
 	<InternalState>
 		<Name> MS </Name>
