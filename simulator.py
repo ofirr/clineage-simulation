@@ -16,6 +16,8 @@ import sys
 sys.path.append("/home/{}/clineage/".format(os.environ['USER']))
 import clineage.wsgi
 
+import sys
+sys.setrecursionlimit(10000)
 
 def generate_tree_ascii_plot(path_newick):
 
@@ -383,9 +385,9 @@ def run(path_matlab, path_project, config_filename, run_flag, quiet):
         )
 
         # take simulation tree and make ascii plot
-        generate_tree_ascii_plot(
-            os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK)
-        )
+        # generate_tree_ascii_plot(
+        #     os.path.join(path_simulation_output, const.FILE_SIMULATION_NEWICK)
+        # )
 
     # user wants to generate tree only
     if run_flag[const.FLAG_TREE_SIMULATION] == const.FLAG_ONLY_TREE_SIMULATION:
@@ -441,10 +443,10 @@ def run(path_matlab, path_project, config_filename, run_flag, quiet):
         )
 
         # take reconstructed tree and make ascii plot
-        generate_tree_ascii_plot(
-            os.path.join(path_reconstruction_output,
-                         const.FILE_RECONSTRUCTED_NEWICK)
-        )
+        # generate_tree_ascii_plot(
+        #     os.path.join(path_reconstruction_output,
+        #                  const.FILE_RECONSTRUCTED_NEWICK)
+        # )
 
         # fixme: revisit. this part doesn't work anymore with multiple genotyping simulation
         # highlight tree differences and save to png

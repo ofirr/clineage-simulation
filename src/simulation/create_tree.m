@@ -10,7 +10,7 @@ function [phytree_obj] = create_tree( ...
 
     % generate tree
     T = generateTree(rules, my_run.Nodes, root_node, my_run.NameInds, my_run.Name);
-
+    fprintf("After generateTree\n");
     phytree_obj = T.tree;
 
     % reroot if necessary
@@ -30,10 +30,10 @@ function [phytree_obj] = create_tree( ...
         'Distances', 'true', ...
         'BranchNames', 'false' ...
     );
-
-    plot_tree(path_newick_without_distance, path_png_without_distance, rules);
-    plot_tree(path_newick_with_distance, path_png_with_distance, rules);
-    
+    fprintf("After phytreewrites\n");
+    %plot_tree(path_newick_without_distance, path_png_without_distance, rules);
+    %plot_tree(path_newick_with_distance, path_png_with_distance, rules);
+    %fprintf("After plot_trees\n");
     function [] = plot_method_01(tree, node_names)
     % plot tree using eSTGt plotter
     % this doesn't add labels currently
