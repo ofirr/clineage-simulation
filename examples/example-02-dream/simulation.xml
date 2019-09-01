@@ -1,7 +1,7 @@
 <Program>
 <ExecParams>
 	<SimTime>
-		86400	
+		86400
 	</SimTime>
 	<Seed>
 		875887
@@ -12,6 +12,11 @@
 	<Prod>
 		C -> 0.01 {C,C}_1
 	</Prod>
+	<InternalState>
+		<Name> Time </Name>
+		<InitVal> 0 </InitVal>
+		<FuncHandleName> update_time </FuncHandleName>
+	</InternalState>
 	<InternalState>
 		<Name> MS </Name>
 		<InitVal> -1 </InitVal>

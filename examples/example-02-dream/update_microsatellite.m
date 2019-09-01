@@ -31,6 +31,10 @@ function [ newMS ] = update_microsatellite( MS, T, Nodes, parentType, rnd, rep )
         return;
     end
 
+    % get the time that elapsed since the previous cell division
+    parent_time = Nodes{parentType}(rnd).InternalStates.('Time');
+    time_factor = T - parent_time;
+
     for i = 1:length(MS)
 
         try
@@ -45,6 +49,10 @@ function [ newMS ] = update_microsatellite( MS, T, Nodes, parentType, rnd, rep )
 
         %fixme: with rand_seed, barely changes
 
+        % update all transition probabilities by the time factor
+        if max(probs) < 1
+            probs = [probs(1) probs(2:length(probs))*time_factor];
+        end
         % get index that corresponds to ms repeat length using probability
         % distribution
         new_idx = datasample(...
