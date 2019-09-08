@@ -381,6 +381,6 @@ mutation_table_final = convert_to_mutation_table_for_tmc(...
 save_mutation_table(path_mutation_table, mutation_table_final);
 
 % write workspace to a file
-save(fullfile(path_output, 'workspace.mat'));
+save(fullfile(path_output, 'workspace.mat'), 'Variablename', '-v7.3');
 
 fprintf("matlab done\n");
