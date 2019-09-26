@@ -309,7 +309,7 @@ def compare(path_simulation_newick, path_reconstructed_newick, path_score_output
     }
 
     cmd = [
-        'java', '-jar', const.PATH_TREECMP_BIN,
+        'java', '-Xss4G', '-jar', const.PATH_TREECMP_BIN,
         '-P', '-N', '-I'
         '-r', path_simulation_newick,
         '-i', path_reconstructed_newick,
