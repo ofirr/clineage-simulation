@@ -223,7 +223,8 @@ end
 my_run = runs(1);
 
 fprintf("End Time: %f\n", my_run.T(end));
-fprintf("End Population: %d\n", my_run.X(end));
+% fprintf("End Population: %d\n", my_run.X(end));
+fprintf("End Population: %d\n", sum(my_run.X(end, :)));
 
 %% create tree
 
