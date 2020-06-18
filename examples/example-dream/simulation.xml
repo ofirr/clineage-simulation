@@ -1,0 +1,725 @@
+<Program>
+<ExecParams>
+        <SimTime>
+                31536000
+        </SimTime>
+        <Seed>
+		605509
+	</Seed>
+</ExecParams>
+<FunHandleName> update_rules </FunHandleName>
+<Rule>
+        <Prod>
+                C -&gt; 0.00001736111 {C,C}_1 | {M,M}_0
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 1000 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 5000 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                1
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                M -&gt; 0.00001736111 {M,M}_0.299 | {M,ICM}_0.7 | {M,Trophectoderm}_0.001
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                ICM -&gt; 0.00001736111 {ICM,ICM}_0.35 | {ICM,Epiblast}_0.35 | {ICM,PE}_3
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Trophectoderm -&gt; 0.00001736111 {Trophectoderm,Trophectoderm}_0.5 | {Trophectoderm,Placenta}_ow
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Placenta -&gt; 0.00001736111 {Placenta,Placenta}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Epiblast -&gt; 0.00003472222 {Epiblast,Epiblast}_0.4 | {Epiblast,Mesoderm}_0.3 | {Epiblast,Ectoderm}_0.3 
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                PE -&gt; 0.00001736111 {PE,PE}_0.2 | {PE,Endoderm}_0.799 | {PE,Yolk_sac}_0.001
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Mesoderm -&gt; 0.00003472222 {Mesoderm, Mesoderm}_0.4 | {Mesoderm, Cardiac}_0.1 | {Mesoderm, Skeletal}_0.1 | {Mesoderm, Tubule_kidney}_0.2 | {Mesoderm, Smooth_Muscle}_0.2
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+            Ectoderm -&gt; 0.00003472222 {Ectoderm, Ectoderm}_0.4 | {Ectoderm, Skin}_0.2 | {Ectoderm, Neuron}_0.2 | {Ectoderm, Pigment}_0.2
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+            Endoderm -&gt; 0.00003472222 {Endoderm, Endoderm}_0.4 | {Endoderm, Lung}_0.2 | {Endoderm, Thyroid}_0.1 | {Endoderm, Digestive}_0.2 | {Endoderm, Pancreatic}_0.1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Cardiac -&gt; 0.00002472222 {Cardiac, Cardiac}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Skeletal -&gt; 0.00002 {Skeletal, Skeletal}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Tubule_kidney -&gt; 0.00002472222 {Tubule_kidney, Tubule_kidney}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Smooth_Muscle -&gt; 0.00001472222 {Smooth_Muscle, Smooth_Muscle}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Skin -&gt; 0.00003472222 {Skin, Skin}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Neuron -&gt; 0.00003472222 {Neuron, Neuron}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Pigment -&gt; 0.00002472222 {Pigment, Pigment}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Lung -&gt; 0.00003472222 {Lung, Lung}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Thyroid -&gt; 0.00001736111 {Thyroid, Thyroid}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Digestive -&gt; 0.00004 {Digestive, Digestive}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+<Rule>
+        <Prod>
+                Pancreatic -&gt; 0.00003472222 {Pancreatic, Pancreatic}_1
+        </Prod>
+        <InternalState>
+                <Name> Time </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_time </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> MS </Name>
+                <InitVal> -1 </InitVal>
+                <FuncHandleName> update_microsatellite </FuncHandleName>
+                <DuplicateNum> 5 </DuplicateNum>
+        </InternalState>
+        <InternalState>
+                <Name> Gen </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> update_generation </FuncHandleName>
+        </InternalState>
+        <InternalState>
+                <Name> ChildrenLifeTokens </Name>
+                <InitVal> 0 </InitVal>
+                <FuncHandleName> FuncUpdateChildrenLifeTokens </FuncHandleName>
+                <DuplicateNum> 2 </DuplicateNum>
+        </InternalState>
+        <ConditionalTransition>
+                <Condition> max(ChildrenLifeTokens) == 0 </Condition>
+                <Transition> {0} </Transition>
+        </ConditionalTransition>
+        <InitPop>
+                0
+        </InitPop>
+</Rule>
+</Program>

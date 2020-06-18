@@ -1,0 +1,25 @@
+genotyping:
+- genotypingConfidenceThreshold: 1
+  n: 1
+  noiseConstant: 0.0
+  targetNumReadsPerSample: 5000
+- genotypingConfidenceThreshold: 1
+  n: 2
+  noiseConstant: 0.0
+  targetNumReadsPerSample: 10000
+- genotypingConfidenceThreshold: 1
+  n: 3
+  noiseConstant: 0.0
+  targetNumReadsPerSample: 50000
+- genotypingConfidenceThreshold: 1
+  n: 4
+  noiseConstant: 0.0
+  targetNumReadsPerSample: 100000
+- genotypingConfidenceThreshold: 1
+  n: 5
+  noiseConstant: 0.0
+  targetNumReadsPerSample: 500000
+- genotypingConfidenceThreshold: 1
+  n: 6
+  noiseConstant: 0.0
+  targetNumReadsPerSample: 1000000
