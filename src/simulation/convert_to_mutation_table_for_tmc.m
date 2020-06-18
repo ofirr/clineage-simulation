@@ -16,13 +16,17 @@ LOC_10	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	N
 %}
 
 % get the indexes of the leaves by extracting the last row of the LiveNodes
-leaves_idx = run.LiveNodes{end};
+%leaves_idx = run.LiveNodes{end};
+live_nodes_sizes = size(run.LiveNodes);
+live_nodes_final_row = run.LiveNodes(live_nodes_sizes(1),:);
+all_leaves_idx = horzcat(live_nodes_final_row{:});
 
 % get number of microsatellite loci
 num_of_ms_loci = size(mutation_table, 1);
 
 % get number of cells (without root cell)
-num_of_cells = length( { run.Nodes{1}(leaves_idx).Name } );
+% num_of_cells = length( { run.Nodes{1}(leaves_idx).Name } );
+num_of_cells = length(all_leaves_idx);
 
 % num of rows in the table = header + num of ms loci
 num_of_rows = num_of_ms_loci + 1;
@@ -41,7 +45,20 @@ ms_loci_names = 'LOC_' + string(1:num_of_ms_loci);
 ms_loci_names = cellstr(ms_loci_names)';
 
 % create column header for mutation table
-cell_names = { run.Nodes{1}(leaves_idx).Name };
+% cell_names = { run.Nodes{1}(leaves_idx).Name };
+cell_names = string();
+global_leaves_idx=0;
+for cell_type = 1:length(live_nodes_final_row)
+    leaves_idx_array = live_nodes_final_row(cell_type);
+    leaves_idx = leaves_idx_array{end};
+    for col = 1:length(leaves_idx)
+        global_leaves_idx = global_leaves_idx + 1;
+        leaf_id = leaves_idx(col);
+        cell_names(global_leaves_idx) = run.Nodes{cell_type,1}(leaf_id).Name;
+    end
+end
+cell_names = cellstr(cell_names);
+
 cell_numeric_ids = num2cell( 1:size(cell_names, 2) );
 
 if has_root == true
