@@ -239,7 +239,6 @@ phytree_obj = create_tree(...
 );
 fprintf("After create_tree\n");
 %% add dropouts and noises
-
 mutation_tables = cell(alleles);
 
 fprintf("After mutation_tables\n");
@@ -382,6 +381,6 @@ mutation_table_final = convert_to_mutation_table_for_tmc(...
 save_mutation_table(path_mutation_table, mutation_table_final);
 
 % write workspace to a file
-save(fullfile(path_output, 'workspace.mat'), '-v7.3');
+%save(fullfile(path_output, 'workspace.mat'), '-v7.3');
 
 fprintf("matlab done\n");

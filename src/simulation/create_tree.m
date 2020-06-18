@@ -31,9 +31,9 @@ function [phytree_obj] = create_tree( ...
         'BranchNames', 'false' ...
     );
     fprintf("After phytreewrites\n");
-    %plot_tree(path_newick_without_distance, path_png_without_distance, rules);
-    %plot_tree(path_newick_with_distance, path_png_with_distance, rules);
-    %fprintf("After plot_trees\n");
+    % plot_tree(path_newick_without_distance, path_png_without_distance, rules);
+    % plot_tree(path_newick_with_distance, path_png_with_distance, rules);
+    % fprintf("After plot_trees\n");
     function [] = plot_method_01(tree, node_names)
     % plot tree using eSTGt plotter
     % this doesn't add labels currently

@@ -42,8 +42,6 @@ for cell_type = 1:length(live_nodes_final_row)
     end
 end
 column_header = cellstr(column_header);
-disp(column_header);
-disp(row_header);
 if has_root == true
     % add root cell at the end of the column
     column_header{1, size(column_header, 2) + 1} = 'root';

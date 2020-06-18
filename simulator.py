@@ -359,8 +359,8 @@ def get_seed_from_simulation_xml(path_xml):
 
 
 def run(path_matlab, path_project, config_filename, run_flag, quiet):
-    "run function"
-
+    print("@#%@#%@^%@%#@#%@#%@#% run function")
+    
     # read simulation configuration
     config = utils.read_json_config(
         os.path.join(path_project, config_filename)
@@ -377,7 +377,7 @@ def run(path_matlab, path_project, config_filename, run_flag, quiet):
     path_simulation_output = os.path.join(
         path_project, config[const.CONFIG_PATH_RELATIVE_OUTPUT]
     )
-
+    print("@%#^$$%^&#%^#%^ before simulate_lineage_tree")
     if run_flag[const.FLAG_TREE_SIMULATION] == const.FLAG_RUN_TREE_SIMULATION or run_flag[const.FLAG_TREE_SIMULATION] == const.FLAG_ONLY_TREE_SIMULATION:
         # run stochastic lineage tree simulation
         simulate_lineage_tree(
@@ -392,7 +392,7 @@ def run(path_matlab, path_project, config_filename, run_flag, quiet):
     # user wants to generate tree only
     if run_flag[const.FLAG_TREE_SIMULATION] == const.FLAG_ONLY_TREE_SIMULATION:
         return
-
+    print("$^%^%@$^ before run_genotyping_simulation")
     if run_flag[const.FLAG_GENOTYPING] == const.FLAG_RUN_GENOTYPING:
         # run genotyping simulation (wga proportion, dropout, coverage)
         # output mutation table
@@ -421,7 +421,7 @@ def run(path_matlab, path_project, config_filename, run_flag, quiet):
             path_project,
             path_simulation_output
         )
-
+    methods = [] # MANUALLY making sure there are no reconstructions!!
     for path_reconstruction_output, calling in methods:
 
         # reconstruct using TMC based on mutation table generated from simulation

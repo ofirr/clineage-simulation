@@ -32,6 +32,6 @@ python simulator.py \
   --project ${path_project} \
   --config ${config_file}
 
-python make_html_report.py \
-  --project ${path_project} \
-  --config ${config_file}
+#python make_html_report.py \
+#  --project ${path_project} \
+#  --config ${config_file}
